@@ -5,5 +5,6 @@
 .idea/workspace.xml
 
 Client/admin/node_modules
+Client/user/node_modules
 
 Server/node_modules
