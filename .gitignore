@@ -1,0 +1,9 @@
+.idea/
+.idea/admin_panel_vue.iml
+.idea/inspectionProfiles/
+.idea/modules.xml
+.idea/workspace.xml
+
+Client/admin/node_modules
+
+Server/node_modules
