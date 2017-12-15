@@ -4,6 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+// UIComponents
+import Navigation from './components/UIComponents/Navigation'
+
+Vue.use(Navigation)
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
