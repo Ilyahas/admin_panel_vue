@@ -1,5 +1,6 @@
 $navbarBgColor: #5BCAFF;
 $whiteColor: white;
+$whiteActiveLinkColor: #c7ddef;
 
 ul {
   margin: 0;
@@ -7,6 +8,12 @@ ul {
 }
 li {
   list-style-type: none;
+  &.active a {
+    color: $whiteActiveLinkColor !important;
+    &:hover {
+      text-decoration: none !important;
+    }
+  }
 }
 
 a {

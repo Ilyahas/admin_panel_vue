@@ -5,6 +5,7 @@ import NotFound from '../components/GeneralViews/NotFoundPage.vue'
 // Admin pages
 import Overview from 'src/components/Dashboard/Views/Overview.vue'
 import UserProfile from 'src/components/Dashboard/Views/UserProfile.vue'
+import Photos from 'src/components/Dashboard/Views/Photos.vue'
 import Notifications from 'src/components/Dashboard/Views/Notifications.vue'
 import Icons from 'src/components/Dashboard/Views/Icons.vue'
 import Maps from 'src/components/Dashboard/Views/Maps.vue'
@@ -31,6 +32,11 @@ const routes = [
         path: 'stats',
         name: 'stats',
         component: UserProfile
+      },
+      {
+        path: 'photos',
+        name: 'photos',
+        component: Photos
       },
       {
         path: 'notifications',
