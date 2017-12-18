@@ -1,7 +1,7 @@
 import Navigation from './Navigation.vue'
 
 const NavigationStore = {
-  sidebarLinks: [
+  navbarLinks: [
     {
       name: 'Overview',
       path: '/overview'

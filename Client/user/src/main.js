@@ -7,6 +7,9 @@ import router from './router'
 // UIComponents
 import Navigation from './components/UIComponents/Navigation'
 
+// styles
+import './assets/sass/main.scss'
+
 Vue.use(Navigation)
 
 Vue.config.productionTip = false
