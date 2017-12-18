@@ -1,0 +1,32 @@
+.navbar{
+  background-color: $navbarBgColor;
+
+  .navList {
+    height: 40px;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    li {
+      a {
+        color: $whiteColor;
+        line-height: 20px;
+        padding: 10px 30px;
+
+        &:first-child{
+          padding-left: 0;
+        }
+
+        &:hover {
+          text-decoration: underline;
+        }
+
+      }
+    }
+  }
+
+}

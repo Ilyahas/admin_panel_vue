@@ -1,7 +1,23 @@
+$navbarBgColor: #5BCAFF;
+$whiteColor: white;
+
+ul {
+  margin: 0;
+  padding: 0;
+}
 li {
   list-style-type: none;
 }
 
 a {
   text-decoration: none;
+  outline : none;
+}
+
+.container {
+  display: block;
+  margin: 0 auto;
+
+  width: 80%;
+  max-width: 1020px;
 }

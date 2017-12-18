@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import VueResource from 'vue-resource'
 
 // UIComponents
 import Navigation from './components/UIComponents/Navigation'
@@ -10,6 +11,7 @@ import Navigation from './components/UIComponents/Navigation'
 // styles
 import './assets/sass/main.scss'
 
+Vue.use(VueResource)
 Vue.use(Navigation)
 
 Vue.config.productionTip = false

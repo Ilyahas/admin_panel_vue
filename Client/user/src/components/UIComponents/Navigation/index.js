@@ -5,6 +5,10 @@ const NavigationStore = {
     {
       name: 'Overview',
       path: '/overview'
+    },
+    {
+      name: 'Photos',
+      path: '/photos'
     }
   ]
 }
