@@ -5,23 +5,20 @@ import NotFound from '../components/GeneralViews/NotFoundPage.vue'
 // Admin pages
 import Overview from 'src/components/Dashboard/Views/Overview.vue'
 import UserProfile from 'src/components/Dashboard/Views/UserProfile.vue'
-import Photos from 'src/components/Dashboard/Views/Photos.vue'
 import Notifications from 'src/components/Dashboard/Views/Notifications.vue'
 import Icons from 'src/components/Dashboard/Views/Icons.vue'
 import Maps from 'src/components/Dashboard/Views/Maps.vue'
 import Typography from 'src/components/Dashboard/Views/Typography.vue'
 import TableList from 'src/components/Dashboard/Views/TableList.vue'
 
+import Photos from 'src/components/Dashboard/Views/Photos/Photos.vue'
+import addCategory from 'src/components/Dashboard/Views/Photos/addCategory.vue'
+
 const routes = [
   {
     path: '/',
     component: DashboardLayout,
-    redirect: '/admin/overview'
-  },
-  {
-    path: '/admin',
-    component: DashboardLayout,
-    redirect: '/admin/stats',
+    redirect: '/stats',
     children: [
       {
         path: 'overview',
@@ -37,6 +34,11 @@ const routes = [
         path: 'photos',
         name: 'photos',
         component: Photos
+      },
+      {
+        path: 'photos/add-category',
+        name: 'Add Category',
+        component: addCategory
       },
       {
         path: 'notifications',

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import vClickOutside from 'v-click-outside'
+import VueResource from 'vue-resource'
 
 // Plugins
 import GlobalComponents from './gloablComponents'
@@ -18,6 +19,7 @@ import './assets/sass/paper-dashboard.scss'
 import 'es6-promise/auto'
 
 // plugin setup
+Vue.use(VueResource)
 Vue.use(VueRouter)
 Vue.use(GlobalComponents)
 Vue.use(vClickOutside)
