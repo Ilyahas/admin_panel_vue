@@ -8,3 +8,4 @@ Client/admin/node_modules
 Client/user/node_modules
 
 Server/node_modules
+Client/admin/package-lock.json
