@@ -1,3 +1,9 @@
 module.exports = {
-    'PORT': '3000'
+    'database': {
+        'host': 'localhost',
+        'user': 'root',
+        'password': 'root'
+    },
+    'PORT': '3000',
+    'apiLink': '/api'
 };

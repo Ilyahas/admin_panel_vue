@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content container">
     <div class="container-fluid">
       <transition name="fade" mode="out-in">
         <!-- your content here -->
@@ -16,13 +16,16 @@
   .fade-leave-active {
     transition: opacity .1s
   }
+  /* .fade-leave-active in <2.1.8 */
 
   .fade-enter,
   .fade-leave-to
-    /* .fade-leave-active in <2.1.8 */
-
   {
     opacity: 0
+  }
+
+  .content{
+    margin-top: 15px;
   }
 </style>
 

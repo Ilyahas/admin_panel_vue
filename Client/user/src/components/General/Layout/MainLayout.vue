@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <top-nav></top-nav>
+    <nav-bar :navbar-links="$navbar.navbarLinks"></nav-bar>
 
     <site-content></site-content>
   </div>

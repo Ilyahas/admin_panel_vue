@@ -1,0 +1,30 @@
+$navbarBgColor: #5BCAFF;
+$whiteColor: white;
+$whiteActiveLinkColor: #c7ddef;
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+li {
+  list-style-type: none;
+  &.active a {
+    color: $whiteActiveLinkColor !important;
+    &:hover {
+      text-decoration: none !important;
+    }
+  }
+}
+
+a {
+  text-decoration: none;
+  outline : none;
+}
+
+.container {
+  display: block;
+  margin: 0 auto;
+
+  width: 80%;
+  max-width: 1020px;
+}
