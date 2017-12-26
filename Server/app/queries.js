@@ -1,4 +1,4 @@
 module.exports = {
-    'addPhotoCategory': 'INSERT INTO admin_panel.PhotoCategories (name) VALUE ("{name}")',
-    'getPhotoCategory': 'SELECT * FROM admin_panel.PhotoCategories'
+    'addPhotoSection': 'INSERT INTO admin_panel.PhotoSections (name) VALUE ("{name}")',
+    'getPhotoSections': 'SELECT * FROM admin_panel.PhotoSections'
 };

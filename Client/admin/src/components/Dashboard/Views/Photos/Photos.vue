@@ -17,8 +17,6 @@
       }
     },
     created () {
-      this.property = 'Example property update.'
-      console.log('propertyComputed will update, as this.property is now reactive.')
       this.$http.get('http://localhost:3000/api/getCategories').then((res) => {
         console.log(res)
       })

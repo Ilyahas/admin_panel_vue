@@ -6,16 +6,17 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const config = require('./app/config');
 
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.json({limit: '150mb'}));
+app.use(bodyParser.urlencoded({limit: '150mb', extended: true}));
 app.use(cookieParser());
 
 app.use(config.apiLink, api);
 
 app.use(express.static(path.join(__dirname, '/../Client/admin/dist')));
+app.use(express.static(path.join(__dirname, '/../Client/user/dist')));
 
 
 require('./app/api') (api, config);
-require('./app/routes') (app);
+require('./app/routes') (app, path);
 
 app.listen(config.PORT, () => console.log('App listening on port ' + config.PORT + '!'));

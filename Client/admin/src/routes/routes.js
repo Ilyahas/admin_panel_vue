@@ -12,7 +12,7 @@ import Typography from 'src/components/Dashboard/Views/Typography.vue'
 import TableList from 'src/components/Dashboard/Views/TableList.vue'
 
 import Photos from 'src/components/Dashboard/Views/Photos/Photos.vue'
-import addCategory from 'src/components/Dashboard/Views/Photos/addCategory.vue'
+import addSection from 'src/components/Dashboard/Views/Photos/addSection.vue'
 
 const routes = [
   {
@@ -32,13 +32,13 @@ const routes = [
       },
       {
         path: 'photos',
-        name: 'photos',
+        name: 'Photo Sections',
         component: Photos
       },
       {
         path: 'photos/add-category',
-        name: 'Add Category',
-        component: addCategory
+        name: 'Add Sections',
+        component: addSection
       },
       {
         path: 'notifications',
