@@ -9,6 +9,8 @@ import Notifications from './components/UIComponents/NotificationPlugin'
 import SideBar from './components/UIComponents/SidebarPlugin'
 import App from './App'
 
+import Config from './config'
+
 // router setup
 import routes from './routes/routes'
 
@@ -25,6 +27,8 @@ Vue.use(GlobalComponents)
 Vue.use(vClickOutside)
 Vue.use(Notifications)
 Vue.use(SideBar)
+
+Vue.use(Config)
 
 // configure router
 const router = new VueRouter({

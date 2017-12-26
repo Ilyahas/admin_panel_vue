@@ -33,7 +33,7 @@
     data () {
       return {
         categoryName: '',
-        sectionCoverImg: 'static/img/default.png',
+        sectionCoverImg: this.$config.defaultImg,
         imgFile: ''
       }
     },
@@ -42,14 +42,21 @@
     },
     methods: {
       saveSection () {
-        this.$http.post('/api/addSection', this.imgFile).then((res) => {
+        this.$http.post('/api/uploadSectionCover', this.imgFile).then((res) => {
+          console.log(res)
+        })
+        let sectoinData = {
+          name: this.categoryName,
+          imgName: '' // add name of the new file and change in DB path to name
+        }
+        this.$http.post('/api/addSection', sectoinData).then((res) => {
           console.log(res)
         })
       },
       onChange () {
         if (this.$refs.pictureInput.image) {
           let data = new FormData()
-          data.append('file',this.$refs.pictureInput.file)
+          data.append('file', this.$refs.pictureInput.file)
           this.imgFile = data
         } else {
           console.log('FileReader API not supported: use the <form>, Luke!')
