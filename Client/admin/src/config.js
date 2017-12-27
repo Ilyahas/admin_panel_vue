@@ -1,5 +1,7 @@
 const configData = {
-  defaultImg: 'static/img/default.png'
+  defaultImg: 'static/img/default.png',
+  pathToCovers: 'static/img/photoSectionCovers/',
+  serverHost: 'http://localhost:3000'
 }
 
 const Config = {
@@ -11,7 +13,6 @@ const Config = {
         }
       }
     })
-
     Object.defineProperty(Vue.prototype, '$config', {
       get () {
         return this.$root.config
@@ -19,5 +20,4 @@ const Config = {
     })
   }
 }
-
 export default Config

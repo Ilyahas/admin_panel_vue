@@ -17,7 +17,7 @@
       }
     },
     created () {
-      this.$http.get('http://localhost:3000/api/getCategories').then((res) => {
+      this.$http.get(this.$config.serverHost + '/api/getSections').then((res) => {
         console.log(res)
       })
     }

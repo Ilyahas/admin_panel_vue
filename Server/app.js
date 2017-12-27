@@ -6,6 +6,9 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const config = require('./app/config');
 
+const cors = require('cors');
+app.use(cors({origin: 'http://localhost:8080'}));
+
 app.use(bodyParser.json({limit: '150mb'}));
 app.use(bodyParser.urlencoded({limit: '150mb', extended: true}));
 app.use(cookieParser());

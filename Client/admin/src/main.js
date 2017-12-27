@@ -42,7 +42,6 @@ Object.defineProperty(Vue.prototype, '$Chartist', {
     return this.$root.Chartist
   }
 })
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

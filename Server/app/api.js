@@ -7,42 +7,19 @@ module.exports = function(app, config) {
     });
     const format = require("string-template");
     const queries = require('./queries');
-    const multer = require('multer');
-    const path = require('path');
+    const upload = require('./upload');
 
-    const storage = multer.diskStorage({
-        destination: function(req, file, callback) {
-            callback(null, '../Client/admin/dist/static/img/photoSectionCover')
-        },
-        filename: function(req, file, callback) {
-            callback(null, file.originalname)
-        }
-    });
+    app.post('/uploadSectionCover', upload.uploadSectionCover);
 
-    app.post('/addSection', (req, res) => {
-        /*connection.query(format(queries.addPhotoSection, {name: req.body.categoryName}), (err, row, fields) =>{
+    app.post('/addSectionData', (req, res) => {
+        connection.query(format(queries.addPhotoSection, {sectionName: req.body.sectionName, imgName: req.body.imgName}), (err, row, fields) =>{
             if(err){
                 console.log(err);
-                res.status(400);
+                res.status(400).end("Section is not add");
             }
             else {
-
+                res.status(200).end("Section is add");
             }
-        });*/
-        let upload = multer({
-            storage: storage,
-            fileFilter: function(req, file, callback) {
-                let ext = path.extname(file.originalname);
-                if (ext !== '.png' && ext !== '.jpg' && ext !== '.svg' && ext !== '.jpeg') {
-                    return callback(res.end('Only images are allowed'), null);
-                }
-                callback(null, true);
-            }
-        }).single('file');
-        upload(req, res, function(err) {
-            if(err)
-                res.end("File is not uploaded");
-            res.end('File is uploaded')
         });
     });
 
@@ -53,7 +30,6 @@ module.exports = function(app, config) {
                 res.status(400);
             }
             else {
-                console.log(row);
                 res.send(row);
             }
         });

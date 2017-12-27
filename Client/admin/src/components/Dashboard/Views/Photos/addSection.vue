@@ -4,7 +4,7 @@
       <fg-input type="text"
                 label="Section Name"
                 placeholder="Enter category name"
-                v-model="categoryName">
+                v-model="sectionName">
       </fg-input>
       <label>Section photo cover</label>
       <section>
@@ -32,7 +32,7 @@
   export default {
     data () {
       return {
-        categoryName: '',
+        sectionName: '',
         sectionCoverImg: this.$config.defaultImg,
         imgFile: ''
       }
@@ -42,16 +42,27 @@
     },
     methods: {
       saveSection () {
-        this.$http.post('/api/uploadSectionCover', this.imgFile).then((res) => {
-          console.log(res)
+        this.$http.post('http://localhost:3000/api/uploadSectionCover', this.imgFile).then((res) => {
+          console.log(res.status === 200)
+          if (res.status === 200) {
+            this.$http.post('http://localhost:3000/api/addSectionData', sectoinData).then((res) => {
+              console.log(res)
+              if (res.status === 200) {
+                this.$router.push('/photos')
+                this.$router.go(this.$router.length - 1)
+              }
+            })
+          }
         })
+
         let sectoinData = {
-          name: this.categoryName,
-          imgName: '' // add name of the new file and change in DB path to name
+          sectionName: this.sectionName,
+          imgName: ''
         }
-        this.$http.post('/api/addSection', sectoinData).then((res) => {
-          console.log(res)
-        })
+        // get name of the file
+        for (let file of this.imgFile) {
+          sectoinData.imgName = file[1].name
+        }
       },
       onChange () {
         if (this.$refs.pictureInput.image) {
