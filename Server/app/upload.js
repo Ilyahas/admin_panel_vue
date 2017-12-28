@@ -34,14 +34,15 @@ const uploadFile = (call, req, res) => {
 };
 
 exports.uploadSectionCover = async (req, res) => {
-    isUploaded = [false, false];
     let uploadDist = createUploadFunction(createUploadStorage('../Client/admin/dist/static/img/photoSectionCovers'));
     let uploadStatic = createUploadFunction(createUploadStorage('../Client/admin/static/img/photoSectionCovers'));
 
-    isUploaded[0] = await uploadFile(uploadStatic, req, res);
-    console.log(isUploaded[0]);
+    let [isUploadedDist, isUploadedStatic] = await Promise.all([uploadFile(uploadDist, req, res), uploadFile(uploadStatic, req, res)]);
 
-    // ------------------- change to async await --------------------------- //
-    //setTimeout(()=>{if(isUploaded[0] && isUploaded[1]) res.status(200).end("File is uploaded")}, 100);
+    if(isUploadedDist && isUploadedStatic) {
+        res.status(200).end("File is uploaded");
+    } else {
+        res.status(400).end("File is not uploaded");
+    }
 
 };

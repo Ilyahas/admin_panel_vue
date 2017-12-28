@@ -43,13 +43,10 @@
     methods: {
       saveSection () {
         this.$http.post('http://localhost:3000/api/uploadSectionCover', this.imgFile).then((res) => {
-          console.log(res.status === 200)
           if (res.status === 200) {
             this.$http.post('http://localhost:3000/api/addSectionData', sectoinData).then((res) => {
-              console.log(res)
               if (res.status === 200) {
                 this.$router.push('/photos')
-                this.$router.go(this.$router.length - 1)
               }
             })
           }
