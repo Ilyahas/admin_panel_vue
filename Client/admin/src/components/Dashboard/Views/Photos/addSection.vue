@@ -1,34 +1,45 @@
 <template>
   <div>
-    <section class="form">
-      <fg-input type="text"
-                label="Section Name"
-                placeholder="Enter category name"
-                v-model="sectionName">
-      </fg-input>
-      <label>Section photo cover</label>
-      <section>
-         <picture-input
-            ref="pictureInput"
-            @change="onChange"
-            width="600"
-            height="600"
-            margin="16"
-            accept="image/jpeg,image/png"
-            size="10"
-            buttonClass="btn"
-            :customStrings="{
-        upload: '<h1>Bummer!</h1>',
-        drag: 'Drag a 😺 GIF or GTFO'
-      }">
+    <button @click="back" class="btn btn-top"><i class="ti-arrow-left"></i></button>
+
+    <div class="card form">
+      <div class="header">
+        <h4 class="title">Add Photo Section</h4>
+      </div>
+      <div class="content">
+        <form>
+          <fg-input type="text"
+                    label="Section Name"
+                    placeholder="Enter category name"
+                    v-model="sectionName">
+          </fg-input>
+          <label>Section photo cover</label>
+          <picture-input
+              ref="pictureInput"
+              @change="onChange"
+              width="600"
+              height="600"
+              margin="16"
+              accept="image/jpeg,image/png"
+              size="10"
+              buttonClass="btn"
+              :customStrings="{
+                upload: '<h1>Bummer!</h1>',
+                drag: 'Drag a 😺 GIF or GTFO'
+              }">
           </picture-input>
-      </section>
-    </section>
-    <button class="btn btn-success" @click="saveSection">Save</button>
+          <div class="text-center">
+            <button class="btn btn-success btn-form-submit btn-wd" @click="saveSection">Save</button>
+          </div>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 <script>
   import PictureInput from 'vue-picture-input'
+
   export default {
     data () {
       return {
@@ -69,19 +80,16 @@
         } else {
           console.log('FileReader API not supported: use the <form>, Luke!')
         }
+      },
+      back () {
+        this.$router.push('/photos')
       }
     }
   }
 </script>
-<style scoped>
+<style scoped lang="scss">
   .form{
-    border: 1px solid;
-    border-radius: 5px;
-    padding: 25px;
     width: 50%;
-    max-width: 550px;
-  }
-  button {
-    margin-top: 15px;
+    max-width: 750px;
   }
 </style>
