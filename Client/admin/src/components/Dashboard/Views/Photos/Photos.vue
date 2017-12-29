@@ -11,6 +11,15 @@
           </div>
           <div class="content">
             <img class="border-white section-card" v-bind:src="pathToCovers + section.CoverImgName">
+            <hr>
+            <div class="row">
+              <div class="col-lg-6 col-sm-6 text-center">
+                <router-link to="/photos"><i class="ti-pencil"></i> <span>Edit</span></router-link>
+              </div>
+              <div class="col-lg-6 col-sm-6 text-center">
+                <router-link to="/photos"><i class="ti-close"></i> <span>Delete</span></router-link>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -42,6 +51,18 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  .section-card {
+    height: 190px;
+  }
+  .text-center{
+    text-align: center;
 
+    & span{
+      font-size: 17px;
+    }
+  }
+  .row {
+    margin-top: -10px;
+  }
 </style>
