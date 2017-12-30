@@ -33,6 +33,18 @@ module.exports = function(app, config) {
                 res.send(row);
             }
         });
-    })
+    });
+
+    app.post('/deleteSection', (req, res) => {
+        connection.query(format(queries.deleteSection, {sectionId: req.body.sectionId}),(err, row, fields) => {
+            if(err){
+                console.log(err);
+                res.status(400).end("Section is not deleted");
+            }
+            else {
+                res.status(200).end("Section is deleted");
+            }
+        });
+    });
 
 };

@@ -2,7 +2,21 @@
   margin-top: 0;
   margin-bottom: 10px;
 }
-.btn-form-submit{
+.btn-form-submit {
   font-size: 18px;
   margin-top: 10px;
+}
+.as-link {
+  background:none!important;
+  color:inherit;
+  border:none;
+  padding:0!important;
+  font: inherit;
+  color: #761c19;
+  cursor: pointer;
+
+  &:hover {
+    color: #ac2925;
+  }
+
 }
