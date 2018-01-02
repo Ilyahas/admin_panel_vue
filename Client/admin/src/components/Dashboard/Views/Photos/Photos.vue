@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link class="btn btn-success btn-top" to="/photos/add-category"><i class="ti-plus"></i></router-link>
+    <router-link class="btn btn-success btn-top" to="/photos/add-section"><i class="ti-plus"></i></router-link>
 
     <div class="row">
       <div class="col-lg-4 col-sm-6" v-for="section in sections">
@@ -17,7 +17,7 @@
             <div class="row row-edit">
 
               <div class="col-lg-6 col-sm-6 text-center">
-                <router-link to="/photos"><i class="ti-pencil"></i> <span>Edit</span></router-link>
+                <router-link :to="{ path: 'photos/edit-section', query: { id: section.idPhotoSections }}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
               </div>
 
               <div class="col-lg-6 col-sm-6 text-center">

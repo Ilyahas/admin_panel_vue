@@ -13,6 +13,7 @@ import TableList from 'src/components/Dashboard/Views/TableList.vue'
 
 import Photos from 'src/components/Dashboard/Views/Photos/Photos.vue'
 import addSection from 'src/components/Dashboard/Views/Photos/addSection.vue'
+import editSection from 'src/components/Dashboard/Views/Photos/editSection.vue'
 
 const routes = [
   {
@@ -36,9 +37,14 @@ const routes = [
         component: Photos
       },
       {
-        path: 'photos/add-category',
-        name: 'Add Sections',
+        path: 'photos/add-section',
+        name: 'Add Section',
         component: addSection
+      },
+      {
+        path: 'photos/edit-section',
+        name: 'Edit Section',
+        component: editSection
       },
       {
         path: 'notifications',

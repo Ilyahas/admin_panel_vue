@@ -35,6 +35,18 @@ module.exports = function(app, config) {
         });
     });
 
+    app.post('/getSectionById', (req, res) => {
+        connection.query(format(queries.getPhotoSectionById, {sectionId: req.body.sectionId}), (err, row, fields) =>{
+            if(err){
+                console.log(err);
+                res.status(400);
+            }
+            else {
+                res.send(row);
+            }
+        });
+    });
+
     app.post('/deleteSection', (req, res) => {
         connection.query(format(queries.deleteSection, {sectionId: req.body.sectionId}),(err, row, fields) => {
             if(err){
@@ -43,6 +55,21 @@ module.exports = function(app, config) {
             }
             else {
                 res.status(200).end("Section is deleted");
+            }
+        });
+    });
+
+
+    app.post('/uploadPhoto', upload.uploadPhoto);
+
+    app.post('/addPhotoData', (req, res) => {
+        connection.query(format(queries.addNewPhoto, {photoName: req.body.photoName, imgName: req.body.imgName}), (err, row, fields) =>{
+            if(err){
+                console.log(err);
+                res.status(400).end("Section is not add");
+            }
+            else {
+                res.status(200).end("Section is add");
             }
         });
     });
