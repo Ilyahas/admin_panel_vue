@@ -9,22 +9,8 @@ module.exports = function(app, config) {
     const queries = require('./queries');
     const upload = require('./upload');
 
-    app.post('/uploadSectionCover', upload.uploadSectionCover);
-
-    app.post('/addSectionData', (req, res) => {
-        connection.query(format(queries.addPhotoSection, {sectionName: req.body.sectionName, imgName: req.body.imgName}), (err, row, fields) =>{
-            if(err){
-                console.log(err);
-                res.status(400).end("Section is not add");
-            }
-            else {
-                res.status(200).end("Section is add");
-            }
-        });
-    });
-
-    app.get('/getSections', (req, res) => {
-        connection.query(queries.getPhotoSections, (err, row, fields) =>{
+    const getData = (stringQuery, req, res) => {
+        connection.query(stringQuery, (err, row, fields) =>{
             if(err){
                 console.log(err);
                 res.status(400);
@@ -33,22 +19,9 @@ module.exports = function(app, config) {
                 res.send(row);
             }
         });
-    });
-
-    app.post('/getSectionById', (req, res) => {
-        connection.query(format(queries.getPhotoSectionById, {sectionId: req.body.sectionId}), (err, row, fields) =>{
-            if(err){
-                console.log(err);
-                res.status(400);
-            }
-            else {
-                res.send(row);
-            }
-        });
-    });
-
-    app.post('/deleteSection', (req, res) => {
-        connection.query(format(queries.deleteSection, {sectionId: req.body.sectionId}),(err, row, fields) => {
+    };
+    const postData = (stringQuery, req, res) => {
+        connection.query(stringQuery,(err, row, fields) => {
             if(err){
                 console.log(err);
                 res.status(400).end("Section is not deleted");
@@ -57,21 +30,39 @@ module.exports = function(app, config) {
                 res.status(200).end("Section is deleted");
             }
         });
+    };
+
+    app.post('/uploadSectionCover', upload.uploadSectionCover);
+
+    app.post('/addSectionData', (req, res) => {
+        postData(format(queries.addPhotoSection, {sectionName: req.body.sectionName, imgName: req.body.imgName}), req, res);
+    });
+
+    app.get('/getSections', (req, res) => {
+        getData(queries.getPhotoSections, req, res);
+    });
+
+    app.post('/getSectionById', (req, res) => {
+        getData(format(queries.getPhotoSectionById, {sectionId: req.body.sectionId}), req, res);
+    });
+
+    app.post('/updateSectionData', (req, res) => {
+        postData(format(queries.updatePhotoSection, {sectionName: req.body.sectionName, imgName: req.body.imgName, sectionId: req.body.sectionId}), req, res);
+    });
+
+    app.post('/deleteSection', (req, res) => {
+        postData(format(queries.deleteSection, {sectionId: req.body.sectionId}), req, res);
     });
 
 
     app.post('/uploadPhoto', upload.uploadPhoto);
 
     app.post('/addPhotoData', (req, res) => {
-        connection.query(format(queries.addNewPhoto, {photoName: req.body.photoName, imgName: req.body.imgName}), (err, row, fields) =>{
-            if(err){
-                console.log(err);
-                res.status(400).end("Section is not add");
-            }
-            else {
-                res.status(200).end("Section is add");
-            }
-        });
+        postData(format(queries.addNewPhoto, {photoName: req.body.photoName, imgName: req.body.imgName, sectionId: req.body.sectionId}), req, res);
+    });
+
+    app.post('/getPhotosBySectionId', (req, res) => {
+        getData(format(queries.getPhotosInSection, {sectionId: req.body.sectionId}), req, res);
     });
 
 };

@@ -34,8 +34,8 @@
     <modal-component v-if="showModal">
       <h3 slot="header">Delete "{{selectedSection.SectionName}}"</h3>
       <div slot="footer">
-        <button class="modal-default-button btn" @click="deleteSection">OK</button>
         <button class="modal-default-button btn btn-success" @click="showModal = false">Cancel</button>
+        <button class="modal-default-button btn" @click="deleteSection">OK</button>
       </div>
     </modal-component>
   </div>
