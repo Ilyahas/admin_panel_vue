@@ -4,7 +4,7 @@
     <div class="row">
 
       <!-- Edit Section Cover image and Title -->
-      <div class="col-lg-4 col-sm-12">
+      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
         <div class="card form">
           <div class="header">
             <h4 class="title">Edit Photo Section</h4>
@@ -39,7 +39,7 @@
       </div>
 
       <!-- Add new photos to section and show existing -->
-      <div class="col-lg-8 col-sm-12">
+      <div class="col-xl-9 col-lg-8 col-md-6 col-sm-12">
         <div class="card form">
           <div class="header">
             <h4 class="title">Add Photos</h4>
@@ -48,8 +48,8 @@
 
             <div class="row">
 
-              <div class="col-lg-4 col-sm-4">
-                <div class="photoFrame">
+              <div class="col-lg-4 col-md-6 col-sm-4">
+                <div class="photoFrame" ref="photoFrameInput">
                   <fg-input type="text"
                             label="Photo Name"
                             placeholder="Enter name of the photo"
@@ -78,11 +78,12 @@
               </div>
 
               <!-- Photos in Section -->
-              <div class="col-lg-4 col-sm-4" v-for="photo in allPhotos" >
-                <div class="photoFrame">
+              <div class="col-lg-4 col-md-6 col-sm-4" v-for="photo in allPhotos" >
+                <div class="photoFrame" ref="photoFrameShow" v-bind:style="photoFrameStyle">
                   <span class="photoTitle">{{photo.PhotoName}}</span>
-                  <div>
-                    <img v-bind:src="pathToPhotos + photo.PhotoImgName" width="120">
+                  <button class="deletePhotoBtn as-link" @click="askConfirmation(photo)"><i class="ti-close"></i></button>
+                  <div class="photoContainer">
+                    <img v-bind:src="pathToPhotos + photo.PhotoImgName">
                   </div>
                 </div>
               </div>
@@ -97,10 +98,19 @@
     <div class="text-center">
       <button class="btn btn-success btn-form-submit btn-wd" @click="saveSection">Save Section</button>
     </div>
+    <modal-component v-if="showModal">
+      <h3 slot="header">Delete the Photo?</h3>
+      <div slot="footer">
+        <button class="modal-default-button btn btn-success" @click="showModal = false">Cancel</button>
+        <button class="modal-default-button btn" @click="deletePhoto">OK</button>
+      </div>
+    </modal-component>
   </div>
 </template>
 <script>
+  import ModalComponent from './modalComponent.vue'
   import PictureInput from 'vue-picture-input'
+  import Vue from 'vue'
 
   export default {
     data () {
@@ -113,11 +123,15 @@
         newPhotoName: '',
         newPhoto: '',
         allPhotos: [],
+        selectedPhoto: {},
         pathToPhotos: this.$config.pathToPhotos,
-        currentId: 0
+        photoFrameStyle: {},
+        currentId: 0,
+        showModal: false
       }
     },
     components: {
+      ModalComponent,
       PictureInput
     },
     methods: {
@@ -153,6 +167,7 @@
             this.$http.post(this.$config.serverHost + '/api/addPhotoData', photoData).then((res) => {
               if (res.status === 200) {
                 // successfull noptification
+                this.$route.push('/photos/edit-section')
               }
             })
           }
@@ -196,6 +211,24 @@
             this.$router.push('/photos')
           }
         })
+      },
+      askConfirmation (photo) {
+        this.selectedPhoto = photo
+        this.showModal = true
+      },
+      deletePhoto () {
+        this.$http.post(this.$config.serverHost + '/api/deletePhoto', {photoId: this.selectedPhoto.idphotos}).then((res) => {
+          if (res.status === 200) {
+            this.allPhotos.splice(this.allPhotos.indexOf(this.selectedPhoto), 1)
+          }
+        })
+        this.showModal = false
+      },
+      sameHeight () {
+        let FIX_NUMBER_PX = 2
+        for (let i = 0; i < this.$refs.photoFrameShow.length; ++i) {
+          Vue.set(this.photoFrameStyle, 'height', this.$refs.photoFrameInput.clientHeight + FIX_NUMBER_PX + 'px')
+        }
       }
     },
     created () {
@@ -219,7 +252,16 @@
     border-radius: 5px;
     overflow: hidden;
     padding: 10px;
-    height: 260px;
     margin-bottom: 15px;
+
+    & img {
+      width: 100%;
+    }
+    & .deletePhotoBtn {
+      cursor: pointer;
+      display: inline-block;
+      float: right;
+    }
+
   }
 </style>

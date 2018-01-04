@@ -65,4 +65,8 @@ module.exports = function(app, config) {
         getData(format(queries.getPhotosInSection, {sectionId: req.body.sectionId}), req, res);
     });
 
+    app.post('/deletePhoto', (req, res) => {
+        postData(format(queries.deletePhotoFromSection, {photoId: req.body.photoId}), req, res);
+    });
+
 };

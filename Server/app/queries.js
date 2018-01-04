@@ -5,5 +5,6 @@ module.exports = {
     'updatePhotoSection': 'UPDATE admin_panel.photosections SET SectionName="{sectionName}", CoverImgName="{imgName}" WHERE idPhotoSections = {sectionId}',
     'deleteSection': 'DELETE FROM admin_panel.photosections WHERE idPhotoSections = {sectionId}',
     'addNewPhoto': 'INSERT INTO admin_panel.photos (PhotoName, PhotoImgName, idPhotoSections) VALUE ("{photoName}", "{imgName}", "{sectionId}")',
-    'getPhotosInSection': 'SELECT * FROM admin_panel.photos WHERE idPhotoSections = {sectionId}'
+    'getPhotosInSection': 'SELECT * FROM admin_panel.photos WHERE idPhotoSections = {sectionId}',
+    'deletePhotoFromSection': 'DELETE FROM admin_panel.photos WHERE idphotos = {photoId}'
 };

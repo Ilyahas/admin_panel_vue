@@ -1,3 +1,6 @@
+$deleteColor: #761c19;
+$hoverDeleteColor: #ac2925;
+
 .btn-top {
   margin-top: 0;
   margin-bottom: 10px;
@@ -8,15 +11,14 @@
 }
 .as-link {
   background:none!important;
-  color:inherit;
   border:none;
   padding:0!important;
   font: inherit;
-  color: #761c19;
+  color: $deleteColor;
   cursor: pointer;
 
   &:hover {
-    color: #ac2925;
+    color: $hoverDeleteColor;
   }
 
 }
