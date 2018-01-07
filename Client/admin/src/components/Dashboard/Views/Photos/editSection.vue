@@ -11,28 +11,28 @@
           </div>
           <div class="content">
 
-              <fg-input type="text"
-                        label="Section Name"
-                        placeholder="Enter section name"
-                        v-model="sectionName">
-              </fg-input>
-              <label>Section photo cover</label>
-              <picture-input
-                ref="sectionCoverImgInput"
-                v-bind:prefill="sectionCoverImgPath"
-                :crop="false"
-                @change="onChangeCoverImg"
-                width="640"
-                height="480"
-                margin="16"
-                accept="image/jpeg,image/png"
-                size="10"
-                buttonClass="btn"
-                :customStrings="{
+            <fg-input type="text"
+                      label="Section Name"
+                      placeholder="Enter section name"
+                      v-model="sectionName">
+            </fg-input>
+            <label>Section photo cover</label>
+            <picture-input
+              ref="sectionCoverImgInput"
+              v-bind:prefill="sectionImgPath"
+              :crop="false"
+              @change="onChangeCoverImg"
+              width="640"
+              height="480"
+              margin="16"
+              accept="image/jpeg,image/png"
+              size="10"
+              buttonClass="btn"
+              :customStrings="{
                   upload: '<h1>Bummer!</h1>',
                   drag: 'Drag a 😺 GIF or GTFO'
                 }">
-              </picture-input>
+            </picture-input>
 
           </div>
         </div>
@@ -72,16 +72,18 @@
                     }">
                   </picture-input>
                   <div class="text-center">
-                    <button class="btn btn-success btn-form-submit" @click="saveNewPhoto"><i class="ti-plus"></i></button>
+                    <button class="btn btn-success btn-form-submit" @click="saveNewPhoto"><i class="ti-plus"></i>
+                    </button>
                   </div>
                 </div>
               </div>
 
               <!-- Photos in Section -->
-              <div class="col-lg-4 col-md-6 col-sm-4" v-for="photo in allPhotos" >
-                <div class="photoFrame" ref="photoFrameShow" v-bind:style="photoFrameStyle">
+              <div class="col-lg-4 col-md-6 col-sm-4" v-for="photo in allPhotos">
+                <div class="photoFrame" ref="photoFrameShow">
                   <span class="photoTitle">{{photo.PhotoName}}</span>
-                  <button class="deletePhotoBtn as-link" @click="askConfirmation(photo)"><i class="ti-close"></i></button>
+                  <button class="deletePhotoBtn as-link" @click="askConfirmation(photo)"><i class="ti-close"></i>
+                  </button>
                   <div class="photoContainer">
                     <img v-bind:src="pathToPhotos + photo.PhotoImgName">
                   </div>
@@ -110,22 +112,23 @@
 <script>
   import ModalComponent from './modalComponent.vue'
   import PictureInput from 'vue-picture-input'
-  import Vue from 'vue'
 
   export default {
     data () {
       return {
         changedCoverSection: false,
+        sectionImg: {},
         sectionName: '',
-        sectionCoverImgPath: this.$config.defaultImg,
-        imgFile: '',
-        newPhotoPath: '',
+        sectionImgPath: this.$config.defaultImg,
+
+        newPhotoPath: this.$config.defaultImg,
         newPhotoName: '',
-        newPhoto: '',
+        newPhoto: {},
+
         allPhotos: [],
         selectedPhoto: {},
         pathToPhotos: this.$config.pathToPhotos,
-        photoFrameStyle: {},
+
         currentId: 0,
         showModal: false
       }
@@ -137,7 +140,7 @@
     methods: {
       saveSection () {
         if (this.changedCoverSection) {
-          this.$http.post(this.$config.serverHost + '/api/uploadSectionCover', this.imgFile).then((res) => {
+          this.$http.post(this.$config.serverHost + '/api/uploadSectionCover', this.sectionImg).then((res) => {
             if (res.status === 200) {
               this.saveSectionData()
             }
@@ -145,7 +148,7 @@
         } else {
           let data = new FormData()
           data.append('file', this.$refs.sectionCoverImgInput.file)
-          this.imgFile = data
+          this.sectionImg = data
           this.saveSectionData()
         }
       },
@@ -173,12 +176,13 @@
           }
         })
       },
+
       onChangeCoverImg () {
         if (this.$refs.sectionCoverImgInput.image) {
           this.changedCoverSection = true
           let data = new FormData()
           data.append('file', this.$refs.sectionCoverImgInput.file)
-          this.imgFile = data
+          this.sectionImg = data
         } else {
           console.log('FileReader API not supported: use the <form>, Luke!')
         }
@@ -192,9 +196,7 @@
           console.log('FileReader API not supported: use the <form>, Luke!')
         }
       },
-      back () {
-        this.$router.push('/photos')
-      },
+
       saveSectionData () {
         let sectoinData = {
           sectionName: this.sectionName,
@@ -202,7 +204,7 @@
           sectionId: this.currentId
         }
         // get name of the file
-        for (let file of this.imgFile) {
+        for (let file of this.sectionImg) {
           sectoinData.imgName = file[1].name
           break
         }
@@ -224,21 +226,26 @@
         })
         this.showModal = false
       },
-      sameHeight () {
-        let FIX_NUMBER_PX = 2
-        for (let i = 0; i < this.$refs.photoFrameShow.length; ++i) {
-          Vue.set(this.photoFrameStyle, 'height', this.$refs.photoFrameInput.clientHeight + FIX_NUMBER_PX + 'px')
-        }
+      back () {
+        this.$router.push('/photos')
       }
     },
     created () {
       this.currentId = this.$route.query.id
       this.$http.post(this.$config.serverHost + '/api/getSectionById', {sectionId: this.currentId}).then((res) => {
-        this.sectionName = res.body[0].SectionName
-        this.sectionCoverImgPath = this.$config.pathToCovers + res.body[0].CoverImgName
+        let isSectionExist = res.body.length
+        if (isSectionExist) {
+          this.sectionName = res.body[0].SectionName
+          this.sectionImgPath = this.$config.pathToCovers + res.body[0].CoverImgName
+        } else {
+          this.$router.push('/photos')
+        }
       })
       this.$http.post(this.$config.serverHost + '/api/getPhotosBySectionId', {sectionId: this.currentId}).then((res) => {
-        this.allPhotos = res.body
+        let isPhotosExist = res.body.length
+        if (isPhotosExist) {
+          this.allPhotos = res.body
+        }
       })
     }
   }
@@ -247,7 +254,8 @@
   .form {
     width: 100%;
   }
-  .photoFrame{
+
+  .photoFrame {
     border: 1px solid;
     border-radius: 5px;
     overflow: hidden;
