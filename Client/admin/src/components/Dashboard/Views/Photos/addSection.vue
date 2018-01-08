@@ -9,7 +9,6 @@
             <h4 class="title">Add Photo Section</h4>
           </div>
           <div class="content">
-            <form>
               <fg-input type="text"
                         label="Section Name"
                         placeholder="Enter category name"
@@ -33,7 +32,6 @@
               <div class="text-center">
                 <button class="btn btn-success btn-form-submit btn-wd" @click="saveSection">Save</button>
               </div>
-            </form>
           </div>
         </div>
       </div>
@@ -58,6 +56,10 @@
     },
     methods: {
       saveSection () {
+        if (this.sectionName === '') {
+          // notification about empty name's field
+          return
+        }
         this.$http.post(this.$config.serverHost + '/api/uploadSectionCover', this.imgFile).then((res) => {
           if (res.status === 200) {
             let sectionData = {
@@ -86,7 +88,7 @@
         }
       },
       back () {
-        this.$router.push('/photos')
+        this.$router.go(-1)
       }
     }
   }

@@ -17,7 +17,7 @@
             <div class="row row-edit">
 
               <div class="col-lg-6 col-sm-6 text-center">
-                <router-link :to="{ path: 'photos/edit-section', query: { id: section.idPhotoSections }}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
+                <router-link :to="{ path: '/photos/edit-section', query: {id: section.idPhotoSections}}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
               </div>
 
               <div class="col-lg-6 col-sm-6 text-center">

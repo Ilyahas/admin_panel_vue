@@ -58,7 +58,6 @@
                   <picture-input
                     ref="photoInput"
                     @change="onAddNewPhoto"
-                    v-bind:prefill="newPhotoPath"
                     :crop="false"
                     width="640"
                     height="480"
@@ -112,6 +111,7 @@
 <script>
   import ModalComponent from './modalComponent.vue'
   import PictureInput from 'vue-picture-input'
+  import Vue from 'vue'
 
   export default {
     data () {
@@ -124,13 +124,15 @@
         newPhotoPath: this.$config.defaultImg,
         newPhotoName: '',
         newPhoto: {},
+        newPhotoModel: {},
 
         allPhotos: [],
         selectedPhoto: {},
         pathToPhotos: this.$config.pathToPhotos,
 
         currentId: 0,
-        showModal: false
+        showModal: false,
+        emptyPhotoInput: {}
       }
     },
     components: {
@@ -139,6 +141,10 @@
     },
     methods: {
       saveSection () {
+        if (this.sectionName === '') {
+          // notification
+          return
+        }
         if (this.changedCoverSection) {
           this.$http.post(this.$config.serverHost + '/api/uploadSectionCover', this.sectionImg).then((res) => {
             if (res.status === 200) {
@@ -152,51 +158,6 @@
           this.saveSectionData()
         }
       },
-      saveNewPhoto () {
-        // upload photo
-        this.$http.post(this.$config.serverHost + '/api/uploadPhoto', this.newPhoto).then((res) => {
-          if (res.status === 200) {
-            let photoData = {
-              photoName: this.newPhotoName,
-              imgName: '',
-              sectionId: this.currentId
-            }
-            // get name of the file
-            for (let file of this.newPhoto) {
-              photoData.imgName = file[1].name
-              break
-            }
-            // save photo data to DB
-            this.$http.post(this.$config.serverHost + '/api/addPhotoData', photoData).then((res) => {
-              if (res.status === 200) {
-                // successfull noptification
-                this.$route.push('/photos/edit-section')
-              }
-            })
-          }
-        })
-      },
-
-      onChangeCoverImg () {
-        if (this.$refs.sectionCoverImgInput.image) {
-          this.changedCoverSection = true
-          let data = new FormData()
-          data.append('file', this.$refs.sectionCoverImgInput.file)
-          this.sectionImg = data
-        } else {
-          console.log('FileReader API not supported: use the <form>, Luke!')
-        }
-      },
-      onAddNewPhoto () {
-        if (this.$refs.photoInput.image) {
-          let data = new FormData()
-          data.append('file', this.$refs.photoInput.file)
-          this.newPhoto = data
-        } else {
-          console.log('FileReader API not supported: use the <form>, Luke!')
-        }
-      },
-
       saveSectionData () {
         let sectoinData = {
           sectionName: this.sectionName,
@@ -214,6 +175,69 @@
           }
         })
       },
+      onChangeCoverImg () {
+        if (this.$refs.sectionCoverImgInput.image) {
+          this.changedCoverSection = true
+          let data = new FormData()
+          data.append('file', this.$refs.sectionCoverImgInput.file)
+          this.sectionImg = data
+        } else {
+          console.log('FileReader API not supported: use the <form>, Luke!')
+        }
+      },
+
+      saveNewPhoto () {
+        if (this.$refs.photoInput.image === undefined) {
+          // notification
+          return
+        }
+        // upload photo
+        this.$http.post(this.$config.serverHost + '/api/uploadPhoto', this.newPhoto).then((res) => {
+          if (res.status === 200) {
+            let photoData = {
+              photoName: this.newPhotoName,
+              imgName: '',
+              sectionId: this.currentId
+            }
+            // get name of the file
+            for (let file of this.newPhoto) {
+              photoData.imgName = file[1].name
+              break
+            }
+            // save photo data to DB
+            this.$http.post(this.$config.serverHost + '/api/addPhotoData', photoData).then((res) => {
+              if (res.status === 200) {
+                // successfull notification
+                this.$router.go(this.$router.currentRoute)
+              }
+            }).catch((error) => {
+              // error notification
+              console.log(error)
+            })
+          }
+        }).catch((error) => {
+          // error notification
+          console.log(error)
+        })
+      },
+      onAddNewPhoto () {
+        if (this.$refs.photoInput.image) {
+          let data = new FormData()
+          data.append('file', this.$refs.photoInput.file)
+          this.newPhoto = data
+        } else {
+          console.log('FileReader API not supported: use the <form>, Luke!')
+        }
+      },
+      getPhotos () {
+        this.$http.post(this.$config.serverHost + '/api/getPhotosBySectionId', {sectionId: this.currentId}).then((res) => {
+          let isPhotosExist = res.body.length
+          if (isPhotosExist) {
+            this.allPhotos = res.body
+          }
+        })
+      },
+
       askConfirmation (photo) {
         this.selectedPhoto = photo
         this.showModal = true
@@ -226,8 +250,9 @@
         })
         this.showModal = false
       },
+
       back () {
-        this.$router.push('/photos')
+        this.$router.go(-1)
       }
     },
     created () {
@@ -241,12 +266,8 @@
           this.$router.push('/photos')
         }
       })
-      this.$http.post(this.$config.serverHost + '/api/getPhotosBySectionId', {sectionId: this.currentId}).then((res) => {
-        let isPhotosExist = res.body.length
-        if (isPhotosExist) {
-          this.allPhotos = res.body
-        }
-      })
+      this.getPhotos()
+      setTimeout(() => { this.emptyPhotoInput = Vue.util.extend({}, this.$refs.photoInput) }, 1000)
     }
   }
 </script>

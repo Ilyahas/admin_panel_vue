@@ -1,4 +1,4 @@
-module.exports = function(app, config) {
+module.exports = function (app, config) {
     const mysql = require('mysql');
     const connection = mysql.createConnection({
         host: config.database.host,
@@ -10,8 +10,8 @@ module.exports = function(app, config) {
     const upload = require('./upload');
 
     const getData = (stringQuery, req, res) => {
-        connection.query(stringQuery, (err, row, fields) =>{
-            if(err){
+        connection.query(stringQuery, (err, row, fields) => {
+            if (err) {
                 console.log(err);
                 res.status(400);
             }
@@ -21,8 +21,8 @@ module.exports = function(app, config) {
         });
     };
     const postData = (stringQuery, req, res) => {
-        connection.query(stringQuery,(err, row, fields) => {
-            if(err){
+        connection.query(stringQuery, (err, row, fields) => {
+            if (err) {
                 console.log(err);
                 res.status(400).end("Section is not deleted");
             }
@@ -35,7 +35,14 @@ module.exports = function(app, config) {
     app.post('/uploadSectionCover', upload.uploadSectionCover);
 
     app.post('/addSectionData', (req, res) => {
-        postData(format(queries.addPhotoSection, {sectionName: req.body.sectionName, imgName: req.body.imgName}), req, res);
+        if (req.body.sectionName !== '') {
+            postData(format(queries.addPhotoSection, {
+                sectionName: req.body.sectionName,
+                imgName: req.body.imgName
+            }), req, res);
+        } else {
+            res.status(400).end("Section Name is not define");
+        }
     });
 
     app.get('/getSections', (req, res) => {
@@ -47,7 +54,11 @@ module.exports = function(app, config) {
     });
 
     app.post('/updateSectionData', (req, res) => {
-        postData(format(queries.updatePhotoSection, {sectionName: req.body.sectionName, imgName: req.body.imgName, sectionId: req.body.sectionId}), req, res);
+        postData(format(queries.updatePhotoSection, {
+            sectionName: req.body.sectionName,
+            imgName: req.body.imgName,
+            sectionId: req.body.sectionId
+        }), req, res);
     });
 
     app.post('/deleteSection', (req, res) => {
@@ -58,7 +69,11 @@ module.exports = function(app, config) {
     app.post('/uploadPhoto', upload.uploadPhoto);
 
     app.post('/addPhotoData', (req, res) => {
-        postData(format(queries.addNewPhoto, {photoName: req.body.photoName, imgName: req.body.imgName, sectionId: req.body.sectionId}), req, res);
+        postData(format(queries.addNewPhoto, {
+            photoName: req.body.photoName,
+            imgName: req.body.imgName,
+            sectionId: req.body.sectionId
+        }), req, res);
     });
 
     app.post('/getPhotosBySectionId', (req, res) => {
