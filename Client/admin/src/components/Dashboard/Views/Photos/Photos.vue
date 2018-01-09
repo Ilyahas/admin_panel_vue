@@ -63,6 +63,9 @@
             this.notify('Photo Section was deleted', 'ti-close', 'success')
             this.sections.splice(this.sections.indexOf(this.selectedSection), 1)
           }
+        }).catch((error) => {
+          this.notify('Cannot delete section', 'ti-close', 'warning')
+          console.log(error)
         })
         this.showModal = false
       },
@@ -83,6 +86,9 @@
     created () {
       this.$http.get(this.$config.serverHost + '/api/getSections').then((res) => {
         this.sections = res.body
+      }).catch((error) => {
+        this.notify('Cannot get sections', 'ti-gallery', 'warning')
+        console.log(error)
       })
     }
   }

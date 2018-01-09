@@ -174,6 +174,9 @@
             this.notify('Photo Section was edit', 'ti-pencil', 'success')
             this.$router.push('/photos')
           }
+        }).catch((error) => {
+          this.notify('Cannot update section', 'ti-save', 'warning')
+          console.log(error)
         })
       },
       onChangeCoverImg () {
@@ -235,6 +238,9 @@
           if (isPhotosExist) {
             this.allPhotos = res.body
           }
+        }).catch((error) => {
+          this.notify('Cannot get images', 'ti-image', 'warning')
+          console.log(error)
         })
       },
 
@@ -247,6 +253,9 @@
           if (res.status === 200) {
             this.allPhotos.splice(this.allPhotos.indexOf(this.selectedPhoto), 1)
           }
+        }).catch((error) => {
+          this.notify('Cannot delete image', 'ti-close', 'warning')
+          console.log(error)
         })
         this.showModal = false
       },
@@ -276,6 +285,9 @@
           this.notify('This Photo Section does not exist', 'ti-gallery', 'danger')
           this.$router.push('/photos')
         }
+      }).catch((error) => {
+        this.notify('Cannot get section', 'ti-gallery', 'warning')
+        console.log(error)
       })
       this.getPhotos()
       setTimeout(() => { this.emptyPhotoInput = Vue.util.extend({}, this.$refs.photoInput) }, 1000)

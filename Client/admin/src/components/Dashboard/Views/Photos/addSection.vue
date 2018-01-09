@@ -79,8 +79,14 @@
                 this.notify('Section was successfully added', 'ti-check', 'success')
                 this.$router.push('/photos')
               }
+            }).catch((error) => {
+              this.notify('Cannot add section', 'ti-plus', 'warning')
+              console.log(error)
             })
           }
+        }).catch((error) => {
+          this.notify('Cannot add section', 'ti-plus', 'warning')
+          console.log(error)
         })
       },
       onChange () {
