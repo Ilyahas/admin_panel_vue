@@ -142,7 +142,7 @@
     methods: {
       saveSection () {
         if (this.sectionName === '') {
-          // notification
+          this.notify('Section Name cannot be empty', 'ti-info', 'warning')
           return
         }
         if (this.changedCoverSection) {
@@ -171,6 +171,7 @@
         }
         this.$http.post(this.$config.serverHost + '/api/updateSectionData', sectoinData).then((res) => {
           if (res.status === 200) {
+            this.notify('Photo Section was edit', 'ti-pencil', 'success')
             this.$router.push('/photos')
           }
         })
@@ -188,7 +189,7 @@
 
       saveNewPhoto () {
         if (this.$refs.photoInput.image === undefined) {
-          // notification
+          this.notify('Section Picture cannot be empty', 'ti-info', 'warning')
           return
         }
         // upload photo
@@ -207,16 +208,15 @@
             // save photo data to DB
             this.$http.post(this.$config.serverHost + '/api/addPhotoData', photoData).then((res) => {
               if (res.status === 200) {
-                // successfull notification
                 this.$router.go(this.$router.currentRoute)
               }
             }).catch((error) => {
-              // error notification
+              this.notify('Cannot save image', 'ti-save', 'warning')
               console.log(error)
             })
           }
         }).catch((error) => {
-          // error notification
+          this.notify('Cannot save image', 'ti-save', 'warning')
           console.log(error)
         })
       },
@@ -253,6 +253,16 @@
 
       back () {
         this.$router.go(-1)
+      },
+      notify (msg, icon, type) {
+        this.$notifications.notify(
+          {
+            message: msg,
+            icon: icon,
+            horizontalAlign: 'right',
+            verticalAlign: 'top',
+            type: type
+          })
       }
     },
     created () {
@@ -263,6 +273,7 @@
           this.sectionName = res.body[0].SectionName
           this.sectionImgPath = this.$config.pathToCovers + res.body[0].CoverImgName
         } else {
+          this.notify('This Photo Section does not exist', 'ti-gallery', 'danger')
           this.$router.push('/photos')
         }
       })

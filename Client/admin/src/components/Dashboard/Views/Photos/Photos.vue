@@ -60,10 +60,21 @@
       deleteSection () {
         this.$http.post(this.$config.serverHost + '/api/deleteSection', {sectionId: this.selectedSection.idPhotoSections}).then((res) => {
           if (res.status === 200) {
+            this.notify('Photo Section was deleted', 'ti-close', 'success')
             this.sections.splice(this.sections.indexOf(this.selectedSection), 1)
           }
         })
         this.showModal = false
+      },
+      notify (msg, icon, type) {
+        this.$notifications.notify(
+          {
+            message: msg,
+            icon: icon,
+            horizontalAlign: 'right',
+            verticalAlign: 'top',
+            type: type
+          })
       }
     },
     components: {

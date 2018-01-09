@@ -57,7 +57,11 @@
     methods: {
       saveSection () {
         if (this.sectionName === '') {
-          // notification about empty name's field
+          this.notify('Section Name cannot be empty', 'ti-info', 'warning')
+          return
+        }
+        if (this.$refs.pictureInput.image === undefined) {
+          this.notify('Section Picture cannot be empty', 'ti-info', 'warning')
           return
         }
         this.$http.post(this.$config.serverHost + '/api/uploadSectionCover', this.imgFile).then((res) => {
@@ -72,6 +76,7 @@
             }
             this.$http.post(this.$config.serverHost + '/api/addSectionData', sectionData).then((res) => {
               if (res.status === 200) {
+                this.notify('Section was successfully added', 'ti-check', 'success')
                 this.$router.push('/photos')
               }
             })
@@ -89,6 +94,16 @@
       },
       back () {
         this.$router.go(-1)
+      },
+      notify (msg, icon, type) {
+        this.$notifications.notify(
+          {
+            message: msg,
+            icon: icon,
+            horizontalAlign: 'right',
+            verticalAlign: 'top',
+            type: type
+          })
       }
     }
   }
