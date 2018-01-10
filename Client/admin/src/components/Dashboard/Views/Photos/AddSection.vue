@@ -64,6 +64,7 @@
           this.notify('Section Picture cannot be empty', 'ti-info', 'warning')
           return
         }
+        this.onChange()
         this.$http.post(this.$config.serverHost + '/api/uploadSectionCover', this.imgFile).then((res) => {
           if (res.status === 200) {
             let sectionData = {

@@ -15,11 +15,11 @@ app.use(cookieParser());
 
 app.use(config.apiLink, api);
 
-app.use(express.static(path.join(__dirname, '/../Client/admin/dist')));
-app.use(express.static(path.join(__dirname, '/../Client/user/dist')));
+app.use(express.static(path.join(__dirname, "/../Client/admin/dist")));
+app.use(express.static(path.join(__dirname, "/../Client/user/dist")));
 
 
 require('./app/api') (api, config);
 require('./app/routes') (app, path);
 
-app.listen(config.PORT, () => console.log('App listening on port ' + config.PORT + '!'));
+app.listen(config.PORT, () => console.log("App listening on port " + config.PORT + "!"));

@@ -109,7 +109,7 @@
   </div>
 </template>
 <script>
-  import ModalComponent from './modalComponent.vue'
+  import ModalComponent from './ModalComponent.vue'
   import PictureInput from 'vue-picture-input'
   import Vue from 'vue'
 

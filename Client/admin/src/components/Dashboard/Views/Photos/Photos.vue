@@ -41,7 +41,7 @@
   </div>
 </template>
 <script>
-  import ModalComponent from './modalComponent.vue'
+  import ModalComponent from './ModalComponent.vue'
 
   export default {
     data () {

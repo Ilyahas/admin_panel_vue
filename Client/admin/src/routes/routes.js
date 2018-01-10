@@ -12,8 +12,10 @@ import Typography from 'src/components/Dashboard/Views/Typography.vue'
 import TableList from 'src/components/Dashboard/Views/TableList.vue'
 
 import Photos from 'src/components/Dashboard/Views/Photos/Photos.vue'
-import addSection from 'src/components/Dashboard/Views/Photos/addSection.vue'
-import editSection from 'src/components/Dashboard/Views/Photos/editSection.vue'
+import AddSection from 'src/components/Dashboard/Views/Photos/AddSection.vue'
+import EditSection from 'src/components/Dashboard/Views/Photos/EditSection.vue'
+import News from 'src/components/Dashboard/Views/News/News.vue'
+import AddNews from 'src/components/Dashboard/Views/News/AddNews.vue'
 
 const routes = [
   {
@@ -39,12 +41,22 @@ const routes = [
       {
         path: 'photos/add-section',
         name: 'Add Section',
-        component: addSection
+        component: AddSection
       },
       {
         path: 'photos/edit-section',
         name: 'Edit Section',
-        component: editSection
+        component: EditSection
+      },
+      {
+        path: 'news',
+        name: 'News',
+        component: News
+      },
+      {
+        path: 'news/add-news',
+        name: 'Add News',
+        component: AddNews
       },
       {
         path: 'notifications',

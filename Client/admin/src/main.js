@@ -8,6 +8,7 @@ import GlobalComponents from './gloablComponents'
 import Notifications from './components/UIComponents/NotificationPlugin'
 import SideBar from './components/UIComponents/SidebarPlugin'
 import App from './App'
+import VueEditor from 'vue2-editor'
 
 import Config from './config'
 
@@ -27,6 +28,7 @@ Vue.use(GlobalComponents)
 Vue.use(vClickOutside)
 Vue.use(Notifications)
 Vue.use(SideBar)
+Vue.use(VueEditor)
 
 Vue.use(Config)
 

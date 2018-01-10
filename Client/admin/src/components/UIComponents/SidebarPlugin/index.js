@@ -19,6 +19,11 @@ const SidebarStore = {
       path: '/photos'
     },
     {
+      name: 'News',
+      icon: 'ti-comment-alt',
+      path: '/news'
+    },
+    {
       name: 'Table List',
       icon: 'ti-view-list-alt',
       path: '/table-list'
