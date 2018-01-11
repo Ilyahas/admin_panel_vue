@@ -104,7 +104,5 @@
   .content{
     overflow: hidden;
   }
-  .row-edit {
-    margin-top: -10px;
-  }
+
 </style>
