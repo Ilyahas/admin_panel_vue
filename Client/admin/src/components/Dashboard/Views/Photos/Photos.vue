@@ -11,7 +11,7 @@
             <h4 class="title">{{section.SectionName}}</h4>
           </div>
 
-          <div class="content">
+          <div class="content text-center">
             <img class="border-white section-card" v-bind:src="pathToCovers + section.CoverImgName">
             <hr>
             <div class="row row-edit">
@@ -41,13 +41,13 @@
   </div>
 </template>
 <script>
-  import ModalComponent from './ModalComponent.vue'
+  import ModalComponent from '../ModalComponent.vue'
 
   export default {
     data () {
       return {
-        pathToCovers: this.$config.pathToCovers,
-        sections: {},
+        pathToCovers: this.$config.pathToSectionCovers,
+        sections: [],
         selectedSection: {},
         showModal: false
       }
@@ -103,13 +103,6 @@
   }
   .content{
     overflow: hidden;
-  }
-  .text-center{
-    text-align: center;
-
-    & span{
-      font-size: 17px;
-    }
   }
   .row-edit {
     margin-top: -10px;

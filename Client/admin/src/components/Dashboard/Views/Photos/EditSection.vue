@@ -109,7 +109,7 @@
   </div>
 </template>
 <script>
-  import ModalComponent from './ModalComponent.vue'
+  import ModalComponent from '../ModalComponent.vue'
   import PictureInput from 'vue-picture-input'
   import Vue from 'vue'
 
@@ -214,12 +214,12 @@
                 this.$router.go(this.$router.currentRoute)
               }
             }).catch((error) => {
-              this.notify('Cannot save image', 'ti-save', 'warning')
+              this.notify('Cannot save image data', 'ti-save', 'warning')
               console.log(error)
             })
           }
         }).catch((error) => {
-          this.notify('Cannot save image', 'ti-save', 'warning')
+          this.notify('Cannot upload image', 'ti-save', 'warning')
           console.log(error)
         })
       },
@@ -249,7 +249,7 @@
         this.showModal = true
       },
       deletePhoto () {
-        this.$http.post(this.$config.serverHost + '/api/deletePhoto', {photoId: this.selectedPhoto.idphotos}).then((res) => {
+        this.$http.post(this.$config.serverHost + '/api/deletePhoto', {photoId: this.selectedPhoto.idPhotos}).then((res) => {
           if (res.status === 200) {
             this.allPhotos.splice(this.allPhotos.indexOf(this.selectedPhoto), 1)
           }
@@ -280,7 +280,7 @@
         let isSectionExist = res.body.length
         if (isSectionExist) {
           this.sectionName = res.body[0].SectionName
-          this.sectionImgPath = this.$config.pathToCovers + res.body[0].CoverImgName
+          this.sectionImgPath = this.$config.pathToSectionCovers + res.body[0].CoverImgName
         } else {
           this.notify('This Photo Section does not exist', 'ti-gallery', 'danger')
           this.$router.push('/photos')

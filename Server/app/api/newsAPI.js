@@ -3,7 +3,9 @@ module.exports = function (app, getData, postData) {
     const queries = require('./newsQueries');
     const upload = require('./upload');
 
-    app.post('/uploadNewsCover', upload.uploadNewsCover);
+    app.post('/uploadNewsCover', (req, res) => {
+        upload.uploadImgs(req, res, "newsCovers")
+    });
 
     app.post('/addNewsData', (req, res) => {
         if (req.body.newsTitle !== '') {
@@ -18,7 +20,7 @@ module.exports = function (app, getData, postData) {
     });
 
     app.get('/getNews', (req, res) => {
-
+        getData(queries.getNewsList, req, res);
     });
 
     app.post('/getNewsById', (req, res) => {

@@ -33,35 +33,9 @@ const uploadFile = (call, req, res) => {
     });
 };
 
-exports.uploadSectionCover = async (req, res) => {
-    let uploadDist = createUploadFunction(createUploadStorage("../Client/admin/dist/static/img/photoSectionCovers"));
-    let uploadStatic = createUploadFunction(createUploadStorage("../Client/admin/static/img/photoSectionCovers"));
-
-    let [isUploadedDist, isUploadedStatic] = await Promise.all([uploadFile(uploadDist, req, res), uploadFile(uploadStatic, req, res)]);
-
-    if(isUploadedDist && isUploadedStatic) {
-        res.status(200).end("File is uploaded");
-    } else {
-        res.status(400).end("File is not uploaded");
-    }
-};
-
-exports.uploadPhoto = async (req, res) => {
-    let uploadDist = createUploadFunction(createUploadStorage("../Client/admin/dist/static/img/photos"));
-    let uploadStatic = createUploadFunction(createUploadStorage("../Client/admin/static/img/photos"));
-
-    let [isUploadedDist, isUploadedStatic] = await Promise.all([uploadFile(uploadDist, req, res), uploadFile(uploadStatic, req, res)]);
-
-    if(isUploadedDist && isUploadedStatic) {
-        res.status(200).end("File is uploaded");
-    } else {
-        res.status(400).end("File is not uploaded");
-    }
-};
-
-exports.uploadNewsCover = async (req, res) => {
-    let uploadDist = createUploadFunction(createUploadStorage("../Client/admin/dist/static/img/newsCovers"));
-    let uploadStatic = createUploadFunction(createUploadStorage("../Client/admin/static/img/newsCovers"));
+exports.uploadImgs = async (req, res, path) => {
+    let uploadDist = createUploadFunction(createUploadStorage("../Client/admin/dist/static/img/" + path));
+    let uploadStatic = createUploadFunction(createUploadStorage("../Client/admin/static/img/" + path));
 
     let [isUploadedDist, isUploadedStatic] = await Promise.all([uploadFile(uploadDist, req, res), uploadFile(uploadStatic, req, res)]);
 

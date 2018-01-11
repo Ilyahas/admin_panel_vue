@@ -22,3 +22,10 @@ $hoverDeleteColor: #ac2925;
   }
 
 }
+.text-center{
+  text-align: center;
+
+  & span{
+    font-size: 17px;
+  }
+}

@@ -1,7 +1,8 @@
 const configData = {
   defaultImg: 'static/img/default.png',
-  pathToCovers: 'static/img/photoSectionCovers/',
+  pathToSectionCovers: 'static/img/photoSectionCovers/',
   pathToPhotos: 'static/img/photos/',
+  pathToNewsCover: 'static/img/newsCovers/',
   serverHost: 'http://localhost:3000'
 }
 

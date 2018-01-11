@@ -5,7 +5,9 @@ module.exports = function (app, getData, postData) {
     const upload = require('./upload');
 
 
-    app.post('/uploadSectionCover', upload.uploadNewsCover);
+    app.post('/uploadSectionCover', (req, res) => {
+        upload.uploadImgs(req, res, "photoSectionCovers");
+    });
 
     app.post('/addSectionData', (req, res) => {
         if (req.body.sectionName !== '') {
@@ -39,7 +41,9 @@ module.exports = function (app, getData, postData) {
     });
 
 
-    app.post('/uploadPhoto', upload.uploadPhoto);
+    app.post('/uploadPhoto', (req, res) => {
+        upload.uploadImgs(req, res, "photos");
+    });
 
     app.post('/addPhotoData', (req, res) => {
         postData(format(queries.addNewPhoto, {
