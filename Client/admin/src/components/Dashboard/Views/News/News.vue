@@ -31,7 +31,13 @@
 
       </div>
     </div>
-
+    <modal-component v-if="showModal">
+      <h3 slot="header">Delete "{{selectedNews.Title}}"?</h3>
+      <div slot="footer">
+        <button class="modal-default-button btn btn-success" @click="showModal = false">Cancel</button>
+        <button class="modal-default-button btn" @click="deleteNews">OK</button>
+      </div>
+    </modal-component>
   </div>
 </template>
 <script>
@@ -41,12 +47,27 @@
     data () {
       return {
         pathToCovers: this.$config.pathToNewsCover,
-        newsList: []
+        newsList: [],
+        selectedNews: {},
+        showModal: false
       }
     },
-    method: {
+    methods: {
       askConfirmation (news) {
-
+        this.selectedNews = news
+        this.showModal = true
+      },
+      deleteNews () {
+        this.$http.post(this.$config.serverHost + '/api/deleteNews', {newsId: this.selectedNews.idnews}).then((res) => {
+          if (res.status === 200) {
+            this.notify('News was deleted', 'ti-close', 'success')
+            this.newsList.splice(this.newsList.indexOf(this.selectedNews), 1)
+          }
+        }).catch((error) => {
+          this.notify('Cannot delete news', 'ti-close', 'warning')
+          console.log(error)
+        })
+        this.showModal = false
       },
       notify (msg, icon, type) {
         this.$notifications.notify(

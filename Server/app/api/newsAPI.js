@@ -24,6 +24,10 @@ module.exports = function (app, getData, postData) {
     });
 
     app.post('/getNewsById', (req, res) => {
+        getData(format(queries.getNewsById, {newsId: req.body.newsId}), req, res);
+    });
 
+    app.post('/deleteNews', (req, res) => {
+        postData(format(queries.deleteNews, {newsId: req.body.newsId}), req, res);
     });
 };
