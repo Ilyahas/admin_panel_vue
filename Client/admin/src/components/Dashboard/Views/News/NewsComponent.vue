@@ -35,7 +35,7 @@
       </div>
       <div class="text-center">
         <button v-if="isNewNews" class="btn btn-success btn-form-submit btn-wd" @click="addNews">Save</button>
-        <button v-if="!isNewNews" class="btn btn-success btn-form-submit btn-wd" @click="saveNews">Save</button>
+        <button v-if="!isNewNews" class="btn btn-success btn-form-submit btn-wd" @click="saveNews">Update</button>
       </div>
     </div>
   </div>
@@ -96,6 +96,7 @@
         // get name of the file
         for (let file of this.image) {
           newsData.imgName = file[1].name
+          break
         }
         this.$http.post(this.$config.serverHost + '/api/addNewsData', newsData).then((res) => {
           if (res.status === 200) {
@@ -108,40 +109,43 @@
         })
       },
       saveNews () {
-        if (this.sectionName === '') {
-          this.notify('Section Name cannot be empty', 'ti-info', 'warning')
+        if (this.title === '') {
+          this.notify('Title cannot be empty', 'ti-info', 'warning')
           return
         }
         if (this.changedCoverNews) {
-          this.$http.post(this.$config.serverHost + '/api/uploadSectionCover', this.sectionImg).then((res) => {
+          this.$http.post(this.$config.serverHost + '/api/uploadNewsCover', this.image).then((res) => {
             if (res.status === 200) {
               this.saveNewsData()
             }
+          }).catch((error) => {
+            this.notify('Cannot upload picture', 'ti-save', 'warning')
+            console.log(error)
           })
         } else {
-          // QUESTION ABOUT THIS THREE LINES ???????????????????????????????
           let data = new FormData()
-          data.append('file', this.$refs.sectionCoverImgInput.file)
-          this.sectionImg = data
+          data.append('file', this.$refs.pictureInput.file)
+          this.image = data
 
           this.saveNewsData()
         }
       },
       saveNewsData () {
-        let sectoinData = {
-          sectionName: this.sectionName,
+        let newsData = {
+          text: this.content,
+          title: this.title,
           imgName: '',
-          sectionId: this.currentId
+          newsId: this.currentId
         }
         // get name of the file
-        for (let file of this.sectionImg) {
-          sectoinData.imgName = file[1].name
+        for (let file of this.image) {
+          newsData.imgName = file[1].name
           break
         }
-        this.$http.post(this.$config.serverHost + '/api/updateSectionData', sectoinData).then((res) => {
+        this.$http.post(this.$config.serverHost + '/api/updateNews', newsData).then((res) => {
           if (res.status === 200) {
-            this.notify('Photo Section was edit', 'ti-pencil', 'success')
-            this.$router.push('/photos')
+            this.notify('News was edit', 'ti-pencil', 'success')
+            this.$router.push('/news')
           }
         }).catch((error) => {
           this.notify('Cannot update section', 'ti-save', 'warning')
@@ -173,11 +177,13 @@
       if (this.currentId !== undefined) {
         this.isNewNews = false
       }
-      if (this.isNewNews) {
+      if (!this.isNewNews) {
         this.$http.post(this.$config.serverHost + '/api/getNewsById', {newsId: this.currentId}).then((res) => {
           let isNewsExist = res.body.length
           if (isNewsExist) {
+            // init variables
             this.title = res.body[0].Title
+            this.content = res.body[0].Text
             this.newsImgPath = this.$config.pathToNewsCover + res.body[0].CoverImgName
           } else {
             this.notify('This News does not exist', 'ti-gallery', 'danger')
@@ -185,7 +191,7 @@
           }
         }).catch((error) => {
           this.notify('Cannot get news', 'ti-gallery', 'warning')
-          console.log(error)
+          console.log('error: ', error)
         })
       }
     }

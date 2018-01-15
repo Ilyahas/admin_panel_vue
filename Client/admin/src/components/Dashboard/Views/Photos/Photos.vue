@@ -88,12 +88,7 @@
 </script>
 
 <style scoped lang="scss">
-  .btn-top{
-    margin-bottom: 10px;
-  }
-  .section-card {
-    height: 190px;
-  }
+
   .content{
     overflow: hidden;
   }

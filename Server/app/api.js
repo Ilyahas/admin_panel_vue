@@ -6,8 +6,6 @@ module.exports = function (app, config) {
         password: config.database.password
     });
 
-    const newsQueries = require('./api/photoQueries');
-
     const getData = (stringQuery, req, res) => {
         connection.query(stringQuery, (err, row, fields) => {
             if (err) {
@@ -23,10 +21,10 @@ module.exports = function (app, config) {
         connection.query(stringQuery, (err, row, fields) => {
             if (err) {
                 console.log(err);
-                res.status(400).end("Section is not deleted");
+                res.status(400).end("Successful POST");
             }
             else {
-                res.status(200).end("Section is deleted");
+                res.status(200).end("Fail POST");
             }
         });
     };

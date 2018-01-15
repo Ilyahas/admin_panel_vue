@@ -28,7 +28,7 @@
       </picture-input>
       <div class="text-center">
         <button v-if="isNewSection" class="btn btn-success btn-form-submit btn-wd" @click="addSection">Save</button>
-        <button v-if="!isNewSection" class="btn btn-success btn-form-submit btn-wd" @click="saveSection">Save</button>
+        <button v-if="!isNewSection" class="btn btn-success btn-form-submit btn-wd" @click="saveSection">Update</button>
       </div>
     </div>
   </div>

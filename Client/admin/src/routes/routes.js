@@ -16,6 +16,7 @@ import AddSection from 'src/components/Dashboard/Views/Photos/AddSection.vue'
 import EditSection from 'src/components/Dashboard/Views/Photos/EditSection.vue'
 import News from 'src/components/Dashboard/Views/News/News.vue'
 import AddNews from 'src/components/Dashboard/Views/News/AddNews.vue'
+import EditNews from 'src/components/Dashboard/Views/News/EditNews.vue'
 
 const routes = [
   {
@@ -57,6 +58,11 @@ const routes = [
         path: 'news/add-news',
         name: 'Add News',
         component: AddNews
+      },
+      {
+        path: 'news/edit-news',
+        name: 'Edit News',
+        component: EditNews
       },
       {
         path: 'notifications',

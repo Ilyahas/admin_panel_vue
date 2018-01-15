@@ -6,31 +6,27 @@
       <div class="col-lg-4 col-sm-6" v-for="news in newsList">
 
         <div class="card">
-
           <div class="header">
             <h4 class="title">{{news.Title}}</h4>
           </div>
-
           <div class="content text-center">
             <img class="border-white section-card" v-bind:src="pathToCovers + news.CoverImgName">
             <hr>
             <div class="row row-edit">
-
               <div class="col-lg-6 col-sm-6 text-center">
-                <router-link :to="{ path: '/photos/edit-section', query: {id: news.idnews}}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
+                <router-link :to="{ path: '/news/edit-news', query: {id: news.idnews}}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
               </div>
 
               <div class="col-lg-6 col-sm-6 text-center">
                 <button id="show-modal" @click="askConfirmation(news)" class="as-link"><i class="ti-close"></i> <span>Delete</span></button>
               </div>
             </div>
-
           </div>
-
         </div>
 
       </div>
     </div>
+
     <modal-component v-if="showModal">
       <h3 slot="header">Delete "{{selectedNews.Title}}"?</h3>
       <div slot="footer">
@@ -38,6 +34,7 @@
         <button class="modal-default-button btn" @click="deleteNews">OK</button>
       </div>
     </modal-component>
+
   </div>
 </template>
 <script>
@@ -60,11 +57,11 @@
       deleteNews () {
         this.$http.post(this.$config.serverHost + '/api/deleteNews', {newsId: this.selectedNews.idnews}).then((res) => {
           if (res.status === 200) {
-            this.notify('News was deleted', 'ti-close', 'success')
+            this.notify('News was deleted', 'ti-trash', 'success')
             this.newsList.splice(this.newsList.indexOf(this.selectedNews), 1)
           }
         }).catch((error) => {
-          this.notify('Cannot delete news', 'ti-close', 'warning')
+          this.notify('Cannot delete news', 'ti-trash', 'warning')
           console.log(error)
         })
         this.showModal = false
@@ -94,5 +91,9 @@
   }
 </script>
 <style scoped lang="scss">
+
+  .content{
+    overflow: hidden;
+  }
 
 </style>
