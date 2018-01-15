@@ -115,6 +115,7 @@
             newsData.imgData = file[1]
           }
         }
+        console.log(newsData.imgData)
         this.$http.post(this.$config.serverHost + '/api/addNewsData', newsData).then((res) => {
           if (res.status === 200) {
             this.notify('News was successfully added', 'ti-check', 'success')
@@ -185,9 +186,10 @@
       }
     },
     created () {
-      this.newsImg = this.$config.defaultImg
       if (this.currentId !== undefined) {
         this.isNewNews = false
+      } else {
+        this.newsImg = this.$config.defaultImg
       }
       if (!this.isNewNews) {
         this.$http.post(this.$config.serverHost + '/api/getNewsById', {newsId: this.currentId}).then((res) => {
@@ -196,7 +198,7 @@
             // init variables
             this.title = res.body[0].Title
             this.content = res.body[0].Text
-            this.newsImg = this.base64toFile(res.body[0].ImgData, res.body[0].CoverImgName)
+            this.newsImg = this.base64toFile(res.body[0].ImgData.split(',')[1], res.body[0].CoverImgName)
           } else {
             this.notify('This News does not exist', 'ti-gallery', 'danger')
             this.$router.push('/news')

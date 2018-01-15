@@ -10,7 +10,7 @@
             <h4 class="title">{{news.Title}}</h4>
           </div>
           <div class="content text-center">
-            <img class="border-white section-card" v-bind:src="pathToCovers + news.CoverImgName">
+            <img class="border-white section-card" v-bind:src="news.ImgData">
             <hr>
             <div class="row row-edit">
               <div class="col-lg-6 col-sm-6 text-center">
@@ -43,7 +43,6 @@
   export default {
     data () {
       return {
-        pathToCovers: this.$config.pathToNewsCover,
         newsList: [],
         selectedNews: {},
         showModal: false
