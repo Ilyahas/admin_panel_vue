@@ -12,7 +12,8 @@ module.exports = function (app, getData, postData) {
             postData(format(queries.addNews, {
                 text: req.body.text,
                 title: req.body.title,
-                imgName: req.body.imgName
+                imgName: req.body.imgName,
+                imgData: req.body.imgData
             }), req, res);
         } else {
             res.status(400).end("News Title is not define");
@@ -33,12 +34,21 @@ module.exports = function (app, getData, postData) {
 
     app.post('/updateNews', (req, res) => {
         if (req.body.title !== '') {
-            postData(format(queries.updateNews, {
-                text: req.body.text,
-                title: req.body.title,
-                imgName: req.body.imgName,
-                newsId: req.body.newsId
-            }), req, res);
+            if (req.body.newImg) {
+                postData(format(queries.updateNews, {
+                    text: req.body.text,
+                    title: req.body.title,
+                    imgName: req.body.imgName,
+                    imgData: req.body.imgData,
+                    newsId: req.body.newsId
+                }), req, res);
+            } else {
+                postData(format(queries.updateNewsData, {
+                    text: req.body.text,
+                    title: req.body.title,
+                    newsId: req.body.newsId
+                }), req, res);
+            }
         } else {
             res.status(400).end("News Title is not define");
         }
