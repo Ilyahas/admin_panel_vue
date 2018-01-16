@@ -18,6 +18,7 @@
               ref="photoInput"
               @change="onAddNewPhoto"
               :crop="false"
+              v-bind:prefill="newPhoto"
               width="640"
               height="480"
               margin="16"
@@ -37,13 +38,13 @@
         </div>
 
         <!-- Photos in Section -->
-        <div class="col-lg-4 col-md-6 col-sm-4" v-for="photo in allPhotos">
-          <div class="photoFrame" ref="photoFrameShow">
+        <div class="col-lg-4 col-md-6 col-sm-4 cardCustom" v-for="photo in allPhotos">
+          <div class="photoFrame">
             <span class="photoTitle">{{photo.PhotoName}}</span>
             <button class="deletePhotoBtn as-link" @click="askConfirmation(photo)"><i class="ti-close"></i>
             </button>
-            <div class="photoContainer">
-              <img v-bind:src="pathToPhotos + photo.PhotoImgName">
+            <div class="photoContainer text-center">
+              <img v-bind:src="photo.ImgData">
             </div>
           </div>
         </div>
@@ -70,14 +71,13 @@
     },
     data () {
       return {
-        newPhotoPath: this.$config.defaultImg,
+        newPhoto: '',
         newPhotoName: '',
-        newPhoto: {},
-        newPhotoModel: {},
+        image: {},
         selectedPhoto: {},
+        photoChanged: false,
 
         allPhotos: [],
-        pathToPhotos: this.$config.pathToPhotos,
         showModal: false
       }
     },
@@ -91,39 +91,39 @@
           this.notify('Section Picture cannot be empty', 'ti-info', 'warning')
           return
         }
-        // upload photo
-        this.$http.post(this.$config.serverHost + '/api/uploadPhoto', this.newPhoto).then((res) => {
+
+        let photoData = {
+          photoName: this.newPhotoName,
+          imgName: '',
+          imgData: '',
+          sectionId: this.currentId
+        }
+        // get name of the file
+        for (let file of this.image) {
+          if (file[0] === 'file') {
+            photoData.imgName = file[1].name
+          }
+          if (file[0] === 'image') {
+            photoData.imgData = file[1]
+          }
+        }
+        // save photo data to DB
+        this.$http.post(this.$config.serverHost + '/api/addPhoto', photoData).then((res) => {
           if (res.status === 200) {
-            let photoData = {
-              photoName: this.newPhotoName,
-              imgName: '',
-              sectionId: this.currentId
-            }
-            // get name of the file
-            for (let file of this.newPhoto) {
-              photoData.imgName = file[1].name
-              break
-            }
-            // save photo data to DB
-            this.$http.post(this.$config.serverHost + '/api/addPhotoData', photoData).then((res) => {
-              if (res.status === 200) {
-                this.$router.go(this.$router.currentRoute)
-              }
-            }).catch((error) => {
-              this.notify('Cannot save image data', 'ti-save', 'warning')
-              console.log(error)
-            })
+            this.$router.go(this.$router.currentRoute)
           }
         }).catch((error) => {
-          this.notify('Cannot upload image', 'ti-save', 'warning')
+          this.notify('Cannot save image data', 'ti-save', 'warning')
           console.log(error)
         })
       },
       onAddNewPhoto () {
         if (this.$refs.photoInput.image) {
+          this.photoChanged = true
           let data = new FormData()
           data.append('file', this.$refs.photoInput.file)
-          this.newPhoto = data
+          data.append('image', this.$refs.photoInput.image)
+          this.image = data
         } else {
           console.log('FileReader API not supported: use the <form>, Luke!')
         }
@@ -171,6 +171,9 @@
   }
 </script>
 <style scoped lang="scss">
+  .cardCustom {
+    display: inline-block;
+  }
   .photoFrame {
     border: 1px solid;
     border-radius: 5px;
@@ -178,15 +181,27 @@
     padding: 10px;
     margin-bottom: 15px;
 
-    & img {
-      width: 100%;
+    img {
+      height: 7vw;
     }
 
-    & .deletePhotoBtn {
+    .deletePhotoBtn {
       cursor: pointer;
       display: inline-block;
       float: right;
     }
+
+    .photoTitle {
+      text-overflow: ellipsis;
+      width: 80%;
+      display: inline-block;
+      overflow: hidden;
+    }
+
+    .photoContainer {
+      padding: 10px;
+    }
+
 
   }
 </style>

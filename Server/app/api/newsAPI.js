@@ -1,13 +1,8 @@
 module.exports = function (app, getData, postData) {
     const format = require('string-template');
     const queries = require('./newsQueries');
-    const upload = require('./upload');
 
-    app.post('/uploadNewsCover', (req, res) => {
-        upload.uploadImgs(req, res, "newsCovers")
-    });
-
-    app.post('/addNewsData', (req, res) => {
+    app.post('/addNews', (req, res) => {
         if (req.body.title !== '') {
             postData(format(queries.addNews, {
                 text: req.body.text,
@@ -35,7 +30,7 @@ module.exports = function (app, getData, postData) {
     app.post('/updateNews', (req, res) => {
         if (req.body.title !== '') {
             if (req.body.newImg) {
-                postData(format(queries.updateNews, {
+                postData(format(queries.updateNewsWithImg, {
                     text: req.body.text,
                     title: req.body.title,
                     imgName: req.body.imgName,

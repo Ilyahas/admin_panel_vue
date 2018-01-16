@@ -52,7 +52,7 @@
         newsImg: '',
         changedCoverNews: false,
         title: '',
-        image: '',
+        image: {},
         content: '',
         customToolbar: [
           ['bold', 'italic', 'underline'],
@@ -86,7 +86,6 @@
 
           byteArrays.push(byteArray)
         }
-
         return new File(byteArrays, fileName, {type: contentType})
       },
       addNews () {
@@ -116,7 +115,7 @@
           }
         }
         console.log(newsData.imgData)
-        this.$http.post(this.$config.serverHost + '/api/addNewsData', newsData).then((res) => {
+        this.$http.post(this.$config.serverHost + '/api/addNews', newsData).then((res) => {
           if (res.status === 200) {
             this.notify('News was successfully added', 'ti-check', 'success')
             this.$router.push('/news')

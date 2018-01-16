@@ -9,7 +9,7 @@
             <h4 class="title">{{section.SectionName}}</h4>
           </div>
           <div class="content text-center">
-            <img class="border-white section-card" v-bind:src="pathToCovers + section.CoverImgName">
+            <img class="border-white section-card" v-bind:src="section.ImgData">
             <hr>
             <div class="row row-edit">
               <div class="col-lg-6 col-sm-6 text-center">
@@ -39,7 +39,6 @@
   export default {
     data () {
       return {
-        pathToCovers: this.$config.pathToSectionCovers,
         sections: [],
         selectedSection: {},
         showModal: false
@@ -53,11 +52,11 @@
       deleteSection () {
         this.$http.post(this.$config.serverHost + '/api/deleteSection', {sectionId: this.selectedSection.idPhotoSections}).then((res) => {
           if (res.status === 200) {
-            this.notify('Photo Section was deleted', 'ti-close', 'success')
+            this.notify('Photo Section was deleted', 'ti-trash', 'success')
             this.sections.splice(this.sections.indexOf(this.selectedSection), 1)
           }
         }).catch((error) => {
-          this.notify('Cannot delete section', 'ti-close', 'warning')
+          this.notify('Cannot delete section', 'ti-trash', 'warning')
           console.log(error)
         })
         this.showModal = false
