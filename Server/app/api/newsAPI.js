@@ -8,7 +8,8 @@ module.exports = function (app, getData, postData) {
                 text: req.body.text,
                 title: req.body.title,
                 imgName: req.body.imgName,
-                imgData: req.body.imgData
+                imgData: req.body.imgData,
+                date: req.body.date
             }), req, res);
         } else {
             res.status(400).end("News Title is not define");

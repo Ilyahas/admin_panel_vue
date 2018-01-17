@@ -8,15 +8,19 @@
         <div class="card">
           <div class="header">
             <h4 class="title">{{news.Title}}</h4>
+            <span class="news-title-date">{{news.Date}}</span>
           </div>
-          <div class="content text-center">
-            <img class="border-white section-card" v-bind:src="news.ImgData">
+          <div class="content">
+            <div class="text-center">
+              <img class="border-white section-card" v-bind:src="news.ImgData">
+            </div>
+            <div class="news-content" v-html="news.Text">
+            </div>
             <hr>
             <div class="row row-edit">
               <div class="col-lg-6 col-sm-6 text-center">
                 <router-link :to="{ path: '/news/edit-news', query: {id: news.idnews}}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
               </div>
-
               <div class="col-lg-6 col-sm-6 text-center">
                 <button id="show-modal" @click="askConfirmation(news)" class="as-link"><i class="ti-close"></i> <span>Delete</span></button>
               </div>
@@ -93,6 +97,17 @@
 
   .content{
     overflow: hidden;
+  }
+
+  .news-content {
+    padding: 0 3px;
+    overflow: hidden;
+    height: 55px;
+    width: 100%;
+  }
+
+  .news-title-date {
+    color: #adadad;
   }
 
 </style>

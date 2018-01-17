@@ -88,6 +88,23 @@
         }
         return new File(byteArrays, fileName, {type: contentType})
       },
+      getTodayDate () {
+        let today = new Date()
+        let dd = today.getDate()
+        let mm = today.getMonth() + 1
+        let yyyy = today.getFullYear()
+
+        if (dd < 10) {
+          dd = '0' + dd
+        }
+
+        if (mm < 10) {
+          mm = '0' + mm
+        }
+
+        today = dd + '-' + mm + '-' + yyyy
+        return today
+      },
       addNews () {
         let isTitleValid = this.title.length > 3
         if (!isTitleValid) {
@@ -103,7 +120,8 @@
           text: this.content,
           title: this.title,
           imgName: '',
-          imgData: ''
+          imgData: '',
+          date: this.getTodayDate()
         }
         // get name of the file
         for (let file of this.image) {
