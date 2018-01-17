@@ -24,8 +24,6 @@
     opacity: 0
   }
 
-  .content{
-    margin-top: 15px;
-  }
+
 </style>
 

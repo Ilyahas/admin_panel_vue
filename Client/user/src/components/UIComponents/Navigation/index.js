@@ -7,6 +7,10 @@ const NavigationStore = {
       path: '/home'
     },
     {
+      name: 'News',
+      path: '/news'
+    },
+    {
       name: 'Photos',
       path: '/photos'
     }

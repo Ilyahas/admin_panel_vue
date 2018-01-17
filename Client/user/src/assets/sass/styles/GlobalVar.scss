@@ -23,9 +23,13 @@ a {
 
 .container {
   display: block;
-  margin: 0 auto;
+  margin: auto;
   overflow: hidden;
 
   width: 80%;
   max-width: 1020px;
+}
+
+.content{
+  margin-top: 15px;
 }
