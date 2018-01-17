@@ -5,14 +5,18 @@ import App from './App'
 import router from './router'
 import VueResource from 'vue-resource'
 
+import Config from './config'
 // UIComponents
 import Navigation from './components/UIComponents/Navigation'
-
+import VueAwesomeSwiper from 'vue-awesome-swiper'
 // styles
 import './assets/sass/main.scss'
+import 'swiper/dist/css/swiper.css'
 
 Vue.use(VueResource)
 Vue.use(Navigation)
+Vue.use(Config)
+Vue.use(VueAwesomeSwiper)
 
 Vue.config.productionTip = false
 

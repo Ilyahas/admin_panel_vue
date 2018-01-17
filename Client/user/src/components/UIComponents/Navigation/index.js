@@ -3,8 +3,8 @@ import Navigation from './Navigation.vue'
 const NavigationStore = {
   navbarLinks: [
     {
-      name: 'Overview',
-      path: '/overview'
+      name: 'Home',
+      path: '/home'
     },
     {
       name: 'Photos',

@@ -48,4 +48,8 @@ module.exports = function (app, getData, postData) {
             res.status(400).end("News Title is not define");
         }
     })
+
+    app.post('/getTopNews', (req, res) => {
+        getData(format(queries.getTopNews, {topNumber: req.body.topNumber}), req, res);
+    });
 };
