@@ -14,7 +14,7 @@
 <style>
   .fade-enter-active,
   .fade-leave-active {
-    transition: opacity .1s
+    transition: opacity .35s
   }
   /* .fade-leave-active in <2.1.8 */
 

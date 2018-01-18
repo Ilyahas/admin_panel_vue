@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-      <div class="news-item shadow" v-for="(news, index) in listOfNews" :key="index">
+      <div class="news-item shadow" v-for="(news, index) in listOfNews" :key="index" @click="goToNews(news.idnews)" >
         <div class="img-container">
           <img :src="news.ImgData">
         </div>
@@ -20,7 +20,9 @@
       }
     },
     methods: {
-
+      goToNews (newsId) {
+        this.$router.push({ path: '/read-news', query: { id: newsId } })
+      }
     },
     created () {
       this.$http.post(this.$config.serverHost + '/api/getTopNews', {topNumber: this.TOP_NEWS_NUMBER}).then((res) => {
@@ -38,20 +40,37 @@
   @import "../../../assets/sass/styles/GlobalVar";
 
   .shadow {
-    -moz-box-shadow:    2px 2px 2px 1px #ccc;
-    -webkit-box-shadow: 2px 2px 2px 1px #ccc;
-    box-shadow:         2px 2px 2px 1px #ccc;
+    -moz-box-shadow:    2px 3px 2px 1px #ccc;
+    -webkit-box-shadow: 2px 3px 2px 1px #ccc;
+    box-shadow:         2px 3px 2px 1px #ccc;
+    transition: box-shadow .2s;
+
+    &:hover {
+      -moz-box-shadow:    3px 4px 2px 1px #ccc;
+      -webkit-box-shadow: 3px 4px 2px 1px #ccc;
+      box-shadow:         3px 4px 2px 1px #ccc;
+    }
+
   }
 
   .news-item {
+    display: inline-block;
     border: 1px solid $whiteActiveLinkColor;
     padding: 10px 15px;
-    margin: 15px 0;
-    height: 150px;
-    width: 95%;
+    margin: 15px 0 15px 1%;
+    height: 250px;
+    width: 29%;
+
+    &:nth-child(1) {
+      margin-left: 0;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
 
     .img-container {
-      float: right;
+      text-align: center;
 
       img {
         height: 150px;
@@ -60,15 +79,18 @@
     }
 
     .news-content {
-      float: left;
 
       .title {
-        display: inline;
-        font-size: 21px;
+        display: inline-block;
+        overflow: hidden;
+        font-size: 18px;
+        height: 85px;
+        width: 100%;
       }
 
       .news-date{
         color: $navbarBgColor;
+        position: absolute;
       }
 
     }

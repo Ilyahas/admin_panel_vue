@@ -67,7 +67,7 @@
     }
   }
 </script>
-<style lang="scss" scoped>
+<style scoped lang="scss">
   @import "../../../assets/sass/styles/GlobalVar";
   $titleBarHeight: 70px;
 
@@ -102,10 +102,12 @@
 
   .slide-title {
     display: block;
-    height: $titleBarHeight;
-    font-size: 25px;
+    min-height: $titleBarHeight;
+    max-height: $titleBarHeight + 15px;
+    font-size: 24px;
     background: rgba(0, 0, 0, 0.5);
     color: white;
+    overflow: hidden;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
