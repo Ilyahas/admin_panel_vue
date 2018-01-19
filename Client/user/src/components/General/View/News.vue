@@ -1,14 +1,15 @@
 <template>
   <div class="container container-margin">
-      <div class="news-item shadow" v-for="(news, index) in listOfNews" :key="index" @click="goToNews(news.idnews)" >
-        <div class="img-container">
-          <img :src="news.ImgData">
-        </div>
-        <div class="news-content">
-          <div class="title">{{news.Title}}</div>
-          <div><small class="news-date">{{news.Date}}</small></div>
-        </div>
-      </div>
+    <div class="grid">
+      <figure class="effect-milo" v-for="(news, index) in listOfNews" :key="index" @click="goToNews(news.idnews)" >
+        <img :src="news.ImgData">
+        <figcaption>
+          <h2>{{news.Title}}</h2>
+
+          <p>{{news.Date}}</p>
+        </figcaption>
+      </figure>
+    </div>
   </div>
 </template>
 <script>
@@ -39,50 +40,55 @@
 <style scoped lang="scss">
   @import "../../../assets/sass/styles/GlobalVar";
 
-
-
-  .news-item {
-    display: inline-block;
-    border: 1px solid $whiteActiveLinkColor;
-    padding: 10px 15px;
-    margin: 5px 0 5px 1%;
-    height: 250px;
-    width: 29%;
-
-    &:nth-child(1), &:nth-child(3n + 4) {
-      margin-left: 0;
-    }
-
-    &:hover {
-      cursor: pointer;
-    }
-
-    .img-container {
-      text-align: center;
-
-      img {
-        height: 150px;
-      }
-
-    }
-
-    .news-content {
-
-      .title {
-        display: inline-block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-size: 18px;
-        height: 85px;
-        width: 100%;
-      }
-
-      .news-date{
-        color: $navbarBgColor;
-        position: absolute;
-      }
-
-    }
-
+  figure.effect-milo {
+    background: rgba(0, 0, 0, 0.7);
   }
+
+  figure.effect-milo img {
+    max-width: none;
+    width: -webkit-calc(100% + 60px);
+    width: calc(100% + 60px);
+    opacity: 1;
+    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+    transition: opacity 0.35s, transform 0.35s;
+    -webkit-transform: translate3d(-30px,0,0) scale(1.12);
+    transform: translate3d(-30px,0,0) scale(1.12);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  figure.effect-milo:hover img {
+    opacity: 0.5;
+    -webkit-transform: translate3d(0,0,0) scale(1);
+    transform: translate3d(0,0,0) scale(1);
+  }
+
+  figure.effect-milo h2 {
+    font-size: 18px;
+    text-align: right;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 10px;
+  }
+
+  figure.effect-milo p {
+    padding: 0 5px 0 0;
+    width: 30%;
+    border-right: 1px solid #fff;
+    text-align: right;
+    font-size: 15px;
+    opacity: 0;
+    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+    transition: opacity 0.35s, transform 0.35s;
+    -webkit-transform: translate3d(-40px,0,0);
+    transform: translate3d(-40px,0,0);
+  }
+
+  figure.effect-milo:hover p {
+    opacity: 1;
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+  }
+
 </style>

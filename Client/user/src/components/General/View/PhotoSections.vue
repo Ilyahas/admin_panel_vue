@@ -40,37 +40,6 @@
 <style scoped lang="scss">
   @import "../../../assets/sass/styles/GlobalVar";
 
-  .grid {
-    position: relative;
-    margin: 0 auto;
-    list-style: none;
-
-    figure {
-      position: relative;
-      float: left;
-      overflow: hidden;
-      margin: 0 1% 1% 0;
-      min-width: 320px;
-      width: 30%;
-      cursor: pointer;
-
-      figcaption {
-        color: #fff;
-        font-size: 1.25em;
-      }
-
-      figcaption,
-      figcaption > a {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
-    }
-  }
-
-
   .photoSection-item {
     height: 230px;
     background: rgba(0, 0, 0, 0.5);

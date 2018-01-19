@@ -1,11 +1,10 @@
 <template>
-  <div>
+  <div class="container container-margin">
     <md-card>
       <md-card-media>
         <!-- swiper1 -->
         <swiper :options="swiperOptionTop" class="gallery-top" ref="swiperTop">
           <swiper-slide v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + news.ImgData + '\');'">
-
             <div class="slide-title" @click="newsClick(news.idnews)">
               <div class="container">{{news.Title}}</div>
             </div>
@@ -74,18 +73,17 @@
   $titleBarHeight: 85px;
 
   .gallery-top {
-    height: 80vh !important;
+    height: 55vh !important;
     min-height: 500px!important;
     width: 100%;
   }
   .gallery-thumbs {
-    background-color: rgba(135, 191, 250, 0.5);
-    margin-top: -120px;
-    height: 100px!important;
+    background-color: rgba(105, 191, 250, 0.5);
+    height: 70px!important;
     padding: 10px 0;
   }
   .gallery-thumbs .swiper-slide {
-    width: 18%;
+    width: 15%;
     height: 100%;
     opacity: 0.4;
   }
@@ -94,7 +92,7 @@
   }
 
   .swiper-container {
-    height: 300px;
+    height: 100px;
     width: 100%;
   }
 
