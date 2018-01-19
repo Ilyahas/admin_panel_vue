@@ -73,7 +73,7 @@
 
   .photoSection-item {
     height: 230px;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
     transition: 0.35s;
     -webkit-transition: 0.35s;
 
@@ -96,7 +96,7 @@
     }
 
     &:hover {
-      background: rgba(0, 0, 0, 1);
+      background: rgba(0, 0, 0, 0.8);
       transition: 0.35s;
       -webkit-transition: 0.35s;
 
