@@ -6,7 +6,7 @@
         <swiper :options="swiperOptionTop" class="gallery-top" ref="swiperTop">
           <swiper-slide v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + news.ImgData + '\');'">
 
-            <div class="slide-title">
+            <div class="slide-title" @click="newsClick(news.idnews)">
               <div class="container">{{news.Title}}</div>
             </div>
           </swiper-slide>
@@ -45,7 +45,9 @@
       }
     },
     methods: {
-
+      newsClick (index) {
+        console.log(index)
+      }
     },
     mounted () {
       this.$nextTick(() => {
@@ -69,14 +71,16 @@
 </script>
 <style scoped lang="scss">
   @import "../../../assets/sass/styles/GlobalVar";
-  $titleBarHeight: 70px;
+  $titleBarHeight: 85px;
 
   .gallery-top {
-    height: 60vh !important;
+    height: 80vh !important;
     min-height: 500px!important;
     width: 100%;
   }
   .gallery-thumbs {
+    background-color: rgba(135, 191, 250, 0.5);
+    margin-top: -120px;
     height: 100px!important;
     padding: 10px 0;
   }
@@ -101,12 +105,12 @@
   }
 
   .slide-title {
+    text-align: center;
     display: block;
-    min-height: $titleBarHeight;
-    max-height: $titleBarHeight + 15px;
     font-size: 24px;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3);
     color: white;
+    height: $titleBarHeight;
     overflow: hidden;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -116,6 +120,12 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
   }
 
 

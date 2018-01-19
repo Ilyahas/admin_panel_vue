@@ -20,6 +20,9 @@ a {
   text-decoration: none;
   outline : none;
 }
+body {
+  overflow-x: hidden;
+}
 
 .container {
   display: block;
@@ -32,4 +35,26 @@ a {
 
 .container-margin{
   margin-top: 15px;
+}
+
+.shadow {
+  transition: 0.3s;
+
+  &:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+  }
+}
+
+.hover-img-effect {
+  display: block;
+  -moz-transition: all 1s ease-out;
+  -o-transition: all 1s ease-out;
+  -webkit-transition: all 1s ease-out;
+
+  &:hover{
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+  }
+
 }

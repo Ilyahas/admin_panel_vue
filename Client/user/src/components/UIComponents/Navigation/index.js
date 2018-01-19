@@ -12,7 +12,7 @@ const NavigationStore = {
     },
     {
       name: 'Photos',
-      path: '/photos'
+      path: '/photo-sections'
     }
   ]
 }

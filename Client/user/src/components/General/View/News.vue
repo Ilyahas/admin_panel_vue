@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container container-margin">
       <div class="news-item shadow" v-for="(news, index) in listOfNews" :key="index" @click="goToNews(news.idnews)" >
         <div class="img-container">
           <img :src="news.ImgData">
@@ -39,29 +39,17 @@
 <style scoped lang="scss">
   @import "../../../assets/sass/styles/GlobalVar";
 
-  .shadow {
-    -moz-box-shadow:    2px 3px 2px 1px #ccc;
-    -webkit-box-shadow: 2px 3px 2px 1px #ccc;
-    box-shadow:         2px 3px 2px 1px #ccc;
-    transition: box-shadow .2s;
 
-    &:hover {
-      -moz-box-shadow:    3px 4px 2px 1px #ccc;
-      -webkit-box-shadow: 3px 4px 2px 1px #ccc;
-      box-shadow:         3px 4px 2px 1px #ccc;
-    }
-
-  }
 
   .news-item {
     display: inline-block;
     border: 1px solid $whiteActiveLinkColor;
     padding: 10px 15px;
-    margin: 15px 0 15px 1%;
+    margin: 5px 0 5px 1%;
     height: 250px;
     width: 29%;
 
-    &:nth-child(1) {
+    &:nth-child(1), &:nth-child(3n + 4) {
       margin-left: 0;
     }
 
@@ -83,6 +71,7 @@
       .title {
         display: inline-block;
         overflow: hidden;
+        text-overflow: ellipsis;
         font-size: 18px;
         height: 85px;
         width: 100%;
