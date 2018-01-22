@@ -18,6 +18,11 @@ import News from 'src/components/Dashboard/Views/News/News.vue'
 import AddNews from 'src/components/Dashboard/Views/News/AddNews.vue'
 import EditNews from 'src/components/Dashboard/Views/News/EditNews.vue'
 
+import ArticlePage from 'src/components/Dashboard/Views/ArticlePage.vue'
+import Articles from 'src/components/Dashboard/Views/Articles/Articles.vue'
+import AddArticle from 'src/components/Dashboard/Views/Articles/AddArticle.vue'
+import EditArticle from 'src/components/Dashboard/Views/Articles/EditArticle.vue'
+
 const routes = [
   {
     path: '/',
@@ -63,6 +68,26 @@ const routes = [
         path: 'news/edit-news',
         name: 'Edit News',
         component: EditNews
+      },
+      {
+        path: 'articles',
+        name: 'Articles',
+        component: Articles
+      },
+      {
+        path: 'articles/add-article',
+        name: 'Add Article',
+        component: AddArticle
+      },
+      {
+        path: 'articles/edit-article',
+        name: 'Edit Article',
+        component: EditArticle
+      },
+      {
+        path: 'article-page',
+        name: 'Article Page',
+        component: ArticlePage
       },
       {
         path: 'notifications',

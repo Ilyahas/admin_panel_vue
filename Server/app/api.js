@@ -31,4 +31,5 @@ module.exports = function (app, config) {
 
     require('./api/photosAPI') (app, getData, postData);
     require('./api/newsAPI') (app, getData, postData);
+    require('./api/articlesAPI') (app, getData, postData);
 };

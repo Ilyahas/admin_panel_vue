@@ -9,7 +9,7 @@
         </ul>
       </nav>-->
       <div class="copyright pull-right">
-        &copy; 2017
+        &copy; {{ new Date().getFullYear() }}
       </div>
     </div>
   </footer>

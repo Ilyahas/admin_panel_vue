@@ -24,6 +24,16 @@ const SidebarStore = {
       path: '/news'
     },
     {
+      name: 'Articles',
+      icon: 'ti-pencil',
+      path: '/articles'
+    },
+    {
+      name: 'Article',
+      icon: 'ti-pencil-alt',
+      path: '/article-page'
+    },
+    {
       name: 'Table List',
       icon: 'ti-view-list-alt',
       path: '/table-list'

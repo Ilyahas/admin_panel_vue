@@ -92,4 +92,10 @@
     overflow: hidden;
   }
 
+  .title {
+    height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
 </style>

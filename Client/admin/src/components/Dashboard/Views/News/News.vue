@@ -8,7 +8,7 @@
         <div class="card">
           <div class="header">
             <h4 class="title">{{news.Title}}</h4>
-            <span class="news-title-date">{{news.Date}}</span>
+            <span class="title-date">{{news.Date}}</span>
           </div>
           <div class="content">
             <div class="text-center">
@@ -102,12 +102,16 @@
   .news-content {
     padding: 0 3px;
     overflow: hidden;
-    height: 55px;
+    height: 64px;
     width: 100%;
   }
 
-  .news-title-date {
-    color: #adadad;
+  .title {
+    display: block;
+    height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
+
 
 </style>

@@ -57,7 +57,7 @@
         customToolbar: [
           ['bold', 'italic', 'underline'],
           [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-          ['image'], [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
           [{ 'align': [] }]
         ],
         isNewNews: true
@@ -218,7 +218,6 @@
             this.newsImg = this.base64toFile(res.body[0].ImgData.split(',')[1], res.body[0].CoverImgName)
           } else {
             this.notify('This News does not exist', 'ti-gallery', 'danger')
-            this.$router.push('/news')
           }
         }).catch((error) => {
           this.notify('Cannot get news', 'ti-gallery', 'warning')
