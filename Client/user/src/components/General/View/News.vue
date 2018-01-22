@@ -5,7 +5,6 @@
         <img :src="news.ImgData">
         <figcaption>
           <h2>{{news.Title}}</h2>
-
           <p>{{news.Date}}</p>
         </figcaption>
       </figure>

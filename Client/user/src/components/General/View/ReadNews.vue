@@ -51,7 +51,7 @@
     margin-top: 15px;
 
     img {
-      height: 350px;
+      width: 100%;
     }
   }
 </style>

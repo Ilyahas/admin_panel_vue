@@ -4,7 +4,7 @@
       <md-card-media>
         <!-- swiper1 -->
         <swiper :options="swiperOptionTop" class="gallery-top" ref="swiperTop">
-          <swiper-slide v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + news.ImgData + '\');'">
+          <swiper-slide class="bg-container" v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + news.ImgData + '\');'">
             <div class="slide-title" @click="newsClick(news.idnews)">
               <div class="container">{{news.Title}}</div>
             </div>
@@ -45,7 +45,7 @@
     },
     methods: {
       newsClick (index) {
-        console.log(index)
+        this.$router.push({ path: '/read-news', query: { id: index } })
       }
     },
     mounted () {
@@ -78,7 +78,7 @@
     width: 100%;
   }
   .gallery-thumbs {
-    background-color: rgba(105, 191, 250, 0.5);
+    background-color: rgba(105, 191, 250, 0.25);
     height: 70px!important;
     padding: 10px 0;
   }
@@ -119,9 +119,21 @@
     -ms-flex-align: center;
     align-items: center;
 
+    transition: 0.35s;
+
     &:hover {
       cursor: pointer;
       text-decoration: underline;
+    }
+  }
+
+
+  .bg-container:hover {
+    cursor: pointer;
+
+    .slide-title {
+      height: 100%;
+      transition: 0.35s;
     }
 
   }
