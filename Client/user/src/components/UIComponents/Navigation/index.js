@@ -13,6 +13,14 @@ const NavigationStore = {
     {
       name: 'Photos',
       path: '/photo-sections'
+    },
+    {
+      name: 'Articles',
+      path: '/articles'
+    },
+    {
+      name: 'Article',
+      path: '/article'
     }
   ]
 }

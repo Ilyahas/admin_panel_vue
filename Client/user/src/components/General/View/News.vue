@@ -16,7 +16,7 @@
     data () {
       return {
         listOfNews: [],
-        TOP_NEWS_NUMBER: 5
+        TOP_NEWS_NUMBER: 9
       }
     },
     methods: {
@@ -41,6 +41,7 @@
 
   figure.effect-milo {
     background: rgba(0, 0, 0, 0.7);
+    max-height: 218px;
   }
 
   figure.effect-milo img {

@@ -18,6 +18,13 @@
         </swiper>
       </md-card-media>
     </md-card>
+
+    <div class="articles">
+      <span class="art-title">Articles</span>
+      <div>
+
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -72,6 +79,8 @@
   @import "../../../assets/sass/styles/GlobalVar";
   $titleBarHeight: 85px;
 
+
+  /*-----------SLIDESHOW----------------*/
   .gallery-top {
     height: 55vh !important;
     min-height: 500px!important;
@@ -127,7 +136,6 @@
     }
   }
 
-
   .bg-container:hover {
     cursor: pointer;
 
@@ -135,8 +143,18 @@
       height: 100%;
       transition: 0.35s;
     }
-
   }
 
+  /*---------------Articles-------------------*/
+  .articles {
+    margin-top: 10px;
+
+    .art-title {
+      display: inline-block;
+      font-size: 70px;
+      text-align: center;
+      width: 100%;
+    }
+  }
 
 </style>

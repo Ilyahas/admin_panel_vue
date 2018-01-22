@@ -41,7 +41,7 @@
   @import "../../../assets/sass/styles/GlobalVar";
 
   .photoSection-item {
-    height: 230px;
+    max-height: 218px;
     background: rgba(0, 0, 0, 0.5);
     transition: 0.35s;
     -webkit-transition: 0.35s;

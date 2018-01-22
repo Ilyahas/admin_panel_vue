@@ -21,6 +21,10 @@ module.exports = function (app, getData, postData) {
         getData(queries.getArticles, req, res);
     });
 
+    app.post('/getTopArticles', (req, res) => {
+        getData(format(queries.getTopArticles, {topNumber: req.body.topNumber}), req, res);
+    });
+
     app.post('/getArticleById', (req, res) => {
         getData(format(queries.getArticleById, {articleId: req.body.articleId}), req, res);
     });

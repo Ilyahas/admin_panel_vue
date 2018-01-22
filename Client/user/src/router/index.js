@@ -7,6 +7,8 @@ import News from '../components/General/View/News.vue'
 import ReadNews from '../components/General/View/ReadNews.vue'
 import PhotoSections from '../components/General/View/PhotoSections.vue'
 import Photos from '../components/General/View/Photos.vue'
+import ArticlePage from '../components/General/View/ArticlePage.vue'
+import Articles from '../components/General/View/Articles.vue'
 
 Vue.use(Router)
 
@@ -43,6 +45,16 @@ export default new Router({
           path: 'photos',
           name: 'Photos',
           component: Photos
+        },
+        {
+          path: 'articles',
+          name: 'Articles',
+          component: Articles
+        },
+        {
+          path: 'article',
+          name: 'Article Page',
+          component: ArticlePage
         }
       ]
     }

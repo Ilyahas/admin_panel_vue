@@ -42,6 +42,27 @@
     }
   }
 </script>
-<style>
+<style scoped lang="scss">
+  @import "../../../assets/sass/styles/GlobalVar";
+
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    display: inline-block;
+    list-style-type: none;
+    &.active a {
+      color: $whiteActiveLinkColor !important;
+      &:hover {
+        text-decoration: none !important;
+      }
+    }
+  }
+
+  a {
+    text-decoration: none;
+    outline : none;
+  }
 
 </style>
