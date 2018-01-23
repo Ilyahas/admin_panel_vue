@@ -47,12 +47,10 @@
     -webkit-transition: 0.35s;
 
     .title {
+      font-size: $fontSizeTitle - 7px;
       padding: 10px;
       width: calc(100% - 10px);
       overflow: hidden;
-
-      span {
-      }
     }
 
     img {
@@ -75,12 +73,5 @@
         transform: scale(1.15);
       }
     }
-
   }
-
-
-
-
-
-
 </style>

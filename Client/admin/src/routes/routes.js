@@ -14,6 +14,7 @@ import TableList from 'src/components/Dashboard/Views/TableList.vue'
 import Photos from 'src/components/Dashboard/Views/Photos/Photos.vue'
 import AddSection from 'src/components/Dashboard/Views/Photos/AddSection.vue'
 import EditSection from 'src/components/Dashboard/Views/Photos/EditSection.vue'
+
 import News from 'src/components/Dashboard/Views/News/News.vue'
 import AddNews from 'src/components/Dashboard/Views/News/AddNews.vue'
 import EditNews from 'src/components/Dashboard/Views/News/EditNews.vue'
@@ -22,6 +23,8 @@ import ArticlePage from 'src/components/Dashboard/Views/ArticlePage.vue'
 import Articles from 'src/components/Dashboard/Views/Articles/Articles.vue'
 import AddArticle from 'src/components/Dashboard/Views/Articles/AddArticle.vue'
 import EditArticle from 'src/components/Dashboard/Views/Articles/EditArticle.vue'
+
+import MainPage from 'src/components/Dashboard/Views/MainPage/MainPage.vue'
 
 const routes = [
   {
@@ -38,6 +41,11 @@ const routes = [
         path: 'stats',
         name: 'stats',
         component: UserProfile
+      },
+      {
+        path: 'main-page',
+        name: 'Main Page',
+        component: MainPage
       },
       {
         path: 'photos',

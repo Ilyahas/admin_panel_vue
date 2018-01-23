@@ -73,7 +73,8 @@
         } else {
           articleData = {
             title: this.title,
-            text: this.content
+            text: this.content,
+            articleId: this.currentId
           }
         }
         this.$http.post(this.$config.serverHost + strUrl, articleData).then((res) => {

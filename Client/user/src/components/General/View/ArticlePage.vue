@@ -30,7 +30,9 @@
   }
 </script>
 <style scoped lang="scss">
+  @import "../../../assets/sass/styles/GlobalVar";
+
   .title {
-    font-size: 35px;
+    font-size: $fontSizeTitle + 10px;
   }
 </style>

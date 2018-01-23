@@ -13,9 +13,6 @@
         news: {}
       }
     },
-    methods: {
-
-    },
     created () {
       if (this.$route.query.id) {
         this.$http.post(this.$config.serverHost + '/api/getNewsById', {newsId: this.$route.query.id}).then((res) => {
@@ -39,12 +36,12 @@
   @import "../../../assets/sass/styles/GlobalVar";
 
   .title {
-    font-size: 24px;
+    font-size: $fontSizeTitle;
   }
   .title-date {
     color: $navbarBgColor;
     display: block;
-    font-size: 15px;
+    font-size: $fontSizeTitle - 10px;
     margin-top: 15px;
   }
   .title-img {

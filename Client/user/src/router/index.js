@@ -9,6 +9,7 @@ import PhotoSections from '../components/General/View/PhotoSections.vue'
 import Photos from '../components/General/View/Photos.vue'
 import ArticlePage from '../components/General/View/ArticlePage.vue'
 import Articles from '../components/General/View/Articles.vue'
+import ReadArticle from '../components/General/View/ReadArticle.vue'
 
 Vue.use(Router)
 
@@ -50,6 +51,11 @@ export default new Router({
           path: 'articles',
           name: 'Articles',
           component: Articles
+        },
+        {
+          path: 'read-article',
+          name: 'Read Articles',
+          component: ReadArticle
         },
         {
           path: 'article',

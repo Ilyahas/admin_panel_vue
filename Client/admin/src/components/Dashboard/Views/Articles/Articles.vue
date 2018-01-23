@@ -96,7 +96,7 @@
   }
 
   .article-content {
-    height: 155px;
+    height: 160px;
     overflow: hidden;
     text-overflow: ellipsis;
   }

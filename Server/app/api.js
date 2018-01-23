@@ -6,8 +6,19 @@ module.exports = function (app, config) {
         password: config.database.password
     });
 
-    const getData = (stringQuery, req, res) => {
-        connection.query(stringQuery, (err, row, fields) => {
+    connection.config.queryFormat = function (query, values) {
+        if (!values) return query;
+        return query.replace(/\:(\w+)/g, function (txt, key) {
+            if (values.hasOwnProperty(key)) {
+                return this.escape(values[key]);
+            }
+            return txt;
+        }.bind(this));
+    };
+
+    const getData = (stringQuery, req, res, params) => {
+        params = params || {};
+        connection.query(stringQuery, params, (err, row, fields) => {
             if (err) {
                 console.log(err);
                 res.status(400);
@@ -17,8 +28,10 @@ module.exports = function (app, config) {
             }
         });
     };
-    const postData = (stringQuery, req, res) => {
-        connection.query(stringQuery, (err, row, fields) => {
+
+    const postData = (stringQuery, req, res, params) => {
+        params = params || {};
+        connection.query(stringQuery, params, (err, row, fields) => {
             if (err) {
                 console.log(err);
                 res.status(400).end("Successful POST");
@@ -29,6 +42,7 @@ module.exports = function (app, config) {
         });
     };
 
+    require('./api/mainpageAPI') (app, getData, postData);
     require('./api/photosAPI') (app, getData, postData);
     require('./api/newsAPI') (app, getData, postData);
     require('./api/articlesAPI') (app, getData, postData);

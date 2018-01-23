@@ -64,7 +64,7 @@
   }
 
   figure.effect-milo h2 {
-    font-size: 18px;
+    font-size: $fontSizeTitle - 7px;
     text-align: right;
     position: absolute;
     right: 0;

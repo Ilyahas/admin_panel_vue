@@ -27,9 +27,6 @@
       Thumbs,
       Viewer
     },
-    methods: {
-
-    },
     created () {
       if (this.$route.query.id) {
         this.sectionId = this.$route.query.id.toString()
@@ -50,6 +47,3 @@
     }
   }
 </script>
-<style scoped lang="scss">
-
-</style>

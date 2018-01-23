@@ -21,8 +21,12 @@
 
     <div class="articles">
       <span class="art-title">Articles</span>
-      <div>
-
+      <div class="art-grid">
+        <div class="article-item" v-for="(article, index) in listOfArticles" :key="index">
+          <div class="art-item-title">{{article.Title}}</div>
+          <div class="art-date">{{article.Date}}</div>
+          <button @click="goToArticle(article.idArticles)" class="btn"><span>Read More</span> <i class="icon ti-angle-right"></i></button>
+        </div>
       </div>
     </div>
   </div>
@@ -46,13 +50,18 @@
           slideToClickedSlide: true
         },
         listOfNewsForCarusel: [],
+        listOfArticles: [],
         TOP_NEWS_NUMBER: 5,
+        TOP_ARTICLES_NUMBER: 2,
         styleBg: 'background-image:url'
       }
     },
     methods: {
       newsClick (index) {
         this.$router.push({ path: '/read-news', query: { id: index } })
+      },
+      goToArticle (id) {
+        this.$router.push({ path: '/read-article', query: { id: id } })
       }
     },
     mounted () {
@@ -64,10 +73,21 @@
       })
     },
     created () {
+      /* Get Top News for slideshow */
       this.$http.post(this.$config.serverHost + '/api/getTopNews', {topNumber: this.TOP_NEWS_NUMBER}).then((res) => {
         let isNewsExist = res.body.length
         if (isNewsExist) {
           this.listOfNewsForCarusel = res.body
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
+
+      /* Get Top Articles */
+      this.$http.post(this.$config.serverHost + '/api/getTopArticles', {topNumber: this.TOP_ARTICLES_NUMBER}).then((res) => {
+        let isArticlesExist = res.body.length
+        if (isArticlesExist) {
+          this.listOfArticles = res.body
         }
       }).catch((error) => {
         console.log(error)
@@ -79,6 +99,10 @@
   @import "../../../assets/sass/styles/GlobalVar";
   $titleBarHeight: 85px;
 
+  *:before,
+  *:after {
+    z-index: -1;
+  }
 
   /*-----------SLIDESHOW----------------*/
   .gallery-top {
@@ -155,6 +179,41 @@
       text-align: center;
       width: 100%;
     }
+
+    .art-grid {
+      position: relative;
+      margin: 0 auto;
+      list-style: none;
+
+      .article-item {
+        border: 1px solid;
+        position: relative;
+        padding: 1%;
+        float: left;
+        overflow: hidden;
+        margin: 0 1% 1% 0;
+        min-width: 320px;
+        width: 47%;
+
+        &:nth-child(even) {
+          margin: 0 0 1% 0;
+        }
+
+        .art-item-title {
+          font-size: $fontSizeTitle;
+          height: 94px;
+          overflow: hidden;
+        }
+
+        .art-date {
+          color: $navbarBgColor;
+          font-size: $fontSizeSmall;
+        }
+
+      }
+
+    }
+
   }
 
 </style>

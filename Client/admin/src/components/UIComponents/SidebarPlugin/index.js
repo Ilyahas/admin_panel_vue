@@ -14,6 +14,11 @@ const SidebarStore = {
       path: '/stats'
     },
     {
+      name: 'Main Page',
+      icon: 'ti-blackboard',
+      path: '/main-page'
+    },
+    {
       name: 'Photo Managment',
       icon: 'ti-instagram',
       path: '/photos'

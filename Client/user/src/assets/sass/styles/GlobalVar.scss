@@ -2,6 +2,9 @@ $navbarBgColor: #5BCAFF;
 $whiteColor: white;
 $whiteActiveLinkColor: #c7ddef;
 
+$fontSizeTitle: 27px;
+$fontSizeSmall: 15px;
+
 body {
   overflow-x: hidden;
 }
@@ -55,4 +58,55 @@ body {
       height: 100%;
     }
   }
+}
+
+.btn {
+  background: rgba(255, 255, 255, 0);
+  border: 1px solid $navbarBgColor;
+  color: $navbarBgColor;
+  position: relative;
+  display: block;
+  overflow: hidden;
+  max-width: 150px;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 15px;
+  padding: 5px 10px;
+
+  &,
+  &:before,
+  &:after {
+    box-sizing: border-box;
+    transition: 0.35s ease-in-out;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $navbarBgColor;
+    transform: translateX(-100%);
+  }
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:hover {
+    color: $whiteColor;
+
+    &:before {
+      transform: translateX(0);
+    }
+  }
+
+}
+
+.icon {
+  float: right;
+  margin-top: 1px;
+  margin-left: 3px;
 }

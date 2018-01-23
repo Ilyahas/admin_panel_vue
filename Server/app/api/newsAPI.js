@@ -1,16 +1,16 @@
 module.exports = function (app, getData, postData) {
-    const format = require('string-template');
+
     const queries = require('./newsQueries');
 
     app.post('/addNews', (req, res) => {
         if (req.body.title !== '') {
-            postData(format(queries.addNews, {
+            postData(queries.addNews, req, res, {
                 text: req.body.text,
                 title: req.body.title,
                 imgName: req.body.imgName,
                 imgData: req.body.imgData,
                 date: req.body.date
-            }), req, res);
+            });
         } else {
             res.status(400).end("News Title is not define");
         }
@@ -21,36 +21,36 @@ module.exports = function (app, getData, postData) {
     });
 
     app.post('/getNewsById', (req, res) => {
-        getData(format(queries.getNewsById, {newsId: req.body.newsId}), req, res);
+        getData(queries.getNewsById, req, res, {newsId: req.body.newsId});
     });
 
     app.post('/deleteNews', (req, res) => {
-        postData(format(queries.deleteNews, {newsId: req.body.newsId}), req, res);
+        postData(queries.deleteNews, req, res, {newsId: req.body.newsId});
     });
 
     app.post('/updateNews', (req, res) => {
         if (req.body.title !== '') {
             if (req.body.newImg) {
-                postData(format(queries.updateNewsWithImg, {
+                postData(queries.updateNewsWithImg, req, res, {
                     text: req.body.text,
                     title: req.body.title,
                     imgName: req.body.imgName,
                     imgData: req.body.imgData,
                     newsId: req.body.newsId
-                }), req, res);
+                });
             } else {
-                postData(format(queries.updateNewsData, {
+                postData(queries.updateNewsData, req, res, {
                     text: req.body.text,
                     title: req.body.title,
                     newsId: req.body.newsId
-                }), req, res);
+                });
             }
         } else {
             res.status(400).end("News Title is not define");
         }
-    })
+    });
 
     app.post('/getTopNews', (req, res) => {
-        getData(format(queries.getTopNews, {topNumber: req.body.topNumber}), req, res);
+        getData(queries.getTopNews, req, res, {topNumber: req.body.topNumber});
     });
 };
