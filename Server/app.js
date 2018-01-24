@@ -15,7 +15,7 @@ app.use(cookieParser());
 
 app.use(config.apiLink, api);
 
-app.use(express.static(path.join(__dirname, "/../Client/admin/dist")));
+app.use('/admin', express.static(path.join(__dirname, "/../Client/admin/dist")));
 app.use(express.static(path.join(__dirname, "/../Client/user/dist")));
 
 

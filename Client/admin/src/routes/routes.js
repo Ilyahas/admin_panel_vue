@@ -25,6 +25,8 @@ import AddArticle from 'src/components/Dashboard/Views/Articles/AddArticle.vue'
 import EditArticle from 'src/components/Dashboard/Views/Articles/EditArticle.vue'
 
 import MainPage from 'src/components/Dashboard/Views/MainPage/MainPage.vue'
+import AddMainPage from 'src/components/Dashboard/Views/MainPage/AddMainPageSection.vue'
+import EditMainPage from 'src/components/Dashboard/Views/MainPage/EditMainPageSection.vue'
 
 const routes = [
   {
@@ -46,6 +48,16 @@ const routes = [
         path: 'main-page',
         name: 'Main Page',
         component: MainPage
+      },
+      {
+        path: 'main-page/add-section',
+        name: 'Add Section to Main Page',
+        component: AddMainPage
+      },
+      {
+        path: 'main-page/edit-section',
+        name: 'Edit Section to Main Page',
+        component: EditMainPage
       },
       {
         path: 'photos',

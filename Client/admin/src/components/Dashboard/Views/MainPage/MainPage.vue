@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link class="btn btn-success btn-top" to="/articles/add-article"><i class="ti-plus"></i></router-link>
+    <router-link class="btn btn-success btn-top" to="/main-page/add-section"><i class="ti-plus"></i></router-link>
 
     <div class="row">
       <div class="col-lg-4 col-sm-6" v-for="section in listOfSections">
@@ -14,10 +14,10 @@
             <hr>
             <div class="row row-edit">
               <div class="col-lg-6 col-sm-6 text-center">
-                <router-link :to="{ path: '/articles/edit-article', query: {id: section.idMainPageSections}}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
+                <router-link :to="{ path: '/main-page/edit-section', query: {id: section.idMainPageSections}}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
               </div>
               <div class="col-lg-6 col-sm-6 text-center">
-                <button id="show-modal" @click="askConfirmation(article)" class="as-link"><i class="ti-close"></i> <span>Delete</span></button>
+                <button id="show-modal" @click="askConfirmation(section)" class="as-link"><i class="ti-close"></i> <span>Delete</span></button>
               </div>
             </div>
           </div>

@@ -10,7 +10,7 @@ module.exports = function (app, getData, postData) {
     });
 
     app.post('/getMainPageSectionById', (req, res) => {
-        getData(queries.getMainPageSectionById, req, res, {articleId: req.body.articleId});
+        getData(queries.getMainPageSectionById, req, res, {mainPageSectionId: req.body.mainPageSectionId});
     });
 
     app.post('/addMainPageSection', (req, res) => {
