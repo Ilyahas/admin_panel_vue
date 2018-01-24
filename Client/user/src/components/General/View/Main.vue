@@ -29,6 +29,12 @@
         </div>
       </div>
     </div>
+
+    <div class="custom-section" v-for="(section, index) in listOfSections" :key="index">
+      <span class="sections-title">{{section.Title}}</span>
+      <div v-html="section.Text"></div>
+    </div>
+
   </div>
 </template>
 <script>
@@ -51,6 +57,7 @@
         },
         listOfNewsForCarusel: [],
         listOfArticles: [],
+        listOfSections: [],
         TOP_NEWS_NUMBER: 5,
         TOP_ARTICLES_NUMBER: 2,
         styleBg: 'background-image:url'
@@ -88,6 +95,16 @@
         let isArticlesExist = res.body.length
         if (isArticlesExist) {
           this.listOfArticles = res.body
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
+
+      /* Get Sections */
+      this.$http.get(this.$config.serverHost + '/api/getMainPageSections').then((res) => {
+        let isSectionsExist = res.body.length
+        if (isSectionsExist) {
+          this.listOfSections = res.body
         }
       }).catch((error) => {
         console.log(error)
@@ -209,11 +226,7 @@
           color: $navbarBgColor;
           font-size: $fontSizeSmall;
         }
-
       }
-
     }
-
   }
-
 </style>
