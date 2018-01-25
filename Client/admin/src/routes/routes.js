@@ -28,115 +28,117 @@ import MainPage from 'src/components/Dashboard/Views/MainPage/MainPage.vue'
 import AddMainPage from 'src/components/Dashboard/Views/MainPage/AddMainPageSection.vue'
 import EditMainPage from 'src/components/Dashboard/Views/MainPage/EditMainPageSection.vue'
 
-const routes = [
-  {
-    path: '/',
-    component: DashboardLayout,
-    redirect: '/stats',
-    children: [
+export default new Router({
+    routes: [
       {
-        path: 'overview',
-        name: 'overview',
-        component: Overview
+        path: '/',
+        component: DashboardLayout,
+        redirect: '/stats',
+        children: [
+          {
+            path: 'overview',
+            name: 'overview',
+            component: Overview
+          },
+          {
+            path: 'stats',
+            name: 'stats',
+            component: UserProfile
+          },
+          {
+            path: 'main-page',
+            name: 'Main Page',
+            component: MainPage
+          },
+          {
+            path: 'main-page/add-section',
+            name: 'Add Section to Main Page',
+            component: AddMainPage
+          },
+          {
+            path: 'main-page/edit-section',
+            name: 'Edit Section to Main Page',
+            component: EditMainPage
+          },
+          {
+            path: 'photos',
+            name: 'Photo Sections',
+            component: Photos
+          },
+          {
+            path: 'photos/add-section',
+            name: 'Add Section',
+            component: AddSection
+          },
+          {
+            path: 'photos/edit-section',
+            name: 'Edit Section',
+            component: EditSection
+          },
+          {
+            path: 'news',
+            name: 'News',
+            component: News
+          },
+          {
+            path: 'news/add-news',
+            name: 'Add News',
+            component: AddNews
+          },
+          {
+            path: 'news/edit-news',
+            name: 'Edit News',
+            component: EditNews
+          },
+          {
+            path: 'articles',
+            name: 'Articles',
+            component: Articles
+          },
+          {
+            path: 'articles/add-article',
+            name: 'Add Article',
+            component: AddArticle
+          },
+          {
+            path: 'articles/edit-article',
+            name: 'Edit Article',
+            component: EditArticle
+          },
+          {
+            path: 'article-page',
+            name: 'Article Page',
+            component: ArticlePage
+          },
+          {
+            path: 'notifications',
+            name: 'notifications',
+            component: Notifications
+          },
+          {
+            path: 'icons',
+            name: 'icons',
+            component: Icons
+          },
+          {
+            path: 'maps',
+            name: 'maps',
+            component: Maps
+          },
+          {
+            path: 'typography',
+            name: 'typography',
+            component: Typography
+          },
+          {
+            path: 'table-list',
+            name: 'table-list',
+            component: TableList
+          }
+        ]
       },
-      {
-        path: 'stats',
-        name: 'stats',
-        component: UserProfile
-      },
-      {
-        path: 'main-page',
-        name: 'Main Page',
-        component: MainPage
-      },
-      {
-        path: 'main-page/add-section',
-        name: 'Add Section to Main Page',
-        component: AddMainPage
-      },
-      {
-        path: 'main-page/edit-section',
-        name: 'Edit Section to Main Page',
-        component: EditMainPage
-      },
-      {
-        path: 'photos',
-        name: 'Photo Sections',
-        component: Photos
-      },
-      {
-        path: 'photos/add-section',
-        name: 'Add Section',
-        component: AddSection
-      },
-      {
-        path: 'photos/edit-section',
-        name: 'Edit Section',
-        component: EditSection
-      },
-      {
-        path: 'news',
-        name: 'News',
-        component: News
-      },
-      {
-        path: 'news/add-news',
-        name: 'Add News',
-        component: AddNews
-      },
-      {
-        path: 'news/edit-news',
-        name: 'Edit News',
-        component: EditNews
-      },
-      {
-        path: 'articles',
-        name: 'Articles',
-        component: Articles
-      },
-      {
-        path: 'articles/add-article',
-        name: 'Add Article',
-        component: AddArticle
-      },
-      {
-        path: 'articles/edit-article',
-        name: 'Edit Article',
-        component: EditArticle
-      },
-      {
-        path: 'article-page',
-        name: 'Article Page',
-        component: ArticlePage
-      },
-      {
-        path: 'notifications',
-        name: 'notifications',
-        component: Notifications
-      },
-      {
-        path: 'icons',
-        name: 'icons',
-        component: Icons
-      },
-      {
-        path: 'maps',
-        name: 'maps',
-        component: Maps
-      },
-      {
-        path: 'typography',
-        name: 'typography',
-        component: Typography
-      },
-      {
-        path: 'table-list',
-        name: 'table-list',
-        component: TableList
-      }
-    ]
-  },
-  { path: '*', component: NotFound }
+      { path: '*', component: NotFound }]
+  }
 ]
 
 /**
@@ -147,5 +149,3 @@ function view(name) {
    var res= require('../components/Dashboard/Views/' + name + '.vue');
    return res;
 };**/
-
-export default routes
