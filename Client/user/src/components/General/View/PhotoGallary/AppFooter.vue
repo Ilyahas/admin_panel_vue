@@ -1,17 +1,10 @@
 <template>
   <footer id="footer">
-    <div v-html="text"></div>
+    <div>Copyright &copy; {{ new Date().getFullYear() }}. All rights reserved.</div>
   </footer>
 </template>
 
 <script>
 
-export default {
-  name: 'app-footer',
-  data () {
-    return {
-      text: null
-    }
-  }
-}
+export default {}
 </script>

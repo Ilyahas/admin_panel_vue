@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="main">
     <div class="container-fluid">
       <transition name="fade" mode="out-in">
         <!-- your content here -->
@@ -23,7 +23,6 @@
   {
     opacity: 0
   }
-
 
 </style>
 

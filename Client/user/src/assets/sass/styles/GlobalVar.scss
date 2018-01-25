@@ -9,6 +9,11 @@ body {
   overflow-x: hidden;
 }
 
+p {
+  -webkit-margin-before: 10px;
+  -webkit-margin-after: 10px;
+}
+
 .container {
   display: block;
   margin: auto;

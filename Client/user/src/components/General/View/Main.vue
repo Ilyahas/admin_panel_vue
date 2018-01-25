@@ -32,7 +32,7 @@
 
     <div class="custom-section" v-for="(section, index) in listOfSections" :key="index">
       <span class="sections-title">{{section.Title}}</span>
-      <div v-html="section.Text"></div>
+      <div class="section-content" v-html="section.Text"></div>
     </div>
 
   </div>
@@ -115,6 +115,7 @@
 <style scoped lang="scss">
   @import "../../../assets/sass/styles/GlobalVar";
   $titleBarHeight: 85px;
+  $fontSectionSize: 70px;
 
   *:before,
   *:after {
@@ -155,7 +156,7 @@
   .slide-title {
     text-align: center;
     display: block;
-    font-size: 24px;
+    font-size: $fontSizeTitle;
     background: rgba(0, 0, 0, 0.3);
     color: white;
     height: $titleBarHeight;
@@ -188,11 +189,12 @@
 
   /*---------------Articles-------------------*/
   .articles {
+    display: block;
     margin-top: 10px;
 
     .art-title {
       display: inline-block;
-      font-size: 70px;
+      font-size: $fontSectionSize;
       text-align: center;
       width: 100%;
     }
@@ -229,4 +231,24 @@
       }
     }
   }
+
+
+  /*-----------------Sections------------------*/
+  .custom-section {
+    display: block;
+    margin-top: 200px;
+    padding: 15px 0;
+
+    .sections-title {
+      display: block;
+      font-size: $fontSectionSize;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .section-content {
+      font-size: $fontSizeSmall + 5px;
+    }
+  }
+
 </style>
