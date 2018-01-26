@@ -1,10 +1,4 @@
-module.exports = function (app, config) {
-    const mysql = require('mysql');
-    const connection = mysql.createConnection({
-        host: config.database.host,
-        user: config.database.user,
-        password: config.database.password
-    });
+module.exports = function (app, connection, config) {
 
     connection.config.queryFormat = function (query, values) {
         if (!values) return query;

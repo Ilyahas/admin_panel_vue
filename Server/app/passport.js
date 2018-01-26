@@ -1,6 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcryptjs');
 
-module.exports = function(passport) {
+module.exports = function(connection, passport) {
 
     passport.serializeUser(function(user, done) {
         done(null, user);
@@ -8,8 +9,8 @@ module.exports = function(passport) {
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        connection.query("select * from admin_panel.users where idusers = " + id, (err,rows) => {
-            done(err, rows[0]);
+        connection.query("select * from admin_panel.users where `idusers` = " + id, (err,rows) => {
+            done(null, rows);
         });
     });
 
@@ -19,21 +20,20 @@ module.exports = function(passport) {
             passwordField : 'password',
             passReqToCallback : true // allows us to pass back the entire request to the callback
         },
-        (req, login, password, done) => { // callback with email and password from our form
-
-            connection.query("SELECT * FROM users WHERE login = '" + login + "'", (err,rows) => {
+        (req, login, password, done) => {
+            connection.query("SELECT * FROM admin_panel.users WHERE `login` = '" + login + "'", (err, rows) => {
                 if (err)
-                    return done(err);
+                    return done(null);
                 if (!rows.length) {
-                    return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+                    return done(null, null);
                 }
 
-                // if the user is found but the password is wrong
-                if (!( rows[0].password === password))
-                    return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
-
-                // all is well, return successful user
-                return done(null, rows[0]);
+                bcrypt.compare(password, rows[0].password, (err, res) => {
+                    if(res)
+                        return done(null, rows[0]);
+                    else
+                        return done(null, null);
+                });
 
             });
         })

@@ -1,0 +1,46 @@
+$deleteColor: #761c19;
+$hoverDeleteColor: #ac2925;
+
+.btn-top {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.btn-form-submit {
+  font-size: 18px;
+  margin-top: 10px;
+}
+.as-link {
+  background:none!important;
+  border:none;
+  padding:0!important;
+  font: inherit;
+  color: $deleteColor;
+  cursor: pointer;
+
+  &:hover {
+    color: $hoverDeleteColor;
+  }
+
+}
+.text-center{
+  text-align: center;
+
+  & span{
+    font-size: 17px;
+  }
+}
+.row-edit {
+  margin-top: -10px;
+}
+.modalWindow{
+  z-index: 10500 !important;
+}
+
+.section-card {
+  height: 190px;
+}
+
+.title-date {
+  font-size: 13px;
+  color: #adadad;
+}

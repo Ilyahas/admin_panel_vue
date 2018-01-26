@@ -1,4 +1,6 @@
-module.exports = function(app, path) {
+module.exports = function(app, path, express, passport) {
+
+    const bcrypt = require('bcryptjs');
 
     const newdir_ = path.resolve(__dirname, '..', '..');
 
@@ -6,7 +8,7 @@ module.exports = function(app, path) {
         if (!req.isAuthenticated()) {
             return next();
         }
-        res.redirect('/');
+        res.redirect('/admin');
     };
 
     const isLoggedIn = (req, res, next) => {
@@ -16,37 +18,33 @@ module.exports = function(app, path) {
         res.redirect('/login');
     };
 
-    app.get('/admin', isLoggedIn, (req, res) => {
-        res.sendFile(path.join(newdir_ + '/Client/admin/dist/index.html'));
-    });
+    app.use('/admin', isLoggedIn, express.static(path.join(newdir_ + '/Client/admin/dist')));
+    app.use('/login', isAuthorized, express.static(path.join(newdir_ + '/Client/login/dist')));
+    app.use('/', express.static(path.join(newdir_ + '/Client/user/dist')));
 
-    app.get('/', (req, res) => {
-        res.sendFile(path.join(newdir_ + '/Client/user/dist/index.html'));
-    });
-
-    app.get('/logout', function(req, res) {
+    app.get('/logout', (req, res) => {
         req.logout();
         res.redirect('/login');
     });
 
-    app.get('/login', isAuthorized, function (req, res) {
-        res.sendFile(path.join(newdir_ + '/Client/user/dist/index.html'));
-    });
-
-    app.post('/login', function(req, res, next) {
+    app.post('/login', (req, res, next) => {
         passport.authenticate('local-login', function(err, user, info) {
             if (err) { return next(err); }
             if (!user) {
                 res.status(401);
-                res.redirect('/admin');
                 return;
             }
-            req.login(user.login, function(error) {
+            req.login(user.idusers, (error) => {
                 if (error) return next(error);
-                return res.redirect('/');
+                return res.redirect('/admin');
             });
 
         })(req, res, next);
     });
+
+    app.get('/hash', (req, res) => {
+        console.log(bcrypt.hashSync('admin', 8));
+        res.end();
+    })
 
 };

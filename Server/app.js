@@ -5,8 +5,14 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
-var session  = require('express-session');
+const session  = require('express-session');
+const mysql = require('mysql');
 const config = require('./app/config');
+const connection = mysql.createConnection({
+    host: config.database.host,
+    user: config.database.user,
+    password: config.database.password
+});
 
 const cors = require('cors');
 app.use(cors({origin: 'http://localhost:8080'}));
@@ -17,10 +23,6 @@ app.use(cookieParser());
 
 app.use(config.apiLink, api);
 
-app.use(express.static(path.join(__dirname, "/../Client/admin/dist")));
-app.use(express.static(path.join(__dirname, "/../Client/user/dist")));
-
-
 app.use(session({
     secret: 'alwaysrunning',
     resave: true,
@@ -30,8 +32,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-require('./app/api') (api, config);
-require('./app/routes') (app, path);
-require('./app/passport.js')(passport);
+require('./app/api') (api, connection, config);
+require('./app/passport.js')(connection, passport);
+require('./app/routes') (app, path, express, passport);
 
 app.listen(config.PORT, () => console.log("App listening on port " + config.PORT + "!"));

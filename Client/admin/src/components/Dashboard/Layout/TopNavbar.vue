@@ -12,17 +12,11 @@
       </div>
       <div class="navbar-right-menu">
         <ul class="nav navbar-nav navbar-right">
-          <li class="open">
-            <a href="#" class="dropdown-toggle btn-magnify" data-toggle="dropdown">
-              <i class="ti-panel"></i>
-              <p>Stats</p>
-            </a>
-          </li>
           <li>
-            <a href="#" class="btn-rotate">
-              <i class="ti-settings"></i>
+            <a :href="host + '/logout'" class="btn-rotate">
+              <i class="ti-shift-right"></i>
               <p>
-                Settings
+                Logout
               </p>
             </a>
           </li>
@@ -41,7 +35,8 @@
     },
     data () {
       return {
-        activeNotifications: false
+        activeNotifications: false,
+        host: this.$config.serverHost
       }
     },
     methods: {
