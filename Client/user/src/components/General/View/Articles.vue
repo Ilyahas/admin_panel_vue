@@ -6,30 +6,50 @@
       <div class="art-content" v-html="article.Text"></div>
       <button @click="goToArticle(article.idArticles)" class="btn"><span>Read More</span> <i class="icon ti-angle-right"></i></button>
     </div>
+    <infinite-loading @infinite="infiniteHandler">
+      <span slot="no-more"></span>
+    </infinite-loading>
   </div>
 </template>
 <script>
+  import InfiniteLoading from 'vue-infinite-loading'
+
   export default {
     data () {
       return {
         listOfArticles: [],
-        TOP_ARTICLES_NUMBER: 9
+        TOP_ARTICLES_NUMBER: 3,
+        isMoreArticlesForLoad: true
       }
+    },
+    components: {
+      InfiniteLoading
     },
     methods: {
       goToArticle (id) {
         this.$router.push({ path: '/read-article', query: { id: id } })
-      }
-    },
-    created () {
-      this.$http.post(this.$config.serverHost + '/api/getTopArticles', {topNumber: this.TOP_ARTICLES_NUMBER}).then((res) => {
-        let isNewsExist = res.body.length
-        if (isNewsExist) {
-          this.listOfArticles = res.body
+      },
+      infiniteHandler ($state) {
+        let fromLoadArticlesIndex = this.listOfArticles.length
+        if (this.isMoreArticlesForLoad) {
+          this.$http.post(this.$config.serverHost + '/api/getTopArticles', {
+            topNumber: this.TOP_ARTICLES_NUMBER,
+            fromNumber: fromLoadArticlesIndex
+          }).then((res) => {
+            let isArticlesExist = res.body.length
+            if (isArticlesExist) {
+              this.listOfArticles = this.listOfArticles.concat(res.body)
+              $state.loaded()
+            } else {
+              this.isMoreArticlesForLoad = false
+              $state.complete()
+            }
+          }).catch((error) => {
+            console.log(error)
+            $state.complete()
+          })
         }
-      }).catch((error) => {
-        console.log(error)
-      })
+      }
     }
   }
 </script>

@@ -51,6 +51,9 @@ module.exports = function (app, getData, postData) {
     });
 
     app.post('/getTopNews', (req, res) => {
-        getData(queries.getTopNews, req, res, {topNumber: req.body.topNumber});
+        if (req.body.fromNumber === undefined) {
+            req.body.fromNumber = 0;
+        }
+        getData(queries.getTopNews, req, res, {topNumber: req.body.topNumber, fromNumber: req.body.fromNumber});
     });
 };

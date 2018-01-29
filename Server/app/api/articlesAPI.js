@@ -21,7 +21,10 @@ module.exports = function (app, getData, postData) {
     });
 
     app.post('/getTopArticles', (req, res) => {
-        getData(queries.getTopArticles, req, res, {topNumber: req.body.topNumber});
+        if (req.body.fromNumber === undefined) {
+            req.body.fromNumber = 0;
+        }
+        getData(queries.getTopArticles, req, res, {topNumber: req.body.topNumber, fromNumber: req.body.fromNumber});
     });
 
     app.post('/getArticleById', (req, res) => {

@@ -8,31 +8,52 @@
           <p>{{news.Date}}</p>
         </figcaption>
       </figure>
+      <infinite-loading @infinite="infiniteHandler">
+        <span slot="no-more"></span>
+      </infinite-loading>
     </div>
   </div>
 </template>
 <script>
+  import InfiniteLoading from 'vue-infinite-loading'
+
   export default {
     data () {
       return {
         listOfNews: [],
-        TOP_NEWS_NUMBER: 9
+        TOP_NEWS_NUMBER: 12,
+        isMoreNewsForLoad: true
       }
+    },
+    components: {
+      InfiniteLoading
     },
     methods: {
       goToNews (newsId) {
         this.$router.push({ path: '/read-news', query: { id: newsId } })
-      }
-    },
-    created () {
-      this.$http.post(this.$config.serverHost + '/api/getTopNews', {topNumber: this.TOP_NEWS_NUMBER}).then((res) => {
-        let isNewsExist = res.body.length
-        if (isNewsExist) {
-          this.listOfNews = res.body
+      },
+      infiniteHandler ($state) {
+        let fromLoadNewsIndex = this.listOfNews.length
+
+        if (this.isMoreNewsForLoad) {
+          this.$http.post(this.$config.serverHost + '/api/getTopNews', {
+            topNumber: this.TOP_NEWS_NUMBER,
+            fromNumber: fromLoadNewsIndex
+          }).then((res) => {
+            let isNewsExist = res.body.length
+            if (isNewsExist) {
+              this.listOfNews = this.listOfNews.concat(res.body)
+              $state.loaded()
+            } else {
+              this.isMoreNewsForLoad = false
+              $state.complete()
+            }
+          }).catch((error) => {
+            console.log(error)
+            $state.complete()
+          })
         }
-      }).catch((error) => {
-        console.log(error)
-      })
+      }
     }
   }
 </script>
@@ -41,7 +62,7 @@
 
   figure.effect-milo {
     background: rgba(0, 0, 0, 0.7);
-    max-height: 218px;
+    max-height: 217px;
   }
 
   figure.effect-milo img {
