@@ -3,14 +3,18 @@
 import Vue from 'vue'
 import App from './App'
 import VueResource from 'vue-resource'
+import VueNoty from 'vuejs-noty'
+
 
 import 'bootstrap/dist/css/bootstrap.css'
 import './assets/sass/paper-dashboard.scss'
-
-import Notifications from './components/NotificationPlugin'
+import 'vuejs-noty/dist/vuejs-noty.css'
 
 Vue.use(VueResource)
-Vue.use(Notifications)
+Vue.use(VueNoty,  {
+  timeout: 10000,
+  progressBar: false
+})
 
 Vue.config.productionTip = false
 

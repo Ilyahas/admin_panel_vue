@@ -19,7 +19,7 @@
         height="480"
         margin="16"
         accept="image/jpeg,image/png"
-        size="10"
+        size="5"
         buttonClass="btn"
         :customStrings="{
                   upload: '<h1>Bummer!</h1>',

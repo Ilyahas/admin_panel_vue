@@ -14,13 +14,14 @@
           <label>News Cover</label>
           <picture-input
             ref="pictureInput"
+            :crop="true"
             v-bind:prefill="newsImg"
             @change="onChange"
             width="640"
             height="480"
             margin="16"
             accept="image/jpeg,image/png"
-            size="10"
+            size="5"
             buttonClass="btn"
             :customStrings="{
                     upload: '<h1>Bummer!</h1>',

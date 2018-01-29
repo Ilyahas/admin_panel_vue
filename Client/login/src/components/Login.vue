@@ -43,11 +43,11 @@ export default {
   methods: {
     submit () {
       if (this.userlogin === '') {
-        this.notify('Login is empty', 'ti-trash', 'warning')
+        this.$noty.warning('Login is empty')
         return
       }
       if (this.password === '') {
-        this.notify('Password is empty', 'ti-trash', 'warning')
+        this.$noty.warning('Password is empty')
         return
       }
       this.$http.post(this.host + '/login', {login: this.userlogin, password: this.password}).then((res) => {
@@ -55,19 +55,9 @@ export default {
           window.location.href = this.host + '/admin'
         }
       }).catch((error) => {
+        this.$noty.error('Some server problem, Try later')
         console.log(error)
       })
-    },
-    notify (msg, icon, type) {
-      console.log(this.$notifications.notify)
-      this.$notifications.notify(
-        {
-          message: msg,
-          icon: icon,
-          horizontalAlign: 'right',
-          verticalAlign: 'top',
-          type: type
-        })
     }
   }
 }

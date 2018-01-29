@@ -392,3 +392,8 @@ input.input100 {
 
 
 
+/*------- Notification ---------*/
+.noty_body {
+  padding: 15px !important;
+  font-size: 18px !important;
+}
