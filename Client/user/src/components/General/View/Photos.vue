@@ -35,14 +35,15 @@
           if (isPhotosExist) {
             EventBus.$emit('section', res.body[0])
           } else {
-            // notify: id is wrong
-            // this.$router.push('/photo-sections')
+            this.$noty.error('Photo Section does not exist')
+            this.$router.push('/photo-sections')
           }
         }).catch((error) => {
           console.log(error)
         })
       } else {
-        // notify: id is undefined
+        this.$noty.error('Photo Section does not exist')
+        this.$router.push('/photo-sections')
       }
     }
   }

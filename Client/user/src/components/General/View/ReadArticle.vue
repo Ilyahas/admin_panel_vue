@@ -20,8 +20,13 @@
             this.article = res.body[0]
           }
         }).catch((error) => {
+          this.$noty.error('Article does not exist')
+          this.$router.push('/articles')
           console.log(error)
         })
+      } else {
+        this.$noty.error('Article does not exist')
+        this.$router.push('/articles')
       }
     }
   }

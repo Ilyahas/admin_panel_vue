@@ -20,7 +20,7 @@
         if (isNewsExist) {
           this.articlePageContent = res.body[0]
         } else {
-          // notify: id is wrong
+          this.$noty.error('Article does not exist')
           this.$router.push('/news')
         }
       }).catch((error) => {

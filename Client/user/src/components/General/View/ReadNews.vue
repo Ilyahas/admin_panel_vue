@@ -20,14 +20,15 @@
           if (isNewsExist) {
             this.news = res.body[0]
           } else {
-            // notify: id is wrong
+            this.$noty.error('News does not exist')
             this.$router.push('/news')
           }
         }).catch((error) => {
           console.log(error)
         })
       } else {
-        // notify: id is undefined
+        this.$noty.error('News does not exist')
+        this.$router.push('/news')
       }
     }
   }

@@ -115,7 +115,7 @@
 <style scoped lang="scss">
   @import "../../../assets/sass/styles/GlobalVar";
   $titleBarHeight: 85px;
-  $fontSectionSize: 70px;
+  $fontSectionSize: 60px;
 
   *:before,
   *:after {

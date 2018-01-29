@@ -28,8 +28,8 @@
         if (isSectionsExist) {
           this.listOfSections = res.body
         } else {
-          // notify: id is wrong
-          this.$router.push('/news')
+          this.$noty.error('Photo Section does not exist')
+          this.$router.push('/photo-sections')
         }
       }).catch((error) => {
         console.log(error)
