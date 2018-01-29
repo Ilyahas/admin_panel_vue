@@ -7,33 +7,52 @@
           <div class="title"><span>{{section.SectionName}}</span></div>
         </figcaption>
       </figure>
+      <infinite-loading @infinite="infiniteHandler">
+        <span slot="no-more"></span>
+      </infinite-loading>
     </div>
   </div>
 </template>
 <script>
+  import InfiniteLoading from 'vue-infinite-loading'
+
   export default {
     data () {
       return {
-        listOfSections: []
+        listOfSections: [],
+        TOP_PHOTOSECTIONS_NUMBER: 12,
+        isMorePhotoSectionsForLoad: true
       }
+    },
+    components: {
+      InfiniteLoading
     },
     methods: {
       goToSection (id) {
         this.$router.push({ path: '/photos', query: { id: id } })
-      }
-    },
-    created () {
-      this.$http.get(this.$config.serverHost + '/api/getSections').then((res) => {
-        let isSectionsExist = res.body.length
-        if (isSectionsExist) {
-          this.listOfSections = res.body
-        } else {
-          this.$noty.error('Photo Section does not exist')
-          this.$router.push('/photo-sections')
+      },
+      infiniteHandler ($state) {
+        let fromLoadPhotoSectionsIndex = this.listOfSections.length
+
+        if (this.isMorePhotoSectionsForLoad) {
+          this.$http.post(this.$config.serverHost + '/api/getTopSections', {
+            topNumber: this.TOP_PHOTOSECTIONS_NUMBER,
+            fromNumber: fromLoadPhotoSectionsIndex
+          }).then((res) => {
+            let isNewsExist = res.body.length
+            if (isNewsExist) {
+              this.listOfSections = this.listOfSections.concat(res.body)
+              $state.loaded()
+            } else {
+              this.isMorePhotoSectionsForLoad = false
+              $state.complete()
+            }
+          }).catch((error) => {
+            console.log(error)
+            $state.complete()
+          })
         }
-      }).catch((error) => {
-        console.log(error)
-      })
+      }
     }
   }
 </script>

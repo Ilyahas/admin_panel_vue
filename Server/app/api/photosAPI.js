@@ -46,6 +46,13 @@ module.exports = function (app, getData, postData) {
         postData(queries.deleteSection, req, res, {sectionId: req.body.sectionId});
     });
 
+    app.post('/getTopSections', (req, res) => {
+        if (req.body.fromNumber === undefined) {
+            req.body.fromNumber = 0;
+        }
+        getData(queries.getTopSections, req, res, {topNumber: req.body.topNumber, fromNumber: req.body.fromNumber});
+    });
+
 
 
     app.post('/addPhoto', (req, res) => {
