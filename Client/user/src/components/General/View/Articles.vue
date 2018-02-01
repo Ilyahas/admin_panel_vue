@@ -62,6 +62,10 @@
     margin-bottom: 15px;
     overflow: hidden;
 
+    @include breakpoint(xs) {
+      margin-bottom: 1%;
+    }
+
     .art-item-title {
       font-size: $fontSizeTitle;
     }

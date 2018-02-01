@@ -81,6 +81,10 @@
       transition: 0.35s;
       -webkit-transform: scale(1);
       transform: scale(1);
+
+      @include breakpoint(xs) {
+        opacity: 0.5;
+      }
     }
 
     &:hover {

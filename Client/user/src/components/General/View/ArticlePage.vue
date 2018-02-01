@@ -35,4 +35,12 @@
   .title {
     font-size: $fontSizeTitle + 10px;
   }
+
+  @include breakpoint(xs) {
+    .article-content {
+      font-size: 18px;
+      padding: 0 2%;
+    }
+  }
+
 </style>

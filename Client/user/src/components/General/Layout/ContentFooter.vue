@@ -52,6 +52,10 @@
     color: $whiteColor;
     padding: 25px 0;
     width: 100%;
+
+    @include breakpoint(xs) {
+      text-align: center;
+    }
   }
 
 </style>

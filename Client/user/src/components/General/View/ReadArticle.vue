@@ -2,7 +2,7 @@
   <div class="container container-margin">
     <div class="title">{{article.Title}}</div>
     <small class="title-date">{{article.Date}}</small>
-    <div v-html="article.Text"></div>
+    <div class="article-content" v-html="article.Text"></div>
   </div>
 </template>
 <script>
@@ -48,6 +48,13 @@
 
     img {
       width: 100%;
+    }
+  }
+
+  @include breakpoint(xs) {
+    .article-content {
+      font-size: 18px;
+      padding: 0 2%;
     }
   }
 </style>

@@ -1,6 +1,6 @@
 const configData = {
   defaultImg: 'static/img/default.png',
-  serverHost: 'http://localhost:3000'
+  serverHost: 'http://192.168.1.129:3000'
 }
 
 const Config = {

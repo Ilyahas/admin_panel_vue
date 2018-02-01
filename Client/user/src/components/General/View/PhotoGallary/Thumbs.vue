@@ -58,3 +58,14 @@ export default {
   }
 }
 </script>
+<style scoped lang="scss">
+  @import "../../../../assets/sass/styles/GlobalVar";
+
+
+  .photoAlbum #thumbnails article {
+    @include breakpoint(xs) {
+      width: 85%;
+    }
+  }
+
+</style>

@@ -21,13 +21,11 @@
 
     <div class="articles">
       <span class="art-title">Articles</span>
-      <div class="art-grid">
         <div class="article-item" v-for="(article, index) in listOfArticles" :key="index">
           <div class="art-item-title">{{article.Title}}</div>
           <div class="art-date">{{article.Date}}</div>
           <button @click="goToArticle(article.idArticles)" class="btn"><span>Read More</span> <i class="icon ti-angle-right"></i></button>
         </div>
-      </div>
     </div>
 
     <div class="custom-section" v-for="(section, index) in listOfSections" :key="index">
@@ -61,7 +59,7 @@
         listOfArticles: [],
         listOfSections: [],
         TOP_NEWS_NUMBER: 5,
-        TOP_ARTICLES_NUMBER: 2,
+        TOP_ARTICLES_NUMBER: 3,
         styleBg: 'background-image:url'
       }
     },
@@ -124,11 +122,29 @@
     z-index: -1;
   }
 
+  .container {
+    @include breakpoint(xs) {
+      width: 100% !important;
+    }
+  }
+
+  .container-margin{
+    @include breakpoint(xs) {
+      margin-top: 0 !important;
+    }
+  }
+
   /*-----------SLIDESHOW----------------*/
   .gallery-top {
     height: 55vh !important;
     min-height: 500px!important;
     width: 100%;
+
+    @include breakpoint(xs) {
+      height: 55vh !important;
+      min-height: 362px!important;
+    }
+
   }
   .gallery-thumbs {
     background-color: rgba(105, 191, 250, 0.25);
@@ -190,6 +206,8 @@
   }
 
   /*---------------Articles-------------------*/
+  $paddingInTitle: 10px;
+
   .articles {
     display: block;
     margin-top: 10px;
@@ -199,46 +217,39 @@
       font-size: $fontSectionSize;
       text-align: center;
       width: 100%;
-    }
 
-    .art-grid {
-      position: relative;
-      margin: 0 auto;
-      list-style: none;
-
-      .article-item {
-        border: 1px solid;
-        position: relative;
-        padding: 1%;
-        float: left;
-        overflow: hidden;
-        margin: 0 1% 1% 0;
-        min-width: 320px;
-        width: 47%;
-
-        &:nth-child(even) {
-          margin: 0 0 1% 0;
-        }
-
-        .art-item-title {
-          font-size: $fontSizeTitle;
-          height: 94px;
-          overflow: hidden;
-        }
-
-        .art-date {
-          color: $navbarBgColor;
-          font-size: $fontSizeSmall;
-        }
+      @include breakpoint(md) {
+        font-size: $fontSectionSize - 10px;
       }
     }
+
+    .article-item {
+      border: 1px solid;
+      padding: 10px;
+      margin-bottom: 10px;
+      width: calc(100% - 22px);
+
+      .art-item-title {
+        font-size: $fontSizeTitle;
+        overflow: hidden;
+
+        @include breakpoint(md) {
+          font-size: $fontSizeTitle - 5px;
+        }
+      }
+
+      .art-date {
+        color: $navbarBgColor;
+        font-size: $fontSizeSmall;
+      }
+    }
+
   }
 
 
   /*-----------------Sections------------------*/
   .custom-section {
     display: block;
-    margin-top: 200px;
     padding: 15px 0;
 
     .sections-title {
@@ -246,6 +257,10 @@
       font-size: $fontSectionSize;
       text-align: center;
       margin-bottom: 10px;
+
+      @include breakpoint(md) {
+        font-size: $fontSectionSize - 10px;
+      }
     }
 
     .section-content {

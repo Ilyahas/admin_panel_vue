@@ -3,7 +3,7 @@
     <div class="title">{{news.Title}}</div>
     <small class="title-date">{{news.Date}}</small>
     <div class="title-img"><img :src="serverHost + newsImgPath + news.ImgName"></div>
-    <div v-html="news.Text"></div>
+    <div class="news-content" v-html="news.Text"></div>
   </div>
 </template>
 <script>
@@ -52,6 +52,13 @@
 
     img {
       width: 100%;
+    }
+  }
+
+  @include breakpoint(xs) {
+    .news-content {
+      font-size: 18px;
+      padding: 0 2%;
     }
   }
 </style>

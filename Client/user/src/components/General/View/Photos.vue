@@ -48,3 +48,14 @@
     }
   }
 </script>
+<style scoped lang="scss">
+  @import "../../../assets/sass/styles/GlobalVar";
+
+  .photoAlbum #main {
+    @include breakpoint(xs) {
+      left: 0 !important;
+      width: 85vw !important;
+    }
+  }
+
+</style>

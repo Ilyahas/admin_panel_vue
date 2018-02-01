@@ -78,6 +78,10 @@
     transform: translate3d(-30px,0,0) scale(1.15);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+
+    @include breakpoint(xs) {
+      opacity: 0.5;
+    }
   }
 
   figure.effect-milo:hover img {

@@ -5,6 +5,81 @@ $whiteActiveLinkColor: #c7ddef;
 $fontSizeTitle: 27px;
 $fontSizeSmall: 15px;
 
+@mixin breakpoint($device) {
+  @if ($device == xs) {
+    // until 767px
+    @media only screen and (max-width: 767px) {
+      @content;
+    }
+  } @else if ($device == sm) {
+    // from 768px
+    @media only screen and (min-width: 768px) {
+      @content;
+    }
+  } @else if ($device == md) {
+    // from 992px
+    @media only screen and (min-width: 992px) {
+      @content;
+    }
+  } @else if ($device == lg) {
+    // from 1200px - open end
+    @media only screen and (min-width: 1200px) {
+      @content;
+    }
+  }
+  @else if ($device == lg-min) {
+    // from 1200px - open end
+    @media only screen and (min-width: 1201px) {
+      @content;
+    }
+  }
+  @else if ($device == lg-max) {
+    // from 1200px - open end
+    @media only screen and (min-width: 1281px) {
+      @content;
+    }
+  }
+  @else {
+    //custom breakpoint
+    @media only screen and (max-width: $device) {
+      @content;
+    }
+  }
+}
+
+
+@mixin breakpointDesktop {
+  @media only screen and (min-width: 1025px) {
+    @content;
+  }
+}
+
+
+@mixin tabletVersion {
+  @media screen and (min-width: 1025px) and (max-width: 1280px) {
+    @content;
+  }
+}
+
+
+.scrollOff {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  max-height: 100vh;
+  overflow: hidden;
+  padding-bottom: 1px;
+}
+
+.scrollOff + .m-content {
+  display: none;
+}
+
+.scrollOff ~ .footer {
+  display: none;
+}
+
 body {
   overflow-x: hidden;
 }
@@ -21,10 +96,18 @@ p {
 
   width: 80%;
   max-width: 1020px;
+
+  @include breakpoint(xs) {
+    width: 99%;
+  }
 }
 
 .container-margin{
   margin-top: 15px;
+
+  @include breakpoint(xs) {
+    margin-top: 1%;
+  }
 }
 
 .shadow {
