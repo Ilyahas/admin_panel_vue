@@ -1,6 +1,9 @@
-module.exports = function (app, getData, postData) {
+module.exports = function (app, getData, postData, path) {
 
     const queries = require('./photoQueries');
+    const upload = require('../upload');
+
+    const newdir_ = path.resolve(__dirname, '..', '..');
 
     app.post('/addSection', (req, res) => {
         if (req.body.sectionName !== '') {
@@ -12,6 +15,10 @@ module.exports = function (app, getData, postData) {
         } else {
             res.status(400).end("Section Name is not define");
         }
+    });
+
+    app.post('/addPhotoFile', (req, res) => {
+        upload.uploadImgs(req, res, newdir_ + "/img/photos");
     });
 
     app.get('/getSections', (req, res) => {
@@ -44,6 +51,7 @@ module.exports = function (app, getData, postData) {
 
     app.post('/deleteSection', (req, res) => {
         postData(queries.deleteSection, req, res, {sectionId: req.body.sectionId});
+        // postData(queries.deleteAllPhotosInSection, req, res, {sectionId: req.body.sectionId});
     });
 
     app.post('/getTopSections', (req, res) => {
@@ -56,16 +64,11 @@ module.exports = function (app, getData, postData) {
 
 
     app.post('/addPhoto', (req, res) => {
-        if (req.body.imgData) {
-            postData(queries.addNewPhoto, req, res, {
-                photoName: req.body.photoName,
-                imgName: req.body.imgName,
-                imgData: req.body.imgData,
-                sectionId: req.body.sectionId
-            });
-        } else {
-            res.status(400).end("Photo is not define");
-        }
+        postData(queries.addNewPhoto, req, res, {
+            photoName: req.body.photoName,
+            imgName: req.body.imgName,
+            sectionId: req.body.sectionId
+        });
     });
 
     app.post('/getPhotosBySectionId', (req, res) => {

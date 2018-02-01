@@ -1,4 +1,4 @@
-module.exports = function (app, connection, config) {
+module.exports = function (app, connection, path) {
 
     connection.config.queryFormat = function (query, values) {
         if (!values) return query;
@@ -37,7 +37,7 @@ module.exports = function (app, connection, config) {
     };
 
     require('./api/mainpageAPI') (app, getData, postData);
-    require('./api/photosAPI') (app, getData, postData);
-    require('./api/newsAPI') (app, getData, postData);
+    require('./api/photosAPI') (app, getData, postData, path);
+    require('./api/newsAPI') (app, getData, postData, path);
     require('./api/articlesAPI') (app, getData, postData);
 };

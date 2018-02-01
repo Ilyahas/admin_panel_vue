@@ -34,12 +34,14 @@ const uploadFile = (call, req, res) => {
 };
 
 exports.uploadImgs = async (req, res, path) => {
-    let uploadDist = createUploadFunction(createUploadStorage("../Client/admin/dist/static/img/" + path));
-    let uploadStatic = createUploadFunction(createUploadStorage("../Client/admin/static/img/" + path));
+    // let uploadDist = createUploadFunction(createUploadStorage("../Client/admin/dist/static/img/" + path));
+    let uploadStatic = createUploadFunction(createUploadStorage(path));
 
-    let [isUploadedDist, isUploadedStatic] = await Promise.all([uploadFile(uploadDist, req, res), uploadFile(uploadStatic, req, res)]);
+    // let [isUploadedDist, isUploadedStatic] = await Promise.all([uploadFile(uploadDist, req, res), uploadFile(uploadStatic, req, res)]);
 
-    if(isUploadedDist && isUploadedStatic) {
+    let isUploadedStatic = uploadFile(uploadStatic, req, res);
+
+    if(isUploadedStatic) {
         res.status(200).end("File is uploaded");
     } else {
         res.status(400).end("File is not uploaded");

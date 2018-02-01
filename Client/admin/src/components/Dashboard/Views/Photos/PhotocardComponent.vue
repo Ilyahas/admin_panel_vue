@@ -44,7 +44,7 @@
             <button class="deletePhotoBtn as-link" @click="askConfirmation(photo)"><i class="ti-close"></i>
             </button>
             <div class="photoContainer text-center">
-              <img v-bind:src="photo.ImgData">
+              <img v-bind:src="photosFullPath + photo.PhotoImgName">
             </div>
           </div>
         </div>
@@ -71,12 +71,14 @@
     },
     data () {
       return {
-        newPhoto: '',
+        newPhoto: this.$config.serverHost + this.$config.defaultImg,
         newPhotoName: '',
         image: {},
         selectedPhoto: {},
         photoChanged: false,
 
+        photosPath: '/img/photos/',
+        photosFullPath: '',
         allPhotos: [],
         showModal: false
       }
@@ -86,16 +88,17 @@
       PictureInput
     },
     methods: {
-      saveNewPhoto () {
-        if (this.$refs.photoInput.image === undefined) {
+      validImg () {
+        if (!this.photoChanged) {
           this.notify('Section Picture cannot be empty', 'ti-info', 'warning')
-          return
+          return false
         }
-
+        return true
+      },
+      getPhotoData () {
         let photoData = {
           photoName: this.newPhotoName,
           imgName: '',
-          imgData: '',
           sectionId: this.currentId
         }
         // get name of the file
@@ -103,15 +106,19 @@
           if (file[0] === 'file') {
             photoData.imgName = file[1].name
           }
-          if (file[0] === 'image') {
-            photoData.imgData = file[1]
-          }
         }
-        // save photo data to DB
-        this.$http.post(this.$config.serverHost + '/api/addPhoto', photoData).then((res) => {
-          if (res.status === 200) {
+        return photoData
+      },
+      saveNewPhoto () {
+        if (!this.validImg()) { return }
+
+        this.$http.post(this.$config.serverHost + '/api/addPhoto', this.getPhotoData()).then((res) => {
+          this.$http.post(this.$config.serverHost + '/api/addPhotoFile', this.image).then((res) => {
             this.$router.go(this.$router.currentRoute)
-          }
+          }).catch((error) => {
+            this.notify('Cannot save image file', 'ti-save', 'warning')
+            console.log(error)
+          })
         }).catch((error) => {
           this.notify('Cannot save image data', 'ti-save', 'warning')
           console.log(error)
@@ -122,13 +129,11 @@
           this.photoChanged = true
           let data = new FormData()
           data.append('file', this.$refs.photoInput.file)
-          data.append('image', this.$refs.photoInput.image)
           this.image = data
         } else {
           console.log('FileReader API not supported: use the <form>, Luke!')
         }
       },
-
       askConfirmation (photo) {
         this.selectedPhoto = photo
         this.showModal = true
@@ -144,7 +149,6 @@
         })
         this.showModal = false
       },
-
       notify (msg, icon, type) {
         this.$notifications.notify(
           {
@@ -158,6 +162,7 @@
       }
     },
     created () {
+      this.photosFullPath = this.$config.serverHost + this.photosPath
       this.$http.post(this.$config.serverHost + '/api/getPhotosBySectionId', {sectionId: this.currentId}).then((res) => {
         let isPhotosExist = res.body.length
         if (isPhotosExist) {

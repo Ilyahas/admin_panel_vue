@@ -14,14 +14,14 @@
           <label>News Cover</label>
           <picture-input
             ref="pictureInput"
-            :crop="true"
+            :crop="false"
             v-bind:prefill="newsImg"
             @change="onChange"
             width="640"
             height="480"
             margin="16"
             accept="image/jpeg,image/png"
-            size="5"
+            size="15"
             buttonClass="btn"
             :customStrings="{
                     upload: '<h1>Bummer!</h1>',
@@ -35,8 +35,8 @@
         </div>
       </div>
       <div class="text-center">
-        <button v-if="isNewNews" class="btn btn-success btn-form-submit btn-wd" @click="addNews">Save</button>
-        <button v-if="!isNewNews" class="btn btn-success btn-form-submit btn-wd" @click="saveNews">Update</button>
+        <button v-if="isNewNews" class="btn btn-success btn-form-submit btn-wd" @click="saveNews('addNews')">Save</button>
+        <button v-if="!isNewNews" class="btn btn-success btn-form-submit btn-wd" @click="saveNews('updateNews')">Update</button>
       </div>
     </div>
   </div>
@@ -50,6 +50,7 @@
     },
     data () {
       return {
+        newsImgPath: '/img/news/',
         newsImg: '',
         changedCoverNews: false,
         title: '',
@@ -58,7 +59,7 @@
         customToolbar: [
           ['bold', 'italic', 'underline'],
           [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-          ['image'], [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
           [{ 'align': [] }]
         ],
         isNewNews: true
@@ -68,27 +69,6 @@
       PictureInput
     },
     methods: {
-      base64toFile (b64Data, fileName, contentType, sliceSize) {
-        contentType = contentType || ''
-        sliceSize = sliceSize || 512
-
-        let byteCharacters = atob(b64Data)
-        let byteArrays = []
-
-        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-          let slice = byteCharacters.slice(offset, offset + sliceSize)
-
-          let byteNumbers = new Array(slice.length)
-          for (let i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i)
-          }
-
-          let byteArray = new Uint8Array(byteNumbers)
-
-          byteArrays.push(byteArray)
-        }
-        return new File(byteArrays, fileName, {type: contentType})
-      },
       getTodayDate () {
         let today = new Date()
         let dd = today.getDate()
@@ -106,78 +86,74 @@
         today = dd + '-' + mm + '-' + yyyy
         return today
       },
-      addNews () {
+      validFields () {
         let isTitleValid = this.title.length > 3
         if (!isTitleValid) {
           this.notify('News Title is too short', 'ti-info', 'warning')
-          return
+          return false
         }
-        if (!this.changedCoverNews) {
-          this.notify('News Cover cannot be empty', 'ti-info', 'warning')
-          return
+        if (!this.changedCoverNews && this.isNewNews) {
+          this.notify('News Cover cannot be default', 'ti-info', 'warning')
+          return false
         }
-
-        let newsData = {
-          text: this.content,
-          title: this.title,
-          imgName: '',
-          imgData: '',
-          date: this.getTodayDate()
-        }
-        // get name of the file
-        for (let file of this.image) {
-          if (file[0] === 'file') {
-            newsData.imgName = file[1].name
-          }
-          if (file[0] === 'image') {
-            newsData.imgData = file[1]
-          }
-        }
-        console.log(newsData.imgData)
-        this.$http.post(this.$config.serverHost + '/api/addNews', newsData).then((res) => {
-          if (res.status === 200) {
-            this.notify('News was successfully added', 'ti-check', 'success')
-            this.$router.push('/news')
-          }
-        }).catch((error) => {
-          this.notify('Cannot add news', 'ti-plus', 'warning')
-          console.log(error)
-        })
+        return true
       },
-      saveNews () {
-        let isTitleValid = this.title.length > 3
-        if (!isTitleValid) {
-          this.notify('News Title is too short', 'ti-info', 'warning')
-          return
-        }
-
-        let newsData = {
-          text: this.content,
-          title: this.title,
-          imgName: '',
-          imgData: '',
-          newsId: this.currentId,
-          newImg: false
-        }
-        if (this.changedCoverNews) {
-          newsData.newImg = true
+      getNewsData () {
+        let newsData = {}
+        if (this.isNewNews) {
+          newsData = {
+            text: this.content,
+            title: this.title,
+            imgName: '',
+            date: this.getTodayDate()
+          }
           // get name of the file
           for (let file of this.image) {
             if (file[0] === 'file') {
               newsData.imgName = file[1].name
             }
-            if (file[0] === 'image') {
-              newsData.imgData = file[1]
+          }
+        } else {
+          newsData = {
+            text: this.content,
+            title: this.title,
+            imgName: '',
+            newsId: this.currentId,
+            isNewImg: false
+          }
+          if (this.changedCoverNews) {
+            newsData.isNewImg = true
+            // get name of the file
+            for (let file of this.image) {
+              if (file[0] === 'file') {
+                newsData.imgName = file[1].name
+              }
             }
           }
         }
-        this.$http.post(this.$config.serverHost + '/api/updateNews', newsData).then((res) => {
-          if (res.status === 200) {
-            this.notify('News was edit', 'ti-pencil', 'success')
-            this.$router.push('/news')
+        return newsData
+      },
+      successUpload () {
+        this.notify('News was successfully added', 'ti-check', 'success')
+        this.$router.push('/news')
+      },
+      saveNews (path) {
+        if (!this.validFields()) { return }
+        let newsData = this.getNewsData()
+
+        this.$http.post(this.$config.serverHost + '/api/' + path, newsData).then((res) => {
+          if (this.isNewNews || newsData.isNewImg) {
+            this.$http.post(this.$config.serverHost + '/api/addNewsFile', this.image).then((res) => {
+              this.successUpload()
+            }).catch((error) => {
+              this.notify('Cannot upload image', 'ti-import', 'warning')
+              console.log(error)
+            })
+          } else {
+            this.successUpload()
           }
         }).catch((error) => {
-          this.notify('Cannot update section', 'ti-pencil', 'warning')
+          this.notify('Cannot add news', 'ti-plus', 'warning')
           console.log(error)
         })
       },
@@ -186,7 +162,6 @@
           this.changedCoverNews = true
           let data = new FormData()
           data.append('file', this.$refs.pictureInput.file)
-          data.append('image', this.$refs.pictureInput.image)
           this.image = data
         } else {
           console.log('FileReader API not supported: use the <form>, Luke!')
@@ -207,7 +182,7 @@
       if (this.currentId !== undefined) {
         this.isNewNews = false
       } else {
-        this.newsImg = this.$config.defaultImg
+        this.newsImg = this.$config.serverHost + this.$config.defaultImg
       }
       if (!this.isNewNews) {
         this.$http.post(this.$config.serverHost + '/api/getNewsById', {newsId: this.currentId}).then((res) => {
@@ -216,7 +191,7 @@
             // init variables
             this.title = res.body[0].Title
             this.content = res.body[0].Text
-            this.newsImg = this.base64toFile(res.body[0].ImgData.split(',')[1], res.body[0].CoverImgName)
+            this.newsImg = this.$config.serverHost + this.newsImgPath + res.body[0].ImgName
           } else {
             this.notify('This News does not exist', 'ti-gallery', 'danger')
           }

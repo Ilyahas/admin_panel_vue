@@ -12,14 +12,14 @@
       <label>Section photo cover</label>
       <picture-input
         ref="sectionCoverImgInput"
-        v-bind:prefill="sectionImg"
+        v-bind:prefill="photoSectionImg"
         :crop="false"
         @change="onChange"
         width="640"
         height="480"
         margin="16"
         accept="image/jpeg,image/png"
-        size="5"
+        size="15"
         buttonClass="btn"
         :customStrings="{
                   upload: '<h1>Bummer!</h1>',
@@ -27,8 +27,8 @@
                 }">
       </picture-input>
       <div class="text-center">
-        <button v-if="isNewSection" class="btn btn-success btn-form-submit btn-wd" @click="addSection">Save</button>
-        <button v-if="!isNewSection" class="btn btn-success btn-form-submit btn-wd" @click="saveSection">Update</button>
+        <button v-if="isNewSection" class="btn btn-success btn-form-submit btn-wd" @click="saveSection('addSection')">Save</button>
+        <button v-if="!isNewSection" class="btn btn-success btn-form-submit btn-wd" @click="saveSection('updateSection')">Update</button>
       </div>
     </div>
   </div>
@@ -42,8 +42,9 @@
     },
     data () {
       return {
+        photoSectionImgPath: '/img/photos/',
+        photoSectionImg: this.$config.serverHost + this.$config.defaultImg,
         changedCoverSection: false,
-        sectionImg: '',
         sectionName: '',
         image: {},
         isNewSection: true
@@ -53,94 +54,71 @@
       PictureInput
     },
     methods: {
-      base64toFile (b64Data, fileName, contentType, sliceSize) {
-        contentType = contentType || ''
-        sliceSize = sliceSize || 512
-
-        let byteCharacters = atob(b64Data)
-        let byteArrays = []
-
-        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-          let slice = byteCharacters.slice(offset, offset + sliceSize)
-
-          let byteNumbers = new Array(slice.length)
-          for (let i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i)
-          }
-
-          let byteArray = new Uint8Array(byteNumbers)
-
-          byteArrays.push(byteArray)
-        }
-        return new File(byteArrays, fileName, {type: contentType})
-      },
-      addSection () {
+      validFields () {
         let isSectionNameValid = this.sectionName.length > 3
         if (!isSectionNameValid) {
           this.notify('Section Name is too short', 'ti-info', 'warning')
-          return
+          return false
         }
-        if (!this.changedCoverSection) {
+        if (!this.changedCoverSection && this.isNewSection) {
           this.notify('Section Picture cannot be default', 'ti-info', 'warning')
-          return
+          return false
         }
-        let sectionData = {
-          sectionName: this.sectionName,
-          imgName: '',
-          imgData: ''
-        }
-        // get name of the file
-        for (let file of this.image) {
-          if (file[0] === 'file') {
-            sectionData.imgName = file[1].name
-          }
-          if (file[0] === 'image') {
-            sectionData.imgData = file[1]
-          }
-        }
-        this.$http.post(this.$config.serverHost + '/api/addSection', sectionData).then((res) => {
-          if (res.status === 200) {
-            this.notify('Section was successfully added', 'ti-check', 'success')
-            this.$router.push('/photos')
-          }
-        }).catch((error) => {
-          this.notify('Cannot add section', 'ti-plus', 'warning')
-          console.log(error)
-        })
+        return true
       },
-      saveSection () {
-        let isSectionNameValid = this.sectionName.length > 3
-        if (!isSectionNameValid) {
-          this.notify('Section Name is too short', 'ti-info', 'warning')
-          return
-        }
-
-        let sectionData = {
-          sectionName: this.sectionName,
-          imgName: '',
-          imgData: '',
-          sectionId: this.currentId,
-          newImg: false
-        }
-        if (this.changedCoverSection) {
-          sectionData.newImg = true
+      successUpload () {
+        this.notify('Section was successfully added', 'ti-check', 'success')
+        this.$router.push('/photos')
+      },
+      getPhotoSectionData () {
+        let sectionData = {}
+        if (this.isNewNews) {
+          sectionData = {
+            sectionName: this.sectionName,
+            imgName: ''
+          }
           // get name of the file
           for (let file of this.image) {
             if (file[0] === 'file') {
               sectionData.imgName = file[1].name
             }
-            if (file[0] === 'image') {
-              sectionData.imgData = file[1]
+          }
+        } else {
+          sectionData = {
+            sectionName: this.sectionName,
+            imgName: '',
+            sectionId: this.currentId,
+            isNewImg: false
+          }
+          if (this.changedCoverSection) {
+            sectionData.isNewImg = true
+            // get name of the file
+            for (let file of this.image) {
+              if (file[0] === 'file') {
+                sectionData.imgName = file[1].name
+              }
             }
           }
         }
-        this.$http.post(this.$config.serverHost + '/api/updateSection', sectionData).then((res) => {
-          if (res.status === 200) {
-            this.notify('Photo Section was edit', 'ti-pencil', 'success')
-            this.$router.push('/photos')
+        return sectionData
+      },
+      saveSection (path) {
+        if (!this.validFields()) { return }
+        let sectionData = this.getPhotoSectionData()
+
+        this.$http.post(this.$config.serverHost + '/api/' + path, sectionData).then((res) => {
+          if (this.isNewSection || sectionData.isNewImg) {
+            this.$http.post(this.$config.serverHost + '/api/addPhotoFile', this.image).then((res) => {
+              this.successUpload()
+            }).catch((error) => {
+              this.notify('Cannot upload image', 'ti-import', 'warning')
+              console.log(error)
+            })
+          } else {
+            this.successUpload()
           }
         }).catch((error) => {
-          this.notify('Cannot update section', 'ti-save', 'warning')
+          this.notify('Cannot add section', 'ti-plus', 'warning')
           console.log(error)
         })
       },
@@ -149,7 +127,6 @@
           this.changedCoverSection = true
           let data = new FormData()
           data.append('file', this.$refs.sectionCoverImgInput.file)
-          data.append('image', this.$refs.sectionCoverImgInput.image)
           this.image = data
         } else {
           console.log('FileReader API not supported: use the <form>, Luke!')
@@ -170,15 +147,13 @@
     created () {
       if (this.currentId !== undefined) {
         this.isNewSection = false
-      } else {
-        this.sectionImg = this.$config.defaultImg
       }
       if (!this.isNewSection) {
         this.$http.post(this.$config.serverHost + '/api/getSectionById', {sectionId: this.currentId}).then((res) => {
           let isSectionExist = res.body.length
           if (isSectionExist) {
             this.sectionName = res.body[0].SectionName
-            this.sectionImg = this.base64toFile(res.body[0].ImgData.split(',')[1], res.body[0].CoverImgName)
+            this.photoSectionImg = this.$config.serverHost + this.photoSectionImgPath + res.body[0].ImgName
           } else {
             this.notify('This Photo Section does not exist', 'ti-gallery', 'danger')
             this.$router.push('/photos')

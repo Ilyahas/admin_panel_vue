@@ -12,7 +12,7 @@
           </div>
           <div class="content">
             <div class="text-center">
-              <img class="border-white section-card" v-bind:src="news.ImgData">
+              <img class="border-white section-card" v-bind:src="newsImg + news.ImgName">
             </div>
             <div class="news-content" v-html="news.Text">
             </div>
@@ -47,6 +47,8 @@
   export default {
     data () {
       return {
+        newsImgPath: '/img/news/',
+        newsImg: '',
         newsList: [],
         selectedNews: {},
         showModal: false
@@ -84,6 +86,7 @@
       ModalComponent
     },
     created () {
+      this.newsImg = this.$config.serverHost + this.newsImgPath
       this.$http.get(this.$config.serverHost + '/api/getNews').then((res) => {
         this.newsList = res.body
       }).catch((error) => {

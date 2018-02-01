@@ -1,6 +1,9 @@
-module.exports = function (app, getData, postData) {
+module.exports = function (app, getData, postData, path) {
 
     const queries = require('./newsQueries');
+    const upload = require('../upload');
+
+    const newdir_ = path.resolve(__dirname, '..', '..');
 
     app.post('/addNews', (req, res) => {
         if (req.body.title !== '') {
@@ -8,12 +11,15 @@ module.exports = function (app, getData, postData) {
                 text: req.body.text,
                 title: req.body.title,
                 imgName: req.body.imgName,
-                imgData: req.body.imgData,
                 date: req.body.date
             });
         } else {
             res.status(400).end("News Title is not define");
         }
+    });
+
+    app.post('/addNewsFile', (req, res) => {
+        upload.uploadImgs(req, res, newdir_ + "/img/news");
     });
 
     app.get('/getNews', (req, res) => {
@@ -30,12 +36,11 @@ module.exports = function (app, getData, postData) {
 
     app.post('/updateNews', (req, res) => {
         if (req.body.title !== '') {
-            if (req.body.newImg) {
+            if (req.body.isNewImg) {
                 postData(queries.updateNewsWithImg, req, res, {
                     text: req.body.text,
                     title: req.body.title,
                     imgName: req.body.imgName,
-                    imgData: req.body.imgData,
                     newsId: req.body.newsId
                 });
             } else {

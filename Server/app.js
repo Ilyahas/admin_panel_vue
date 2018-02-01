@@ -32,7 +32,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-require('./app/api') (api, connection, config);
+require('./app/api') (api, connection, path);
 require('./app/passport.js')(connection, passport);
 require('./app/routes') (app, path, express, passport);
 
