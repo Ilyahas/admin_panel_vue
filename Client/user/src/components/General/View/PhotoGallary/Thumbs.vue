@@ -2,7 +2,7 @@
     <section id="thumbnails">
         <article v-for="(item, index) in items" v-bind:class="{ 'active': activeIndex == index }">
             <a class="thumbnail" v-on:click="selectImage(item, index)">
-                <img v-bind:src="item.ImgData" alt="" />
+                <img v-bind:src="serverHost + photosImgPath + item.PhotoImgName" alt="" />
             </a>
             <h2>{{ item.title }}</h2>
             <div v-html="item.content"></div>
@@ -17,6 +17,8 @@ export default {
   name: 'thumbs',
   data () {
     return {
+      serverHost: this.$config.serverHost,
+      photosImgPath: '/img/photos/',
       items: [],
       activeIndex: 0
     }

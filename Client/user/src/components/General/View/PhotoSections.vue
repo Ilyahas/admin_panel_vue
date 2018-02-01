@@ -2,7 +2,7 @@
   <div class="container container-margin">
     <div class="grid">
       <figure class="photoSection-item" v-for="(section, index) in listOfSections" :key="index" @click="goToSection(section.idPhotoSections)">
-        <img :src="section.ImgData">
+        <img :src="serverHost + photosImgPath + section.ImgName">
         <figcaption>
           <div class="title"><span>{{section.SectionName}}</span></div>
         </figcaption>
@@ -19,6 +19,8 @@
   export default {
     data () {
       return {
+        serverHost: this.$config.serverHost,
+        photosImgPath: '/img/photos/',
         listOfSections: [],
         TOP_PHOTOSECTIONS_NUMBER: 12,
         isMorePhotoSectionsForLoad: true

@@ -2,7 +2,7 @@
   <div class="container container-margin">
     <div class="grid">
       <figure class="effect-milo" v-for="(news, index) in listOfNews" :key="index" @click="goToNews(news.idnews)" >
-        <img :src="news.ImgData">
+        <img :src="serverHost + newsImgPath + news.ImgName">
         <figcaption>
           <h2>{{news.Title}}</h2>
           <p>{{news.Date}}</p>
@@ -20,6 +20,8 @@
   export default {
     data () {
       return {
+        serverHost: this.$config.serverHost,
+        newsImgPath: '/img/news/',
         listOfNews: [],
         TOP_NEWS_NUMBER: 12,
         isMoreNewsForLoad: true

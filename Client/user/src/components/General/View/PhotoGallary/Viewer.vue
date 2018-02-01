@@ -8,7 +8,7 @@
             <div class="caption">
                 <h2>{{ photo.PhotoName }}</h2>
             </div>
-            <div class="image" :style='{ backgroundImage: "url(" + photo.ImgData + ")", backgroundSize: "cover",  backgroundPosition: "center" }'>
+            <div class="image" :style='{ backgroundImage: "url(" + serverHost + photosImgPath + photo.PhotoImgName + ")", backgroundSize: "cover",  backgroundPosition: "center" }'>
             </div>
         </div>
     </div>
@@ -21,6 +21,8 @@ export default {
   name: 'viewer',
   data () {
     return {
+      serverHost: this.$config.serverHost,
+      photosImgPath: '/img/photos/',
       photo: null
     }
   },

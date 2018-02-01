@@ -4,7 +4,7 @@
       <md-card-media>
         <!-- swiper1 -->
         <swiper :options="swiperOptionTop" class="gallery-top" ref="swiperTop">
-          <swiper-slide class="bg-container" v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + news.ImgData + '\');'">
+          <swiper-slide class="bg-container" v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + serverHost + newsImgPath + news.ImgName + '\');'">
             <div class="slide-title" @click="newsClick(news.idnews)">
               <div class="container">{{news.Title}}</div>
             </div>
@@ -14,7 +14,7 @@
         </swiper>
         <!-- swiper2 Thumbs -->
         <swiper :options="swiperOptionThumbs" class="gallery-thumbs" ref="swiperThumbs">
-          <swiper-slide v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + news.ImgData + '\');'"></swiper-slide>
+          <swiper-slide v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + serverHost + newsImgPath + news.ImgName + '\');'"></swiper-slide>
         </swiper>
       </md-card-media>
     </md-card>
@@ -55,6 +55,8 @@
           touchRatio: 0.2,
           slideToClickedSlide: true
         },
+        serverHost: this.$config.serverHost,
+        newsImgPath: '/img/news/',
         listOfNewsForCarusel: [],
         listOfArticles: [],
         listOfSections: [],

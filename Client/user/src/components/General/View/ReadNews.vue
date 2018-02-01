@@ -2,7 +2,7 @@
   <div class="container container-margin">
     <div class="title">{{news.Title}}</div>
     <small class="title-date">{{news.Date}}</small>
-    <div class="title-img"><img :src="news.ImgData"></div>
+    <div class="title-img"><img :src="serverHost + newsImgPath + news.ImgName"></div>
     <div v-html="news.Text"></div>
   </div>
 </template>
@@ -10,6 +10,8 @@
   export default {
     data () {
       return {
+        serverHost: this.$config.serverHost,
+        newsImgPath: '/img/news/',
         news: {}
       }
     },
