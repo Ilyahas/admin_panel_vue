@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:class="{scrollOff: isOpen, navbar: true}">
+  <div v-bind:class="{scrollOff: hideContent, navbar: true}">
     <div id="nav-icon" v-bind:class="{open: isOpen}" @click="toggleOpen">
       <span></span>
       <span></span>
@@ -13,16 +13,20 @@
           <a>{{link.name}}</a>
         </router-link>
       </ul>
-      <ul class="nav-list-mobile" v-bind:class="{showMobileNav: isOpen}">
+      <slide-x-left-transition :duration="300">
+      <ul class="nav-list-mobile" v-show="isOpen">
         <!--By default vue-router adds an active class to each route link. This way the links are colored when clicked-->
         <router-link v-on:click.native="toggleOpen" v-for="(link,index) in navbarLinks" :to="link.path" tag="li" :ref="link.name" v-bind:key="link.name" >
           <a>{{link.name}}</a>
         </router-link>
       </ul>
+      </slide-x-left-transition>
     </div>
   </div>
 </template>
 <script>
+  import { SlideXLeftTransition } from 'vue2-transitions'
+
   export default {
     props: {
       navbarLinks: {
@@ -33,12 +37,23 @@
     data () {
       return {
         isOpen: false,
+        hideContent: false,
         activeLinkIndex: 0
       }
+    },
+    components: {
+      SlideXLeftTransition
     },
     methods: {
       toggleOpen () {
         this.isOpen = !this.isOpen
+        if (!this.hideContent) {
+          setTimeout(() => {
+            this.hideContent = !this.hideContent
+          }, 300)
+        } else {
+          this.hideContent = !this.hideContent
+        }
       },
       findActiveLink () {
         this.navbarLinks.find((element, index) => {
@@ -65,11 +80,6 @@
 
   $mobilePadding: 12px;
 
-
-  .showMobileNav {
-    display: block !important;
-  }
-
   .navbar {
     background-color: $navbarBgColor;
 
@@ -78,7 +88,6 @@
     }
 
     .nav-list-mobile {
-      display: none;
       background-color: $navbarBgColor;
       font-size: 25px;
       position: absolute;
