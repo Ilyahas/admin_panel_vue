@@ -8,8 +8,13 @@
           </li>
         </ul>
       </nav>-->
-      <div class="copyright">
-        Copyright &copy; {{ new Date().getFullYear() }}. All rights reserved.
+      <div class="blocks">
+        <div class="copyright">
+          <span class="text-cr">Copyright &copy; {{ new Date().getFullYear() }}. All rights reserved.</span>
+        </div>
+        <div class="youtute-icon">
+          <a href="#"><img src="../../../assets/youtube.png"></a>
+        </div>
       </div>
     </div>
   </footer>
@@ -50,11 +55,46 @@
   .footer {
     background-color: $navbarBgColor;
     color: $whiteColor;
-    padding: 25px 0;
+    padding: 5px 0;
     width: 100%;
 
     @include breakpoint(xs) {
       text-align: center;
+    }
+
+    .blocks {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      align-items: center;
+      height: 70px;
+
+      .copyright {
+        width: 100%;
+      }
+
+      .youtute-icon {
+        width: 100%;
+
+
+
+        a {
+          img {
+            float: right;
+            opacity: 0.8;
+            transition: all 0.5s;
+          }
+          &:hover {
+            img {
+              opacity: 1;
+              transition: all 0.5s;
+            }
+          }
+        }
+      }
+
     }
   }
 
