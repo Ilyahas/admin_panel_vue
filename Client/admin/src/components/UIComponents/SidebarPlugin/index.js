@@ -3,7 +3,7 @@ import Sidebar from './SideBar.vue'
 const SidebarStore = {
   showSidebar: false,
   sidebarLinks: [
-    {
+    /* {
       name: 'Dashboard',
       icon: 'ti-panel',
       path: '/overview'
@@ -12,7 +12,7 @@ const SidebarStore = {
       name: 'User Profile',
       icon: 'ti-user',
       path: '/stats'
-    },
+    }, */
     {
       name: 'Main Page',
       icon: 'ti-blackboard',
@@ -37,8 +37,8 @@ const SidebarStore = {
       name: 'Article',
       icon: 'ti-pencil-alt',
       path: '/article-page'
-    },
-    {
+    }
+    /* {
       name: 'Table List',
       icon: 'ti-view-list-alt',
       path: '/table-list'
@@ -62,7 +62,7 @@ const SidebarStore = {
       name: 'Notifications',
       icon: 'ti-bell',
       path: '/notifications'
-    }
+    } */
   ],
   displaySidebar (value) {
     this.showSidebar = value

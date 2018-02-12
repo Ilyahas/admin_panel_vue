@@ -36,4 +36,4 @@ require('./app/api') (api, connection, path);
 require('./app/passport.js')(connection, passport);
 require('./app/routes') (app, path, express, passport);
 
-app.listen(config.PORT, () => console.log("App listening on port " + config.PORT + "!"));
+app.listen(config.PORT, '0.0.0.0', () => console.log("App listening on port " + config.PORT + "!"));

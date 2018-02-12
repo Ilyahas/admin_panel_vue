@@ -32,9 +32,9 @@ const routes = [
   {
     path: '/',
     component: DashboardLayout,
-    redirect: '/stats',
+    redirect: '/main-page',
     children: [
-      {
+      /* {
         path: 'overview',
         name: 'overview',
         component: Overview
@@ -43,7 +43,7 @@ const routes = [
         path: 'stats',
         name: 'stats',
         component: UserProfile
-      },
+      }, */
       {
         path: 'main-page',
         name: 'Main Page',
@@ -108,8 +108,8 @@ const routes = [
         path: 'article-page',
         name: 'Article Page',
         component: ArticlePage
-      },
-      {
+      }
+      /* {
         path: 'notifications',
         name: 'notifications',
         component: Notifications
@@ -133,7 +133,7 @@ const routes = [
         path: 'table-list',
         name: 'table-list',
         component: TableList
-      }
+      } */
     ]
   },
   {path: '*', component: NotFound}

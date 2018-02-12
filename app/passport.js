@@ -9,7 +9,7 @@ module.exports = function(connection, passport) {
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        connection.query("select * from admin_panel.users where `idusers` = " + id, (err,rows) => {
+        connection.query("select * from users where `idusers` = " + id, (err,rows) => {
             done(null, rows);
         });
     });
@@ -21,7 +21,7 @@ module.exports = function(connection, passport) {
             passReqToCallback : true // allows us to pass back the entire request to the callback
         },
         (req, login, password, done) => {
-            connection.query("SELECT * FROM admin_panel.users WHERE `login` = '" + login + "'", (err, rows) => {
+            connection.query("SELECT * FROM users WHERE `login` = '" + login + "'", (err, rows) => {
                 if (err)
                     return done(null);
                 if (!rows.length) {

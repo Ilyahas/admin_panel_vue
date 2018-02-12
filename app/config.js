@@ -2,8 +2,9 @@ module.exports = {
     'database': {
         'host': 'localhost',
         'user': 'root',
-        'password': 'root'
+        'password': 'root',
+        'database': 'admin_panel'
     },
-    'PORT': '3000',
+    'PORT': '8080',
     'apiLink': '/api'
 };

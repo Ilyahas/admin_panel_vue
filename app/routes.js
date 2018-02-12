@@ -2,7 +2,7 @@ module.exports = function(app, path, express, passport) {
 
     const bcrypt = require('bcryptjs');
 
-    const newdir_ = path.resolve(__dirname, '..', '..');
+    const newdir_ = path.resolve(__dirname, '..');
 
     const isAuthorized = (req, res, next) => {
         if (!req.isAuthenticated()) {
@@ -20,7 +20,7 @@ module.exports = function(app, path, express, passport) {
 
     app.use('/admin', isLoggedIn, express.static(path.join(newdir_ + '/Client/admin/dist')));
     app.use('/login', isAuthorized, express.static(path.join(newdir_ + '/Client/login/dist')));
-    app.use('/img', isAuthorized, express.static(path.join(newdir_ + '/Server/img')));
+    app.use('/img', isAuthorized, express.static(path.join(newdir_ + '/img')));
     app.use('/', express.static(path.join(newdir_ + '/Client/user/dist')));
 
     app.get('/logout', (req, res) => {
@@ -32,7 +32,7 @@ module.exports = function(app, path, express, passport) {
         passport.authenticate('local-login', function(err, user, info) {
             if (err) { return next(err); }
             if (!user) {
-                res.status(401);
+                res.status(500).send({ error: 'Something failed!' });
                 return;
             }
             req.login(user.idusers, (error) => {

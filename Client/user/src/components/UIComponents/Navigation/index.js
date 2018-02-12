@@ -3,24 +3,24 @@ import Navigation from './Navigation.vue'
 const NavigationStore = {
   navbarLinks: [
     {
-      name: 'Home',
+      name: 'Головна',
       path: '/home'
     },
     {
-      name: 'News',
+      name: 'Новини',
       path: '/news'
     },
     {
-      name: 'Photos',
+      name: 'Фотограії',
       path: '/photo-sections'
     },
     {
-      name: 'Articles',
+      name: 'Статті',
       path: '/articles'
     },
     {
-      name: 'Article',
-      path: '/article'
+      name: 'Історія',
+      path: '/history'
     }
   ]
 }

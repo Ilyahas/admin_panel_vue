@@ -7,7 +7,7 @@ import News from '../components/General/View/News.vue'
 import ReadNews from '../components/General/View/ReadNews.vue'
 import PhotoSections from '../components/General/View/PhotoSections.vue'
 import Photos from '../components/General/View/Photos.vue'
-import ArticlePage from '../components/General/View/ArticlePage.vue'
+import History from '../components/General/View/History.vue'
 import Articles from '../components/General/View/Articles.vue'
 import ReadArticle from '../components/General/View/ReadArticle.vue'
 
@@ -57,9 +57,9 @@ export default new Router({
           component: ReadArticle
         },
         {
-          path: 'article',
-          name: 'Article Page',
-          component: ArticlePage
+          path: 'history',
+          name: 'History',
+          component: History
         }
       ]
     }

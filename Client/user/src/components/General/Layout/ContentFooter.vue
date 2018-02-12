@@ -78,8 +78,6 @@
       .youtute-icon {
         width: 100%;
 
-
-
         a {
           img {
             float: right;
