@@ -20,7 +20,7 @@ module.exports = function(app, path, express, passport) {
 
     app.use('/admin', isLoggedIn, express.static(path.join(newdir_ + '/Client/admin/dist')));
     app.use('/login', isAuthorized, express.static(path.join(newdir_ + '/Client/login/dist')));
-    app.use('/img', isAuthorized, express.static(path.join(newdir_ + '/img')));
+    app.use('/img', express.static(path.join(newdir_ + '/img')));
     app.use('/', express.static(path.join(newdir_ + '/Client/user/dist')));
 
     app.get('/logout', (req, res) => {
