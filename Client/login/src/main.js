@@ -12,7 +12,7 @@ import 'vuejs-noty/dist/vuejs-noty.css'
 
 Vue.use(VueResource)
 Vue.use(VueNoty,  {
-  timeout: 10000,
+  timeout: 3000,
   progressBar: false
 })
 

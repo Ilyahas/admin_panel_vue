@@ -212,6 +212,10 @@
     display: block;
     margin-top: 10px;
 
+    @include breakpoint(xs) {
+      padding: 0 2%;
+    }
+
     .art-title {
       display: inline-block;
       font-size: $fontSectionSize;
@@ -252,11 +256,19 @@
     display: block;
     padding: 15px 0;
 
+    @include breakpoint(xs) {
+      padding: 15px 2%;
+    }
+
     .sections-title {
       display: block;
       font-size: $fontSectionSize;
       text-align: center;
       margin-bottom: 10px;
+
+      @include breakpoint(xs) {
+        font-size: $fontSectionSize - 20px;
+      }
 
       @include breakpoint(md) {
         font-size: $fontSectionSize - 10px;

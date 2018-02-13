@@ -13,29 +13,29 @@ $fontSizeSmall: 15px;
     }
   } @else if ($device == sm) {
     // from 768px
-    @media only screen and (min-width: 768px) {
+    @media only screen and (max-width: 768px) {
       @content;
     }
   } @else if ($device == md) {
     // from 992px
-    @media only screen and (min-width: 992px) {
+    @media only screen and (max-width: 992px) {
       @content;
     }
   } @else if ($device == lg) {
     // from 1200px - open end
-    @media only screen and (min-width: 1200px) {
+    @media only screen and (max-width: 1200px) {
       @content;
     }
   }
   @else if ($device == lg-min) {
     // from 1200px - open end
-    @media only screen and (min-width: 1201px) {
+    @media only screen and (max-width: 1201px) {
       @content;
     }
   }
   @else if ($device == lg-max) {
     // from 1200px - open end
-    @media only screen and (min-width: 1281px) {
+    @media only screen and (max-width: 1281px) {
       @content;
     }
   }
