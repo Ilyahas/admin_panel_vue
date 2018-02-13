@@ -9,8 +9,8 @@ module.exports = function(connection, passport) {
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        connection.query("SELECT * FROM users WHERE idusers=$1::integer", [id], (err,rows) => {
-            done(null, rows);
+        connection.query("SELECT * FROM users WHERE idusers = " + id, (err, res) => {
+            done(null, res.rows);
         });
     });
 
@@ -21,16 +21,16 @@ module.exports = function(connection, passport) {
             passReqToCallback : true // allows us to pass back the entire request to the callback
         },
         (req, login, password, done) => {
-            connection.query("SELECT * FROM users WHERE login=$1::text", [login], (err, rows) => {
+            connection.query("SELECT * FROM users WHERE login= '" + login + "'", (err, res) => {
                 if (err)
                     return done(null);
-                if (!rows.length) {
+                if (!res.rows.length) {
                     return done(null, null);
                 }
 
-                bcrypt.compare(password, rows[0].password, (err, res) => {
-                    if(res)
-                        return done(null, rows[0]);
+                bcrypt.compare(password, res.rows[0].password, (err, res1) => {
+                    if(res1)
+                        return done(null, res.rows[0]);
                     else
                         return done(null, null);
                 });
