@@ -7,10 +7,10 @@ module.exports = function (app, getData, postData) {
 
     app.post('/updateArticlePage', (req, res) => {
         if (req.body.title !== '') {
-            postData(queries.updateArticlePage, req, res, {
-                title: req.body.title,
-                text: req.body.text
-            });
+            postData(queries.updateArticlePage, req, res, [
+                req.body.title,
+                req.body.text
+            ]);
         } else {
             res.status(400).end("Page Title is not define");
         }
@@ -24,20 +24,20 @@ module.exports = function (app, getData, postData) {
         if (req.body.fromNumber === undefined) {
             req.body.fromNumber = 0;
         }
-        getData(queries.getTopArticles, req, res, {topNumber: req.body.topNumber, fromNumber: req.body.fromNumber});
+        getData(queries.getTopArticles, req, res, [req.body.topNumber, req.body.fromNumber]);
     });
 
     app.post('/getArticleById', (req, res) => {
-        getData(queries.getArticleById, req, res, {articleId: req.body.articleId});
+        getData(queries.getArticleById, req, res, [req.body.articleId]);
     });
 
     app.post('/addArticle', (req, res) => {
         if (req.body.title !== '') {
-            postData(queries.addArticle, req, res, {
-                title: req.body.title,
-                text: req.body.text,
-                date: req.body.date
-            });
+            postData(queries.addArticle, req, res, [
+                req.body.title,
+                req.body.text,
+                req.body.date
+            ]);
         } else {
             res.status(400).end("Article Title is not define");
         }
@@ -45,17 +45,17 @@ module.exports = function (app, getData, postData) {
 
     app.post('/updateArticle', (req, res) => {
         if (req.body.title !== '') {
-            getData(queries.updateArticle, req, res, {
-                title: req.body.title,
-                text: req.body.text,
-                articleId: req.body.articleId
-            });
+            getData(queries.updateArticle, req, res, [
+                req.body.title,
+                req.body.text,
+                req.body.articleId
+            ]);
         } else {
             res.status(400).end("Article Title is not define");
         }
     });
 
     app.post('/deleteArticle', (req, res) => {
-        postData(queries.deleteArticle, req, res, {articleId: req.body.articleId});
+        postData(queries.deleteArticle, req, res, [req.body.articleId]);
     });
 };

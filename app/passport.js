@@ -9,7 +9,7 @@ module.exports = function(connection, passport) {
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        connection.query("select * from users where `idusers` = " + id, (err,rows) => {
+        connection.query("SELECT * FROM users WHERE `idusers` = " + id, (err,rows) => {
             done(null, rows);
         });
     });
