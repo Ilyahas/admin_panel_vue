@@ -17,7 +17,7 @@ const client = new Pool({
 });
 
 const cors = require('cors');
-app.use(cors({origin: 'http://localhost:3000'}));
+app.use(cors({origin: 'http://localhost:8080'}));
 
 app.use(bodyParser.json({limit: '150mb'}));
 app.use(bodyParser.urlencoded({limit: '150mb', extended: true}));

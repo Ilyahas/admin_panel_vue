@@ -1,5 +1,5 @@
 module.exports = {
-    'addNews': 'INSERT INTO news (Text, Title, ImgName, Date) VALUE ($1::text, $2::text, $3::text, $4::text)',
+    'addNews': 'INSERT INTO news (Text, Title, ImgName, Date) VALUEs ($1::text, $2::text, $3::text, $4::text)',
     'deleteNews': 'DELETE FROM news WHERE idnews = $1::integer',
     'getNewsList': 'SELECT * FROM news order by idnews DESC',
     'getNewsById': 'SELECT * FROM news WHERE idnews = $1::integer',

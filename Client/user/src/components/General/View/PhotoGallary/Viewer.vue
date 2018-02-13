@@ -6,9 +6,9 @@
         </div>
         <div class="slide active" v-if="photo">
             <div class="caption">
-                <h2>{{ photo.PhotoName }}</h2>
+                <h2>{{ photo.photoname }}</h2>
             </div>
-            <div class="image" :style='{ backgroundImage: "url(" + serverHost + photosImgPath + photo.PhotoImgName + ")", backgroundSize: "cover",  backgroundPosition: "center" }'>
+            <div class="image" :style='{ backgroundImage: "url(" + serverHost + photosImgPath + photo.photoimgname + ")", backgroundSize: "cover",  backgroundPosition: "center" }'>
             </div>
         </div>
     </div>

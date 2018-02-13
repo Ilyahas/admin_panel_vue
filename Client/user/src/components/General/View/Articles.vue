@@ -1,10 +1,10 @@
 <template>
   <div class="container container-margin">
     <div class="article-item" v-for="(article, index) in listOfArticles" :key="index">
-      <div class="art-item-title">{{article.Title}}</div>
-      <div class="art-date">{{article.Date}}</div>
-      <div class="art-content" v-html="article.Text"></div>
-      <button @click="goToArticle(article.idArticles)" class="btn"><span>Read More</span> <i class="icon ti-angle-right"></i></button>
+      <div class="art-item-title">{{article.title}}</div>
+      <div class="art-date">{{article.date}}</div>
+      <div class="art-content" v-html="article.text"></div>
+      <button @click="goToArticle(article.idarticles)" class="btn"><span>Read More</span> <i class="icon ti-angle-right"></i></button>
     </div>
     <infinite-loading @infinite="infiniteHandler">
       <span slot="no-more"></span>
@@ -36,9 +36,9 @@
             topNumber: this.TOP_ARTICLES_NUMBER,
             fromNumber: fromLoadArticlesIndex
           }).then((res) => {
-            let isArticlesExist = res.body.length
+            let isArticlesExist = res.body.rows.length
             if (isArticlesExist) {
-              this.listOfArticles = this.listOfArticles.concat(res.body)
+              this.listOfArticles = this.listOfArticles.concat(res.body.rows)
               $state.loaded()
             } else {
               this.isMoreArticlesForLoad = false

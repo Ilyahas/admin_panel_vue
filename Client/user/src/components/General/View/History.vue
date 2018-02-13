@@ -1,7 +1,7 @@
 <template>
   <div class="container container-margin">
-    <div class="title">{{articlePageContent.Title}}</div>
-    <div class="article-content" v-html="articlePageContent.Text"></div>
+    <div class="title">{{articlePageContent.title}}</div>
+    <div class="article-content" v-html="articlePageContent.text"></div>
   </div>
 </template>
 <script>
@@ -16,9 +16,9 @@
     },
     created () {
       this.$http.get(this.$config.serverHost + '/api/getArticlePage').then((res) => {
-        let isNewsExist = res.body.length
+        let isNewsExist = res.body.rows.length
         if (isNewsExist) {
-          this.articlePageContent = res.body[0]
+          this.articlePageContent = res.body.rows[0]
         } else {
           this.$noty.error('Article does not exist')
           this.$router.push('/news')

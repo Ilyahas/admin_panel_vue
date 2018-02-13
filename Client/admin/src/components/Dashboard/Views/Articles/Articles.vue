@@ -7,15 +7,15 @@
 
         <div class="card">
           <div class="header">
-            <h4 class="title">{{article.Title}}</h4>
-            <span class="title-date">{{article.Date}}</span>
+            <h4 class="title">{{article.title}}</h4>
+            <span class="title-date">{{article.date}}</span>
           </div>
           <div class="content">
-            <div class="article-content" v-html="article.Text"></div>
+            <div class="article-content" v-html="article.text"></div>
             <hr>
             <div class="row row-edit">
               <div class="col-lg-6 col-sm-6 text-center">
-                <router-link :to="{ path: '/articles/edit-article', query: {id: article.idArticles}}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
+                <router-link :to="{ path: '/articles/edit-article', query: {id: article.idarticles}}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
               </div>
               <div class="col-lg-6 col-sm-6 text-center">
                 <button id="show-modal" @click="askConfirmation(article)" class="as-link"><i class="ti-close"></i> <span>Delete</span></button>
@@ -28,7 +28,7 @@
     </div>
 
     <modal-component v-if="showModal">
-      <h3 slot="header">Delete "{{selectedArticle.Title}}"?</h3>
+      <h3 slot="header">Delete "{{selectedArticle.title}}"?</h3>
       <div slot="footer">
         <button class="modal-default-button btn btn-success" @click="showModal = false">Cancel</button>
         <button class="modal-default-button btn" @click="deleteArticle">OK</button>
@@ -80,7 +80,7 @@
     },
     created () {
       this.$http.get(this.$config.serverHost + '/api/getArticles').then((res) => {
-        this.listOfArticles = res.body
+        this.listOfArticles = res.body.rows
       }).catch((error) => {
         this.notify('Cannot get sections', 'ti-gallery', 'warning')
         console.log(error)

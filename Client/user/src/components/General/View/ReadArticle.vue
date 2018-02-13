@@ -1,8 +1,8 @@
 <template>
   <div class="container container-margin">
-    <div class="title">{{article.Title}}</div>
-    <small class="title-date">{{article.Date}}</small>
-    <div class="article-content" v-html="article.Text"></div>
+    <div class="title">{{article.title}}</div>
+    <small class="title-date">{{article.date}}</small>
+    <div class="article-content" v-html="article.text"></div>
   </div>
 </template>
 <script>
@@ -15,9 +15,9 @@
     created () {
       if (this.$route.query.id) {
         this.$http.post(this.$config.serverHost + '/api/getArticleById', {articleId: this.$route.query.id}).then((res) => {
-          let isArticleExist = res.body.length
+          let isArticleExist = res.body.rows.length
           if (isArticleExist) {
-            this.article = res.body[0]
+            this.article = res.body.rows[0]
           }
         }).catch((error) => {
           this.$noty.error('Article does not exist')

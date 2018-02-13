@@ -9,8 +9,7 @@ module.exports = function (app, getData, postData, path) {
         if (req.body.sectionName !== '') {
             postData(queries.addPhotoSection, req, res, [
                 req.body.sectionName,
-                req.body.imgName,
-                req.body.imgData
+                req.body.imgName
             ]);
         } else {
             res.status(400).end("Section Name is not define");
