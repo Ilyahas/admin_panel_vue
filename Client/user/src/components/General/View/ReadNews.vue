@@ -1,9 +1,9 @@
 <template>
   <div class="container container-margin">
-    <div class="title">{{news.Title}}</div>
-    <small class="title-date">{{news.Date}}</small>
-    <div class="title-img"><img :src="serverHost + newsImgPath + news.ImgName"></div>
-    <div class="news-content" v-html="news.Text"></div>
+    <div class="title">{{news.title}}</div>
+    <small class="title-date">{{news.date}}</small>
+    <div class="title-img"><img :src="serverHost + newsImgPath + news.imgname"></div>
+    <div class="news-content" v-html="news.text"></div>
   </div>
 </template>
 <script>
@@ -18,9 +18,9 @@
     created () {
       if (this.$route.query.id) {
         this.$http.post(this.$config.serverHost + '/api/getNewsById', {newsId: this.$route.query.id}).then((res) => {
-          let isNewsExist = res.body.length
+          let isNewsExist = res.body.rows.length
           if (isNewsExist) {
-            this.news = res.body[0]
+            this.news = res.body.rows[0]
           } else {
             this.$noty.error('News does not exist')
             this.$router.push('/news')

@@ -186,12 +186,12 @@
       }
       if (!this.isNewNews) {
         this.$http.post(this.$config.serverHost + '/api/getNewsById', {newsId: this.currentId}).then((res) => {
-          let isNewsExist = res.body.length
+          let isNewsExist = res.body.rows.length
           if (isNewsExist) {
             // init variables
-            this.title = res.body[0].Title
-            this.content = res.body[0].Text
-            this.newsImg = this.$config.serverHost + this.newsImgPath + res.body[0].ImgName
+            this.title = res.body.rows[0].title
+            this.content = res.body.rows[0].text
+            this.newsImg = this.$config.serverHost + this.newsImgPath + res.body.rows[0].imgname
           } else {
             this.notify('This News does not exist', 'ti-gallery', 'danger')
           }

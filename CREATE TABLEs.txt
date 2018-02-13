@@ -1,0 +1,56 @@
+CREATE TABLE public.articlepage
+(
+  idarticlepage SERIAL PRIMARY KEY,
+  title character varying(255) NOT NULL,
+  text text
+);
+
+CREATE TABLE public.articles
+(
+  idarticles SERIAL PRIMARY KEY,
+  title character varying(255) NOT NULL,
+  text text,
+  date character varying(45) DEFAULT NULL::character varying
+);
+
+CREATE TABLE public.mainpagesections
+(
+  idmainpagesections SERIAL PRIMARY KEY,
+  title character varying(255) DEFAULT NULL::character varying,
+  text text
+);
+
+CREATE TABLE public.news
+(
+  idnews SERIAL PRIMARY KEY,
+  text text,
+  title character varying(255) NOT NULL,
+  imgname character varying(255) DEFAULT NULL::character varying,
+  date character varying(45) DEFAULT NULL::character varying
+);
+
+CREATE TABLE public.photos
+(
+  idphotos SERIAL PRIMARY KEY,
+  photoname character varying(255) DEFAULT NULL::character varying,
+  photoimgname character varying(255) DEFAULT NULL::character varying,
+  idphotosections integer
+);
+
+CREATE TABLE public.photosections
+(
+  idphotosections SERIAL PRIMARY KEY,
+  sectionname character varying(255) NOT NULL,
+  imgname character varying(255) DEFAULT NULL::character varying
+);
+
+CREATE TABLE public.users
+(
+  idusers SERIAL PRIMARY KEY,
+  login character varying(255) DEFAULT NULL::character varying,
+  password character varying(255) DEFAULT NULL::character varying
+);
+
+INSERT INTO users (idusers, login, password) VALUES (1, 'admin', '$2a$08$MKw5EY07Lr0NssqikoMoDO.uxDMA741HPVTGMr8gW1bhxPl8fS9Ie');
+
+INSERT INTO articlepage (idarticlepage, title, text) VALUES (1, 'title', 'text');

@@ -23,7 +23,7 @@
               height="480"
               margin="16"
               accept="image/jpeg,image/png"
-              size="5"
+              size="15"
               buttonClass="btn"
               :customStrings="{
                       upload: '<h1>Bummer!</h1>',
@@ -40,11 +40,11 @@
         <!-- Photos in Section -->
         <div class="col-lg-4 col-md-6 col-sm-4 cardCustom" v-for="photo in allPhotos">
           <div class="photoFrame">
-            <span class="photoTitle">{{photo.PhotoName}}</span>
+            <span class="photoTitle">{{photo.photoname}}</span>
             <button class="deletePhotoBtn as-link" @click="askConfirmation(photo)"><i class="ti-close"></i>
             </button>
             <div class="photoContainer text-center">
-              <img v-bind:src="photosFullPath + photo.PhotoImgName">
+              <img v-bind:src="photosFullPath + photo.photoimgname">
             </div>
           </div>
         </div>
@@ -164,9 +164,9 @@
     created () {
       this.photosFullPath = this.$config.serverHost + this.photosPath
       this.$http.post(this.$config.serverHost + '/api/getPhotosBySectionId', {sectionId: this.currentId}).then((res) => {
-        let isPhotosExist = res.body.length
+        let isPhotosExist = res.body.rows.length
         if (isPhotosExist) {
-          this.allPhotos = res.body
+          this.allPhotos = res.body.rows
         }
       }).catch((error) => {
         this.notify('Cannot get images', 'ti-image', 'warning')

@@ -2,10 +2,10 @@
   <div class="container container-margin">
     <div class="grid">
       <figure class="effect-milo" v-for="(news, index) in listOfNews" :key="index" @click="goToNews(news.idnews)" >
-        <img :src="serverHost + newsImgPath + news.ImgName">
+        <img :src="serverHost + newsImgPath + news.imgname">
         <figcaption>
-          <h2>{{news.Title}}</h2>
-          <p>{{news.Date}}</p>
+          <h2>{{news.title}}</h2>
+          <p>{{news.date}}</p>
         </figcaption>
       </figure>
       <infinite-loading @infinite="infiniteHandler">
@@ -42,9 +42,9 @@
             topNumber: this.TOP_NEWS_NUMBER,
             fromNumber: fromLoadNewsIndex
           }).then((res) => {
-            let isNewsExist = res.body.length
+            let isNewsExist = res.body.rows.length
             if (isNewsExist) {
-              this.listOfNews = this.listOfNews.concat(res.body)
+              this.listOfNews = this.listOfNews.concat(res.body.rows)
               $state.loaded()
             } else {
               this.isMoreNewsForLoad = false

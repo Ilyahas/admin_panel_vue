@@ -31,9 +31,9 @@
       if (this.$route.query.id) {
         this.sectionId = this.$route.query.id.toString()
         this.$http.post(this.$config.serverHost + '/api/getSectionById', {sectionId: this.$route.query.id}).then((res) => {
-          let isPhotosExist = res.body.length
+          let isPhotosExist = res.body.rows.length
           if (isPhotosExist) {
-            EventBus.$emit('section', res.body[0])
+            EventBus.$emit('section', res.body.rows[0])
           } else {
             this.$noty.error('Photo Section does not exist')
             this.$router.push('/photo-sections')

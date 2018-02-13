@@ -7,14 +7,14 @@
 
         <div class="card">
           <div class="header">
-            <h4 class="title">{{news.Title}}</h4>
-            <span class="title-date">{{news.Date}}</span>
+            <h4 class="title">{{news.title}}</h4>
+            <span class="title-date">{{news.date}}</span>
           </div>
           <div class="content">
             <div class="text-center">
-              <img class="border-white section-card" v-bind:src="newsImg + news.ImgName">
+              <img class="border-white section-card" v-bind:src="newsImg + news.imgname">
             </div>
-            <div class="news-content" v-html="news.Text">
+            <div class="news-content" v-html="news.text">
             </div>
             <hr>
             <div class="row row-edit">
@@ -32,7 +32,7 @@
     </div>
 
     <modal-component v-if="showModal">
-      <h3 slot="header">Delete "{{selectedNews.Title}}"?</h3>
+      <h3 slot="header">Delete "{{selectedNews.title}}"?</h3>
       <div slot="footer">
         <button class="modal-default-button btn btn-success" @click="showModal = false">Cancel</button>
         <button class="modal-default-button btn" @click="deleteNews">OK</button>
@@ -88,7 +88,7 @@
     created () {
       this.newsImg = this.$config.serverHost + this.newsImgPath
       this.$http.get(this.$config.serverHost + '/api/getNews').then((res) => {
-        this.newsList = res.body
+        this.newsList = res.body.rows
       }).catch((error) => {
         this.notify('Cannot get sections', 'ti-gallery', 'warning')
         console.log(error)

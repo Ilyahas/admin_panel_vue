@@ -7,14 +7,14 @@
 
         <div class="card">
           <div class="header">
-            <h4 class="title">{{section.Title}}</h4>
+            <h4 class="title">{{section.title}}</h4>
           </div>
           <div class="content">
-            <div class="section-content" v-html="section.Text"></div>
+            <div class="section-content" v-html="section.text"></div>
             <hr>
             <div class="row row-edit">
               <div class="col-lg-6 col-sm-6 text-center">
-                <router-link :to="{ path: '/main-page/edit-section', query: {id: section.idMainPageSections}}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
+                <router-link :to="{ path: '/main-page/edit-section', query: {id: section.idmainpagesections}}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
               </div>
               <div class="col-lg-6 col-sm-6 text-center">
                 <button id="show-modal" @click="askConfirmation(section)" class="as-link"><i class="ti-close"></i> <span>Delete</span></button>
@@ -27,7 +27,7 @@
     </div>
 
     <modal-component v-if="showModal">
-      <h3 slot="header">Delete "{{selectedSection.Title}}"?</h3>
+      <h3 slot="header">Delete "{{selectedSection.title}}"?</h3>
       <div slot="footer">
         <button class="modal-default-button btn btn-success" @click="showModal = false">Cancel</button>
         <button class="modal-default-button btn" @click="deleteSection">OK</button>
@@ -79,7 +79,7 @@
     },
     created () {
       this.$http.get(this.$config.serverHost + '/api/getMainPageSections').then((res) => {
-        this.listOfSections = res.body
+        this.listOfSections = res.body.rows
       }).catch((error) => {
         this.notify('Cannot get sections', 'ti-gallery', 'warning')
         console.log(error)

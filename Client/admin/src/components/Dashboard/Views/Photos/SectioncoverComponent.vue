@@ -106,6 +106,7 @@
         if (!this.validFields()) { return }
         let sectionData = this.getPhotoSectionData()
 
+        console.log(sectionData)
         this.$http.post(this.$config.serverHost + '/api/' + path, sectionData).then((res) => {
           if (this.isNewSection || sectionData.isNewImg) {
             this.$http.post(this.$config.serverHost + '/api/addPhotoFile', this.image).then((res) => {
@@ -150,10 +151,10 @@
       }
       if (!this.isNewSection) {
         this.$http.post(this.$config.serverHost + '/api/getSectionById', {sectionId: this.currentId}).then((res) => {
-          let isSectionExist = res.body.length
+          let isSectionExist = res.body.rows.length
           if (isSectionExist) {
-            this.sectionName = res.body[0].SectionName
-            this.photoSectionImg = this.$config.serverHost + this.photoSectionImgPath + res.body[0].ImgName
+            this.sectionName = res.body.rows[0].sectionname
+            this.photoSectionImg = this.$config.serverHost + this.photoSectionImgPath + res.body.rows[0].imgname
           } else {
             this.notify('This Photo Section does not exist', 'ti-gallery', 'danger')
             this.$router.push('/photos')

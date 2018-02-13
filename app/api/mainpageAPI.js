@@ -6,19 +6,19 @@ module.exports = function (app, getData, postData) {
     });
 
     app.post('/getTopMainPageSections', (req, res) => {
-        getData(queries.getTopMainPageSections, req, res, {topNumber: req.body.topNumber});
+        getData(queries.getTopMainPageSections, req, res, [req.body.topNumber]);
     });
 
     app.post('/getMainPageSectionById', (req, res) => {
-        getData(queries.getMainPageSectionById, req, res, {mainPageSectionId: req.body.mainPageSectionId});
+        getData(queries.getMainPageSectionById, req, res, [req.body.mainPageSectionId]);
     });
 
     app.post('/addMainPageSection', (req, res) => {
         if (req.body.title !== '') {
-            postData(queries.addMainPageSection, req, res, {
-                title: req.body.title,
-                text: req.body.text
-            });
+            postData(queries.addMainPageSection, req, res, [
+                req.body.title,
+                req.body.text
+            ]);
         } else {
             res.status(400).end("MainPage Section Title is not define");
         }
@@ -26,18 +26,18 @@ module.exports = function (app, getData, postData) {
 
     app.post('/updateMainPageSection', (req, res) => {
         if (req.body.title !== '') {
-            getData(queries.updateMainPageSection, req, res, {
-                title: req.body.title,
-                text: req.body.text,
-                mainPageSectionId: req.body.mainPageSectionId
-            });
+            getData(queries.updateMainPageSection, req, res, [
+                req.body.title,
+                req.body.text,
+                req.body.mainPageSectionId
+            ]);
         } else {
             res.status(400).end("MainPage Section Title is not define");
         }
     });
 
     app.post('/deleteMainPageSection', (req, res) => {
-        postData(queries.deleteMainPageSection, req, res, {mainPageSectionId: req.body.mainPageSectionId});
+        postData(queries.deleteMainPageSection, req, res, [req.body.mainPageSectionId]);
     });
 
 };

@@ -1,7 +1,6 @@
 module.exports = function(app, path, express, passport) {
 
     const bcrypt = require('bcryptjs');
-
     const newdir_ = path.resolve(__dirname, '..');
 
     const isAuthorized = (req, res, next) => {

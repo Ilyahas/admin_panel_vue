@@ -4,7 +4,7 @@
       <md-card-media>
         <!-- swiper1 -->
         <swiper :options="swiperOptionTop" class="gallery-top" ref="swiperTop">
-          <swiper-slide class="bg-container" v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + serverHost + newsImgPath + news.ImgName + '\');'">
+          <swiper-slide class="bg-container" v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + serverHost + newsImgPath + news.imgname + '\');'">
             <div class="slide-title" @click="newsClick(news.idnews)">
               <div class="container">{{news.Title}}</div>
             </div>
@@ -14,7 +14,7 @@
         </swiper>
         <!-- swiper2 Thumbs -->
         <swiper :options="swiperOptionThumbs" class="gallery-thumbs" ref="swiperThumbs">
-          <swiper-slide v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + serverHost + newsImgPath + news.ImgName + '\');'"></swiper-slide>
+          <swiper-slide v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + serverHost + newsImgPath + news.imgname + '\');'"></swiper-slide>
         </swiper>
       </md-card-media>
     </md-card>
@@ -22,15 +22,15 @@
     <div class="articles">
       <span class="art-title">Articles</span>
         <div class="article-item" v-for="(article, index) in listOfArticles" :key="index">
-          <div class="art-item-title">{{article.Title}}</div>
+          <div class="art-item-title">{{article.title}}</div>
           <div class="art-date">{{article.Date}}</div>
-          <button @click="goToArticle(article.idArticles)" class="btn"><span>Read More</span> <i class="icon ti-angle-right"></i></button>
+          <button @click="goToArticle(article.idarticles)" class="btn"><span>Read More</span> <i class="icon ti-angle-right"></i></button>
         </div>
     </div>
 
     <div class="custom-section" v-for="(section, index) in listOfSections" :key="index">
-      <span class="sections-title">{{section.Title}}</span>
-      <div class="section-content" v-html="section.Text"></div>
+      <span class="sections-title">{{section.title}}</span>
+      <div class="section-content" v-html="section.text"></div>
     </div>
 
   </div>
@@ -82,9 +82,9 @@
     created () {
       /* Get Top News for slideshow */
       this.$http.post(this.$config.serverHost + '/api/getTopNews', {topNumber: this.TOP_NEWS_NUMBER}).then((res) => {
-        let isNewsExist = res.body.length
+        let isNewsExist = res.body.rows.length
         if (isNewsExist) {
-          this.listOfNewsForCarusel = res.body
+          this.listOfNewsForCarusel = res.body.rows
         }
       }).catch((error) => {
         console.log(error)
@@ -92,9 +92,9 @@
 
       /* Get Top Articles */
       this.$http.post(this.$config.serverHost + '/api/getTopArticles', {topNumber: this.TOP_ARTICLES_NUMBER}).then((res) => {
-        let isArticlesExist = res.body.length
+        let isArticlesExist = res.body.rows.length
         if (isArticlesExist) {
-          this.listOfArticles = res.body
+          this.listOfArticles = res.body.rows
         }
       }).catch((error) => {
         console.log(error)
@@ -102,9 +102,9 @@
 
       /* Get Sections */
       this.$http.get(this.$config.serverHost + '/api/getMainPageSections').then((res) => {
-        let isSectionsExist = res.body.length
+        let isSectionsExist = res.body.rows.length
         if (isSectionsExist) {
-          this.listOfSections = res.body
+          this.listOfSections = res.body.rows
         }
       }).catch((error) => {
         console.log(error)
@@ -212,6 +212,10 @@
     display: block;
     margin-top: 10px;
 
+    @include breakpoint(xs) {
+      padding: 0 2%;
+    }
+
     .art-title {
       display: inline-block;
       font-size: $fontSectionSize;
@@ -252,11 +256,19 @@
     display: block;
     padding: 15px 0;
 
+    @include breakpoint(xs) {
+      padding: 15px 2%;
+    }
+
     .sections-title {
       display: block;
       font-size: $fontSectionSize;
       text-align: center;
       margin-bottom: 10px;
+
+      @include breakpoint(xs) {
+        font-size: $fontSectionSize - 20px;
+      }
 
       @include breakpoint(md) {
         font-size: $fontSectionSize - 10px;

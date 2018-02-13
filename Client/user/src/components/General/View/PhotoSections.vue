@@ -1,10 +1,10 @@
 <template>
   <div class="container container-margin">
     <div class="grid">
-      <figure class="photoSection-item" v-for="(section, index) in listOfSections" :key="index" @click="goToSection(section.idPhotoSections)">
-        <img :src="serverHost + photosImgPath + section.ImgName">
+      <figure class="photoSection-item" v-for="(section, index) in listOfSections" :key="index" @click="goToSection(section.idphotosections)">
+        <img :src="serverHost + photosImgPath + section.imgname">
         <figcaption>
-          <div class="title"><span>{{section.SectionName}}</span></div>
+          <div class="title"><span>{{section.sectionname}}</span></div>
         </figcaption>
       </figure>
       <infinite-loading @infinite="infiniteHandler">
@@ -41,9 +41,9 @@
             topNumber: this.TOP_PHOTOSECTIONS_NUMBER,
             fromNumber: fromLoadPhotoSectionsIndex
           }).then((res) => {
-            let isNewsExist = res.body.length
+            let isNewsExist = res.body.rows.length
             if (isNewsExist) {
-              this.listOfSections = this.listOfSections.concat(res.body)
+              this.listOfSections = this.listOfSections.concat(res.body.rows)
               $state.loaded()
             } else {
               this.isMorePhotoSectionsForLoad = false

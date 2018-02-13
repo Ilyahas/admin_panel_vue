@@ -1,10 +1,11 @@
 module.exports = {
     'database': {
         'host': 'localhost',
-        'user': 'root',
-        'password': 'root',
-        'database': 'admin_panel'
+        'user': 'postgres',
+        'password': '',
+        'database': 'admin_panel',
+        'port': '5432'
     },
-    'PORT': '8080',
+    'PORT': '3000',
     'apiLink': '/api'
 };

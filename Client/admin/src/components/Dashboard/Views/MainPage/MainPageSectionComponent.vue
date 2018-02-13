@@ -103,11 +103,11 @@
       }
       if (!this.isNewSection) {
         this.$http.post(this.$config.serverHost + '/api/getMainPageSectionById', {mainPageSectionId: this.currentId}).then((res) => {
-          let isSectionExist = res.body.length
+          let isSectionExist = res.body.rows.length
           if (isSectionExist) {
             // init variables
-            this.title = res.body[0].Title
-            this.content = res.body[0].Text
+            this.title = res.body.rows[0].title
+            this.content = res.body.rows[0].text
           } else {
             this.notify('The Section does not exist', 'ti-gallery', 'danger')
             this.$router.go(-1)
