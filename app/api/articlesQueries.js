@@ -1,10 +1,10 @@
 module.exports = {
-    'getArticlePage': 'SELECT * FROM articlepage WHERE idArticlePage = 1',
-    'updateArticlePage': 'UPDATE articlepage SET Title=$1::text, Text=$2::text WHERE idArticlePage = 1',
+    'getArticlePage': 'SELECT * FROM article_page WHERE id_article_page = 1',
+    'updateArticlePage': 'UPDATE article_page SET title=$1::text, content=$2::text WHERE id_article_page = 1',
     'getArticles': 'SELECT * FROM articles order by idArticles DESC',
-    'getTopArticles': 'SELECT * FROM articles order by idArticles DESC LIMIT $1::integer OFFSET $2::integer',
-    'getArticleById': 'SELECT * FROM articles WHERE idArticles = $1::integer',
-    'addArticle': 'INSERT INTO articles (Title, Text, Date) VALUES ($1::text, $2::text, $3::text)',
-    'updateArticle': 'UPDATE articles SET Title = $1::text, Text = $2::text WHERE idArticles = $3::integer',
-    'deleteArticle': 'DELETE FROM articles WHERE idArticles = $1::integer'
+    'getTopArticles': 'SELECT * FROM articles order by id_articles DESC LIMIT $1::integer OFFSET $2::integer',
+    'getArticleById': 'SELECT * FROM articles WHERE id_articles = $1::integer',
+    'addArticle': 'INSERT INTO articles (title, content, created_date) VALUES ($1::text, $2::text, $3::text)',
+    'updateArticle': 'UPDATE articles SET title = $1::text, content = $2::text WHERE id_articles = $3::integer',
+    'deleteArticle': 'DELETE FROM articles WHERE id_articles = $1::integer'
 };
