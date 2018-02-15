@@ -6,14 +6,14 @@
       <div class="col-lg-4 col-sm-6" v-for="section in sections">
         <div class="card">
           <div class="header">
-            <h4 class="title">{{section.sectionname}}</h4>
+            <h4 class="title">{{section.section_name}}</h4>
           </div>
           <div class="content text-center">
-            <img class="border-white section-card" v-bind:src="photoSectionImg + section.imgname">
+            <img class="border-white section-card" v-bind:src="section.img_data">
             <hr>
             <div class="row row-edit">
               <div class="col-lg-6 col-sm-6 text-center">
-                <router-link :to="{ path: '/photos/edit-section', query: {id: section.idphotosections}}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
+                <router-link :to="{ path: '/photos/edit-section', query: {id: section.id_photo_sections}}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
               </div>
               <div class="col-lg-6 col-sm-6 text-center">
                 <button id="show-modal" @click="askConfirmation(section)" class="as-link"><i class="ti-close"></i> <span>Delete</span></button>
@@ -25,7 +25,7 @@
     </div>
 
     <modal-component v-if="showModal">
-      <h3 slot="header">Delete "{{selectedSection.sectionname}}"?</h3>
+      <h3 slot="header">Delete "{{selectedSection.section_name}}"?</h3>
       <div slot="footer">
         <button class="modal-default-button btn btn-success" @click="showModal = false">Cancel</button>
         <button class="modal-default-button btn" @click="deleteSection">OK</button>
@@ -39,8 +39,6 @@
   export default {
     data () {
       return {
-        photoSectionImgPath: '/img/photos/',
-        photoSectionImg: '',
         sections: [],
         selectedSection: {},
         showModal: false
@@ -52,7 +50,7 @@
         this.showModal = true
       },
       deleteSection () {
-        this.$http.post(this.$config.serverHost + '/api/deleteSection', {sectionId: this.selectedSection.idphotosections}).then((res) => {
+        this.$http.post(this.$config.serverHost + '/api/deleteSection', {sectionId: this.selectedSection.id_photo_sections}).then((res) => {
           if (res.status === 200) {
             this.notify('Photo Section was deleted', 'ti-trash', 'success')
             this.sections.splice(this.sections.indexOf(this.selectedSection), 1)
@@ -78,7 +76,6 @@
       ModalComponent
     },
     created () {
-      this.photoSectionImg = this.$config.serverHost + this.photoSectionImgPath
       this.$http.get(this.$config.serverHost + '/api/getSections').then((res) => {
         this.sections = res.body.rows
       }).catch((error) => {

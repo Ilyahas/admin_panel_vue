@@ -8,18 +8,18 @@
         <div class="card">
           <div class="header">
             <h4 class="title">{{news.title}}</h4>
-            <span class="title-date">{{news.date}}</span>
+            <span class="title-date">{{news.created_date}}</span>
           </div>
           <div class="content">
             <div class="text-center">
-              <img class="border-white section-card" v-bind:src="newsImg + news.imgname">
+              <img class="border-white section-card" v-bind:src="news.img_data">
             </div>
-            <div class="news-content" v-html="news.text">
+            <div class="news-content" v-html="news.content">
             </div>
             <hr>
             <div class="row row-edit">
               <div class="col-lg-6 col-sm-6 text-center">
-                <router-link :to="{ path: '/news/edit-news', query: {id: news.idnews}}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
+                <router-link :to="{ path: '/news/edit-news', query: {id: news.id_news}}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
               </div>
               <div class="col-lg-6 col-sm-6 text-center">
                 <button id="show-modal" @click="askConfirmation(news)" class="as-link"><i class="ti-close"></i> <span>Delete</span></button>
@@ -47,8 +47,7 @@
   export default {
     data () {
       return {
-        newsImgPath: '/img/news/',
-        newsImg: '',
+        newsImg: this.$config.imagesHost + this.$config.defaultImg,
         newsList: [],
         selectedNews: {},
         showModal: false
@@ -60,7 +59,7 @@
         this.showModal = true
       },
       deleteNews () {
-        this.$http.post(this.$config.serverHost + '/api/deleteNews', {newsId: this.selectedNews.idnews}).then((res) => {
+        this.$http.post(this.$config.serverHost + '/api/deleteNews', {newsId: this.selectedNews.id_news}).then((res) => {
           if (res.status === 200) {
             this.notify('News was deleted', 'ti-trash', 'success')
             this.newsList.splice(this.newsList.indexOf(this.selectedNews), 1)
@@ -86,7 +85,6 @@
       ModalComponent
     },
     created () {
-      this.newsImg = this.$config.serverHost + this.newsImgPath
       this.$http.get(this.$config.serverHost + '/api/getNews').then((res) => {
         this.newsList = res.body.rows
       }).catch((error) => {

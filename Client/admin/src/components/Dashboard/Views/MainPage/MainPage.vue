@@ -10,11 +10,11 @@
             <h4 class="title">{{section.title}}</h4>
           </div>
           <div class="content">
-            <div class="section-content" v-html="section.text"></div>
+            <div class="section-content" v-html="section.content"></div>
             <hr>
             <div class="row row-edit">
               <div class="col-lg-6 col-sm-6 text-center">
-                <router-link :to="{ path: '/main-page/edit-section', query: {id: section.idmainpagesections}}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
+                <router-link :to="{ path: '/main-page/edit-section', query: {id: section.id_mainpage_sections}}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
               </div>
               <div class="col-lg-6 col-sm-6 text-center">
                 <button id="show-modal" @click="askConfirmation(section)" class="as-link"><i class="ti-close"></i> <span>Delete</span></button>
@@ -55,7 +55,7 @@
         this.showModal = true
       },
       deleteSection () {
-        this.$http.post(this.$config.serverHost + '/api/deleteMainPageSection', {mainPageSectionId: this.selectedSection.idMainPageSections}).then((res) => {
+        this.$http.post(this.$config.serverHost + '/api/deleteMainPageSection', {mainPageSectionId: this.selectedSection.id_mainpage_sections}).then((res) => {
           if (res.status === 200) {
             this.notify('Section was deleted', 'ti-trash', 'success')
             this.listOfSections.splice(this.listOfSections.indexOf(this.selectedSection), 1)

@@ -5,9 +5,10 @@ module.exports = function (app, getData, postData, path) {
     app.post('/addNews', (req, res) => {
         if (req.body.title !== '') {
             postData(queries.addNews, req, res, [
-                req.body.text,
                 req.body.title,
+                req.body.text,
                 req.body.imgName,
+                req.body.imgData,
                 req.body.date
             ]);
         } else {
@@ -31,16 +32,16 @@ module.exports = function (app, getData, postData, path) {
         if (req.body.title !== '') {
             if (req.body.isNewImg) {
                 postData(queries.updateNewsWithImg, req, res, [
-                    req.body.text,
                     req.body.title,
+                    req.body.text,
                     req.body.imgName,
                     req.body.imgData,
                     req.body.newsId
                 ]);
             } else {
                 postData(queries.updateNewsData, req, res, [
-                    req.body.text,
                     req.body.title,
+                    req.body.text,
                     req.body.newsId
                 ]);
             }

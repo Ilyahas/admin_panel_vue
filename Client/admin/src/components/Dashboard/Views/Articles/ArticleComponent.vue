@@ -31,7 +31,7 @@
         customToolbar: [
           ['bold', 'italic', 'underline'],
           [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+          ['image'], [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
           [{ 'align': [] }]
         ],
         title: '',
@@ -108,7 +108,7 @@
           if (isArticleExist) {
             // init variables
             this.title = res.body.rows[0].title
-            this.content = res.body.rows[0].text
+            this.content = res.body.rows[0].content
           } else {
             this.notify('The Article does not exist', 'ti-gallery', 'danger')
             this.$router.go(-1)

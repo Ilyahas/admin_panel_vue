@@ -6,7 +6,8 @@ module.exports = function (app, getData, postData, path) {
         if (req.body.sectionName !== '') {
             postData(queries.addPhotoSection, req, res, [
                 req.body.sectionName,
-                req.body.imgName
+                req.body.imgName,
+                req.body.imgData
             ]);
         } else {
             res.status(400).end("Section Name is not define");
@@ -23,7 +24,7 @@ module.exports = function (app, getData, postData, path) {
 
     app.post('/updateSection', (req, res) => {
         if (req.body.sectionName !== '') {
-            if (req.body.newImg) {
+            if (req.body.isNewImg) {
                 postData(queries.updatePhotoSectionWithImg, req, res, [
                     req.body.sectionName,
                     req.body.imgName,
