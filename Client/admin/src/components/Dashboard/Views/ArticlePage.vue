@@ -30,7 +30,7 @@
         customToolbar: [
           ['bold', 'italic', 'underline'],
           [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+          ['image'], [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
           [{ 'align': [] }]
         ],
         title: '',
@@ -71,11 +71,10 @@
     created () {
       this.$http.get(this.$config.serverHost + '/api/getArticlePage').then((res) => {
         let isArticleExist = res.body.rows.length
-        console.log(res.body.rows[0])
         if (isArticleExist) {
           // init variables
           this.title = res.body.rows[0].title
-          this.content = res.body.rows[0].text
+          this.content = res.body.rows[0].content
         } else {
           this.notify('The Article does not exist', 'ti-pencil', 'danger')
           this.$router.go(-1)

@@ -16,7 +16,7 @@ export default {
   },
   created () {
     EventBus.$on('section', (obj) => {
-      this.header = obj.sectionname
+      this.header = obj.section_name
     })
   }
 }

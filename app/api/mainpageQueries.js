@@ -1,8 +1,8 @@
 module.exports = {
-    'getMainPageSections': 'SELECT * FROM mainpagesections order by idMainPageSections DESC',
-    'getTopMainPageSections': 'SELECT * FROM mainpagesections order by idMainPageSections DESC LIMIT $1::integer',
-    'getMainPageSectionById': 'SELECT * FROM mainpagesections WHERE idMainPageSections = $1::integer',
-    'addMainPageSection': 'INSERT INTO mainpagesections (Title, Text) VALUES ($1::text, $2::text)',
-    'updateMainPageSection': 'UPDATE mainpagesections SET Title = $1::text, Text = $2::text WHERE idMainPageSections = $3::integer',
-    'deleteMainPageSection': 'DELETE FROM mainpagesections WHERE idMainPageSections = $1::integer'
+    'getMainPageSections': 'SELECT * FROM mainpage_sections order by id_mainpage_sections',
+    'getTopMainPageSections': 'SELECT * FROM mainpage_sections order by id_mainpage_sections LIMIT $1::integer',
+    'getMainPageSectionById': 'SELECT * FROM mainpage_sections WHERE id_mainpage_sections = $1::integer',
+    'addMainPageSection': 'INSERT INTO mainpage_sections (title, content) VALUES ($1::text, $2::text)',
+    'updateMainPageSection': 'UPDATE mainpage_sections SET title = $1::text, content = $2::text WHERE id_mainpage_sections = $3::integer',
+    'deleteMainPageSection': 'DELETE FROM mainpage_sections WHERE id_mainpage_sections = $1::integer'
 };

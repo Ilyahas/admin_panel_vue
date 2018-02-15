@@ -2,7 +2,7 @@
     <section id="thumbnails">
         <article v-for="(item, index) in items" v-bind:class="{ 'active': activeIndex == index }">
             <a class="thumbnail" v-on:click="selectImage(item, index)">
-                <img v-bind:src="serverHost + photosImgPath + item.photoimgname" alt="" />
+                <img v-bind:src="item.img_data" alt="" />
             </a>
             <h2>{{ item.title }}</h2>
             <div v-html="item.content"></div>
@@ -17,8 +17,6 @@ export default {
   name: 'thumbs',
   data () {
     return {
-      serverHost: this.$config.serverHost,
-      photosImgPath: '/img/photos/',
       items: [],
       activeIndex: 0
     }
@@ -31,7 +29,7 @@ export default {
   },
   created () {
     EventBus.$on('section', (obj) => {
-      this.$http.post(this.$config.serverHost + '/api/getPhotosBySectionId', {sectionId: obj.idphotosections}).then((res) => {
+      this.$http.post(this.$config.serverHost + '/api/getPhotosBySectionId', {sectionId: obj.id_photo_sections}).then((res) => {
         let isPhotosExist = res.body.rows.length
         if (isPhotosExist) {
           this.items = res.body.rows

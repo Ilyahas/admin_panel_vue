@@ -8,14 +8,14 @@
         <div class="card">
           <div class="header">
             <h4 class="title">{{article.title}}</h4>
-            <span class="title-date">{{article.date}}</span>
+            <span class="title-date">{{article.created_date}}</span>
           </div>
           <div class="content">
-            <div class="article-content" v-html="article.text"></div>
+            <div class="article-content" v-html="article.content"></div>
             <hr>
             <div class="row row-edit">
               <div class="col-lg-6 col-sm-6 text-center">
-                <router-link :to="{ path: '/articles/edit-article', query: {id: article.idarticles}}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
+                <router-link :to="{ path: '/articles/edit-article', query: {id: article.id_articles}}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
               </div>
               <div class="col-lg-6 col-sm-6 text-center">
                 <button id="show-modal" @click="askConfirmation(article)" class="as-link"><i class="ti-close"></i> <span>Delete</span></button>
@@ -56,7 +56,7 @@
         this.showModal = true
       },
       deleteArticle () {
-        this.$http.post(this.$config.serverHost + '/api/deleteArticle', {articleId: this.selectedArticle.idArticles}).then((res) => {
+        this.$http.post(this.$config.serverHost + '/api/deleteArticle', {articleId: this.selectedArticle.id_articles}).then((res) => {
           if (res.status === 200) {
             this.notify('Article was deleted', 'ti-trash', 'success')
             this.listOfArticles.splice(this.listOfArticles.indexOf(this.selectedArticle), 1)

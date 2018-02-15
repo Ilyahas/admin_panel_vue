@@ -50,8 +50,8 @@
     },
     data () {
       return {
-        newsImgPath: '/img/news/',
-        newsImg: '',
+        newsImg: this.$config.serverHost + this.$config.defaultImg,
+        imgBase64: '',
         changedCoverNews: false,
         title: '',
         image: {},
@@ -59,7 +59,7 @@
         customToolbar: [
           ['bold', 'italic', 'underline'],
           [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+          ['image'], [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
           [{ 'align': [] }]
         ],
         isNewNews: true
@@ -69,6 +69,22 @@
       PictureInput
     },
     methods: {
+      base64toFile (b64Data, fileName, contentType, sliceSize) {
+        contentType = contentType || ''
+        sliceSize = sliceSize || 512
+        let byteCharacters = atob(b64Data)
+        let byteArrays = []
+        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+          let slice = byteCharacters.slice(offset, offset + sliceSize)
+          let byteNumbers = new Array(slice.length)
+          for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i)
+          }
+          let byteArray = new Uint8Array(byteNumbers)
+          byteArrays.push(byteArray)
+        }
+        return new File(byteArrays, fileName, {type: contentType})
+      },
       getTodayDate () {
         let today = new Date()
         let dd = today.getDate()
@@ -99,35 +115,23 @@
         return true
       },
       getNewsData () {
-        let newsData = {}
-        if (this.isNewNews) {
-          newsData = {
-            text: this.content,
-            title: this.title,
-            imgName: '',
-            date: this.getTodayDate()
-          }
-          // get name of the file
+        let newsData = {
+          title: this.title,
+          text: this.content,
+          imgName: '',
+          imgData: '',
+          newsId: this.currentId,
+          date: this.getTodayDate(),
+          isNewImg: false
+        }
+        if (this.changedCoverNews) {
+          newsData.isNewImg = true
           for (let file of this.image) {
             if (file[0] === 'file') {
               newsData.imgName = file[1].name
             }
-          }
-        } else {
-          newsData = {
-            text: this.content,
-            title: this.title,
-            imgName: '',
-            newsId: this.currentId,
-            isNewImg: false
-          }
-          if (this.changedCoverNews) {
-            newsData.isNewImg = true
-            // get name of the file
-            for (let file of this.image) {
-              if (file[0] === 'file') {
-                newsData.imgName = file[1].name
-              }
+            if (file[0] === 'data') {
+              newsData.imgData = file[1]
             }
           }
         }
@@ -140,28 +144,19 @@
       saveNews (path) {
         if (!this.validFields()) { return }
         let newsData = this.getNewsData()
-
         this.$http.post(this.$config.serverHost + '/api/' + path, newsData).then((res) => {
-          if (this.isNewNews || newsData.isNewImg) {
-            this.$http.post(this.$config.serverHost + '/api/addNewsFile', this.image).then((res) => {
-              this.successUpload()
-            }).catch((error) => {
-              this.notify('Cannot upload image', 'ti-import', 'warning')
-              console.log(error)
-            })
-          } else {
-            this.successUpload()
-          }
+          this.successUpload()
         }).catch((error) => {
           this.notify('Cannot add news', 'ti-plus', 'warning')
           console.log(error)
         })
       },
       onChange () {
-        if (this.$refs.pictureInput.image) {
+        if (this.$refs.pictureInput.image !== this.imgBase64) {
           this.changedCoverNews = true
           let data = new FormData()
           data.append('file', this.$refs.pictureInput.file)
+          data.append('data', this.$refs.pictureInput.image)
           this.image = data
         } else {
           console.log('FileReader API not supported: use the <form>, Luke!')
@@ -181,8 +176,6 @@
     created () {
       if (this.currentId !== undefined) {
         this.isNewNews = false
-      } else {
-        this.newsImg = this.$config.serverHost + this.$config.defaultImg
       }
       if (!this.isNewNews) {
         this.$http.post(this.$config.serverHost + '/api/getNewsById', {newsId: this.currentId}).then((res) => {
@@ -190,8 +183,9 @@
           if (isNewsExist) {
             // init variables
             this.title = res.body.rows[0].title
-            this.content = res.body.rows[0].text
-            this.newsImg = this.$config.serverHost + this.newsImgPath + res.body.rows[0].imgname
+            this.content = res.body.rows[0].content
+            this.imgBase64 = res.body.rows[0].img_data
+            this.newsImg = this.base64toFile(this.imgBase64.split(',')[1], res.body.rows[0].img_name)
           } else {
             this.notify('This News does not exist', 'ti-gallery', 'danger')
           }

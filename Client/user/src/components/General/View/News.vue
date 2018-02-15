@@ -1,11 +1,11 @@
 <template>
   <div class="container container-margin">
     <div class="grid">
-      <figure class="effect-milo" v-for="(news, index) in listOfNews" :key="index" @click="goToNews(news.idnews)" >
-        <img :src="serverHost + newsImgPath + news.imgname">
+      <figure class="effect-milo" v-for="(news, index) in listOfNews" :key="index" @click="goToNews(news.id_news)" >
+        <img :src="news.img_data">
         <figcaption>
           <h2>{{news.title}}</h2>
-          <p>{{news.date}}</p>
+          <p>{{news.created_date}}</p>
         </figcaption>
       </figure>
       <infinite-loading @infinite="infiniteHandler">
@@ -20,8 +20,6 @@
   export default {
     data () {
       return {
-        serverHost: this.$config.serverHost,
-        newsImgPath: '/img/news/',
         listOfNews: [],
         TOP_NEWS_NUMBER: 12,
         isMoreNewsForLoad: true

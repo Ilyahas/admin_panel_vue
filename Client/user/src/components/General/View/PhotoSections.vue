@@ -1,10 +1,10 @@
 <template>
   <div class="container container-margin">
     <div class="grid">
-      <figure class="photoSection-item" v-for="(section, index) in listOfSections" :key="index" @click="goToSection(section.idphotosections)">
-        <img :src="serverHost + photosImgPath + section.imgname">
+      <figure class="photoSection-item" v-for="(section, index) in listOfSections" :key="index" @click="goToSection(section.id_photo_sections)">
+        <img :src="section.img_data">
         <figcaption>
-          <div class="title"><span>{{section.sectionname}}</span></div>
+          <div class="title"><span>{{section.section_name}}</span></div>
         </figcaption>
       </figure>
       <infinite-loading @infinite="infiniteHandler">
@@ -19,8 +19,6 @@
   export default {
     data () {
       return {
-        serverHost: this.$config.serverHost,
-        photosImgPath: '/img/photos/',
         listOfSections: [],
         TOP_PHOTOSECTIONS_NUMBER: 12,
         isMorePhotoSectionsForLoad: true

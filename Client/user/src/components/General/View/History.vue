@@ -1,7 +1,7 @@
 <template>
   <div class="container container-margin">
     <div class="title">{{articlePageContent.title}}</div>
-    <div class="article-content" v-html="articlePageContent.text"></div>
+    <div class="article-content" v-html="articlePageContent.content"></div>
   </div>
 </template>
 <script>

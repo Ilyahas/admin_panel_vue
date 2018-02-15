@@ -1,56 +1,59 @@
-CREATE TABLE public.articlepage
+CREATE TABLE public.article_page
 (
-  idarticlepage SERIAL PRIMARY KEY,
+  id_article_page SERIAL PRIMARY KEY,
   title character varying(255) NOT NULL,
-  text text
+  content text
 );
 
 CREATE TABLE public.articles
 (
-  idarticles SERIAL PRIMARY KEY,
+  id_articles SERIAL PRIMARY KEY,
   title character varying(255) NOT NULL,
-  text text,
-  date character varying(45) DEFAULT NULL::character varying
+  content text,
+  created_date character varying(45) DEFAULT NULL::character varying
 );
 
-CREATE TABLE public.mainpagesections
+CREATE TABLE public.mainpage_sections
 (
-  idmainpagesections SERIAL PRIMARY KEY,
+  id_mainpage_sections SERIAL PRIMARY KEY,
   title character varying(255) DEFAULT NULL::character varying,
-  text text
+  content text
 );
 
 CREATE TABLE public.news
 (
-  idnews SERIAL PRIMARY KEY,
-  text text,
+  id_news SERIAL PRIMARY KEY,
   title character varying(255) NOT NULL,
-  imgname character varying(255) DEFAULT NULL::character varying,
-  date character varying(45) DEFAULT NULL::character varying
+  content text,
+  img_name character varying(255) DEFAULT NULL::character varying,
+  img_data text,
+  created_date character varying(45) DEFAULT NULL::character varying
 );
 
 CREATE TABLE public.photos
 (
-  idphotos SERIAL PRIMARY KEY,
-  photoname character varying(255) DEFAULT NULL::character varying,
-  photoimgname character varying(255) DEFAULT NULL::character varying,
-  idphotosections integer
+  id_photos SERIAL PRIMARY KEY,
+  photo_title character varying(255) DEFAULT NULL::character varying,
+  img_name character varying(255) DEFAULT NULL::character varying,
+  img_data text,
+  id_photo_sections integer
 );
 
-CREATE TABLE public.photosections
+CREATE TABLE public.photo_sections
 (
-  idphotosections SERIAL PRIMARY KEY,
-  sectionname character varying(255) NOT NULL,
-  imgname character varying(255) DEFAULT NULL::character varying
+  id_photo_sections SERIAL PRIMARY KEY,
+  section_name character varying(255) NOT NULL,
+  img_name character varying(255) DEFAULT NULL::character varying,
+  img_data text
 );
 
 CREATE TABLE public.users
 (
-  idusers SERIAL PRIMARY KEY,
+  id_users SERIAL PRIMARY KEY,
   login character varying(255) DEFAULT NULL::character varying,
   password character varying(255) DEFAULT NULL::character varying
 );
 
-INSERT INTO users (idusers, login, password) VALUES (1, 'admin', '$2a$08$MKw5EY07Lr0NssqikoMoDO.uxDMA741HPVTGMr8gW1bhxPl8fS9Ie');
+INSERT INTO users (id_users, login, password) VALUES (1, 'admin', '$2a$08$MKw5EY07Lr0NssqikoMoDO.uxDMA741HPVTGMr8gW1bhxPl8fS9Ie');
 
-INSERT INTO articlepage (idarticlepage, title, text) VALUES (1, 'title', 'text');
+INSERT INTO articlepage (id_article_page, title, content) VALUES (1, 'title', 'content');
