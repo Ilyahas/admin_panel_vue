@@ -28,9 +28,11 @@
         </div>
     </div>
 
-    <div class="custom-section" v-for="(section, index) in listOfSections" :key="index">
-      <span class="sections-title">{{section.title}}</span>
-      <div class="section-content" v-html="section.content"></div>
+    <div class="main-sections">
+      <div class="custom-section" v-for="(section, index) in listOfSections" :key="index">
+        <span class="sections-title">{{section.title}}</span>
+        <div class="section-content" v-html="section.content"></div>
+      </div>
     </div>
 
   </div>
@@ -113,7 +115,7 @@
 <style scoped lang="scss">
   @import "../../../assets/sass/styles/GlobalVar";
   $titleBarHeight: 85px;
-  $fontSectionSize: 60px;
+  $fontSectionSize: 50px;
 
   *:before,
   *:after {
@@ -250,31 +252,33 @@
 
 
   /*-----------------Sections------------------*/
-  .custom-section {
-    display: block;
-    padding: 15px 0;
+  .main-sections {
+    margin-top: 25px;
 
-    @include breakpoint(xs) {
-      padding: 15px 2%;
-    }
-
-    .sections-title {
+    .custom-section {
       display: block;
-      font-size: $fontSectionSize;
-      text-align: center;
-      margin-bottom: 10px;
 
       @include breakpoint(xs) {
-        font-size: $fontSectionSize - 20px;
+        padding: 15px 2%;
       }
 
-      @include breakpoint(md) {
-        font-size: $fontSectionSize - 10px;
-      }
-    }
+      .sections-title {
+        display: block;
+        font-size: $fontSectionSize;
+        text-align: center;
 
-    .section-content {
-      font-size: $fontSizeSmall + 5px;
+        @include breakpoint(sm) {
+          font-size: $fontSectionSize - 20px;
+        }
+
+        @include breakpoint(md) {
+          font-size: $fontSectionSize - 10px;
+        }
+      }
+
+      .section-content {
+        font-size: $fontSizeSmall + 5px;
+      }
     }
   }
 

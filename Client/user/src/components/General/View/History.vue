@@ -36,11 +36,13 @@
     font-size: $fontSizeTitle + 10px;
   }
 
-  @include breakpoint(xs) {
-    .article-content {
+  .article-content {
+    font-size: $fontSizeTitle - 7px;
+    line-height: 1.5;
+
+    @include breakpoint(xs) {
       font-size: 18px;
       padding: 0 2%;
     }
   }
-
 </style>
