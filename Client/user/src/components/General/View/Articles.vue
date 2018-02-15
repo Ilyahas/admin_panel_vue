@@ -57,6 +57,8 @@
   @import "../../../assets/sass/styles/GlobalVar";
 
   .article-item {
+    line-height: 1.6;
+
     border: 1px solid;
     padding: 20px;
     margin-bottom: 15px;

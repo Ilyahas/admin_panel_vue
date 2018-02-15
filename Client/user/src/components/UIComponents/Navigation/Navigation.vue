@@ -102,7 +102,7 @@
       width: 100%;
       z-index: 99999;
 
-      @include breakpoint(sm) {
+      @include breakpoint(768px) {
         display: none !important;
       }
 

@@ -8,7 +8,7 @@ $fontSizeSmall: 15px;
 @mixin breakpoint($device) {
   @if ($device == xs) {
     // until 767px
-    @media only screen and (max-width: 767px) {
+    @media only screen and (max-width: 480px) {
       @content;
     }
   } @else if ($device == sm) {
@@ -41,7 +41,7 @@ $fontSizeSmall: 15px;
   }
   @else {
     //custom breakpoint
-    @media only screen and (max-width: $device) {
+    @media only screen and (min-width: $device) {
       @content;
     }
   }
@@ -61,6 +61,7 @@ $fontSizeSmall: 15px;
   }
 }
 
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:300');
 
 .scrollOff {
   top: 0;
@@ -81,6 +82,7 @@ $fontSizeSmall: 15px;
 }
 
 body {
+  font-family: 'Fira Sans', sans-serif;;
   overflow-x: hidden;
 }
 
@@ -104,6 +106,7 @@ p {
 
 .container-margin{
   margin-top: 15px;
+  margin-bottom: 15px;
 
   @include breakpoint(xs) {
     margin-top: 1%;
@@ -122,6 +125,10 @@ p {
   position: relative;
   margin: 0 auto;
   list-style: none;
+
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
 
   figure {
     position: relative;
@@ -160,6 +167,10 @@ p {
   font-size: 18px;
   margin-top: 15px;
   padding: 5px 10px;
+
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
 
   &,
   &:before,

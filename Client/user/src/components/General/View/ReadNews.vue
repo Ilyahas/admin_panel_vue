@@ -53,10 +53,15 @@
     }
   }
 
-  @include breakpoint(xs) {
-    .news-content {
-      font-size: 18px;
+  .news-content {
+    padding: 15px 0;
+    font-size: $fontSizeTitle - 7px;
+    line-height: 1.5;
+
+    @include breakpoint(xs) {
+      font-size: $fontSizeSmall + 3px;
       padding: 0 2%;
     }
   }
+
 </style>
