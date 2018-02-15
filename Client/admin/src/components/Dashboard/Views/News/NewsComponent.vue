@@ -124,7 +124,7 @@
           date: this.getTodayDate(),
           isNewImg: false
         }
-        if (!this.isNewNews && this.changedCoverNews) {
+        if (this.changedCoverNews) {
           newsData.isNewImg = true
           for (let file of this.image) {
             if (file[0] === 'file') {

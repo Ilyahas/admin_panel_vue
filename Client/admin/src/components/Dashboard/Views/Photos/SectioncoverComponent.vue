@@ -94,7 +94,7 @@
           sectionId: this.currentId,
           isNewImg: false
         }
-        if (!this.isNewSection && this.changedCoverSection) {
+        if (this.changedCoverSection) {
           sectionData.isNewImg = true
           for (let file of this.image) {
             if (file[0] === 'file') {

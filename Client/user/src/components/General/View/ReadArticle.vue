@@ -1,8 +1,8 @@
 <template>
   <div class="container container-margin">
     <div class="title">{{article.title}}</div>
-    <small class="title-date">{{article.date}}</small>
-    <div class="article-content" v-html="article.text"></div>
+    <small class="title-date">{{article.created_date}}</small>
+    <div class="article-content" v-html="article.content"></div>
   </div>
 </template>
 <script>

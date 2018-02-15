@@ -4,9 +4,9 @@
       <md-card-media>
         <!-- swiper1 -->
         <swiper :options="swiperOptionTop" class="gallery-top" ref="swiperTop">
-          <swiper-slide class="bg-container" v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + serverHost + newsImgPath + news.imgname + '\');'">
-            <div class="slide-title" @click="newsClick(news.idnews)">
-              <div class="container">{{news.Title}}</div>
+          <swiper-slide class="bg-container" v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + news.img_data+ '\');'">
+            <div class="slide-title" @click="newsClick(news.id_news)">
+              <div class="container">{{news.title}}</div>
             </div>
           </swiper-slide>
           <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
@@ -14,7 +14,7 @@
         </swiper>
         <!-- swiper2 Thumbs -->
         <swiper :options="swiperOptionThumbs" class="gallery-thumbs" ref="swiperThumbs">
-          <swiper-slide v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + serverHost + newsImgPath + news.imgname + '\');'"></swiper-slide>
+          <swiper-slide v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + news.img_data + '\');'"></swiper-slide>
         </swiper>
       </md-card-media>
     </md-card>
@@ -23,14 +23,14 @@
       <span class="art-title">Articles</span>
         <div class="article-item" v-for="(article, index) in listOfArticles" :key="index">
           <div class="art-item-title">{{article.title}}</div>
-          <div class="art-date">{{article.Date}}</div>
-          <button @click="goToArticle(article.idarticles)" class="btn"><span>Read More</span> <i class="icon ti-angle-right"></i></button>
+          <div class="art-date">{{article.created_date}}</div>
+          <button @click="goToArticle(article.id_articles)" class="btn"><span>Read More</span> <i class="icon ti-angle-right"></i></button>
         </div>
     </div>
 
     <div class="custom-section" v-for="(section, index) in listOfSections" :key="index">
       <span class="sections-title">{{section.title}}</span>
-      <div class="section-content" v-html="section.text"></div>
+      <div class="section-content" v-html="section.content"></div>
     </div>
 
   </div>
@@ -53,8 +53,6 @@
           touchRatio: 0.2,
           slideToClickedSlide: true
         },
-        serverHost: this.$config.serverHost,
-        newsImgPath: '/img/news/',
         listOfNewsForCarusel: [],
         listOfArticles: [],
         listOfSections: [],

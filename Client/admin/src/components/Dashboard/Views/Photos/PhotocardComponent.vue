@@ -40,7 +40,7 @@
         <!-- Photos in Section -->
         <div class="col-lg-4 col-md-6 col-sm-4 cardCustom" v-for="photo in allPhotos">
           <div class="photoFrame">
-            <span class="photoTitle">{{photo.photo_name}}</span>
+            <span class="photoTitle">{{photo.photo_title}}</span>
             <button class="deletePhotoBtn as-link" @click="askConfirmation(photo)"><i class="ti-close"></i>
             </button>
             <div class="photoContainer text-center">
