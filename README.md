@@ -27,4 +27,14 @@ $ npm install
 ```bash
 $ npm start
 ```
+### Database
+PostgreSQL config in app/config.js:
+```
+'host': '<host>',
+'user': '<username>',
+'password': '<password>',
+'database': '<database_name>',
+'port': '<port>'
+```
 
+Also in config.js you need to setup server port (3000 by default)
