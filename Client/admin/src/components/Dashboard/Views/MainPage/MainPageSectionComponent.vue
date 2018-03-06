@@ -4,14 +4,14 @@
       <div class="row">
         <div class="col-lg-6 col-sm-12">
           <fg-input type="text"
-                    label="Section Title"
-                    placeholder="Enter Section title"
+                    label="Заголовок Секції"
+                    placeholder="Введіть заголовок секції"
                     v-model="title">
           </fg-input>
         </div>
       </div>
       <div>
-        <label>Page Text</label>
+        <label>Текст секції</label>
         <vue-editor v-model="content" :editorToolbar="customToolbar"></vue-editor>
       </div>
       <div class="text-center">

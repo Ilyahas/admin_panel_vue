@@ -22,29 +22,57 @@
           </div>
         </div>
       </div>
+      <infinite-loading @infinite="infiniteHandler">
+        <span slot="no-more"></span>
+      </infinite-loading>
     </div>
 
     <modal-component v-if="showModal">
-      <h3 slot="header">Delete "{{selectedSection.section_name}}"?</h3>
+      <h3 slot="header">Видалити "{{selectedSection.section_name}}"?</h3>
       <div slot="footer">
-        <button class="modal-default-button btn btn-success" @click="showModal = false">Cancel</button>
-        <button class="modal-default-button btn" @click="deleteSection">OK</button>
+        <button class="modal-default-button btn btn-success" @click="showModal = false">Відмінити</button>
+        <button class="modal-default-button btn" @click="deleteSection">Так</button>
       </div>
     </modal-component>
   </div>
 </template>
 <script>
   import ModalComponent from '../ModalComponent.vue'
+  import InfiniteLoading from 'vue-infinite-loading'
 
   export default {
     data () {
       return {
+        TOP_PHOTOSECTIONS_NUMBER: 9,
+        isMorePhotoSectionsForLoad: true,
         sections: [],
         selectedSection: {},
         showModal: false
       }
     },
     methods: {
+      infiniteHandler ($state) {
+        let fromLoadPhotoSectionsIndex = this.sections.length
+
+        if (this.isMorePhotoSectionsForLoad) {
+          this.$http.post(this.$config.serverHost + '/api/getTopSections', {
+            topNumber: this.TOP_PHOTOSECTIONS_NUMBER,
+            fromNumber: fromLoadPhotoSectionsIndex
+          }).then((res) => {
+            let isNewsExist = res.body.rows.length
+            if (isNewsExist) {
+              this.sections = this.sections.concat(res.body.rows)
+              $state.loaded()
+            } else {
+              this.isMorePhotoSectionsForLoad = false
+              $state.complete()
+            }
+          }).catch((error) => {
+            console.log(error)
+            $state.complete()
+          })
+        }
+      },
       askConfirmation (section) {
         this.selectedSection = section
         this.showModal = true
@@ -52,11 +80,11 @@
       deleteSection () {
         this.$http.post(this.$config.serverHost + '/api/deleteSection', {sectionId: this.selectedSection.id_photo_sections}).then((res) => {
           if (res.status === 200) {
-            this.notify('Photo Section was deleted', 'ti-trash', 'success')
+            this.notify('Секція фотографії була видалена', 'ti-trash', 'success')
             this.sections.splice(this.sections.indexOf(this.selectedSection), 1)
           }
         }).catch((error) => {
-          this.notify('Cannot delete section', 'ti-trash', 'warning')
+          this.notify('Неможливо видалити секцію фотографій', 'ti-trash', 'warning')
           console.log(error)
         })
         this.showModal = false
@@ -73,15 +101,8 @@
       }
     },
     components: {
-      ModalComponent
-    },
-    created () {
-      this.$http.get(this.$config.serverHost + '/api/getSections').then((res) => {
-        this.sections = res.body.rows
-      }).catch((error) => {
-        this.notify('Cannot get sections', 'ti-gallery', 'warning')
-        console.log(error)
-      })
+      ModalComponent,
+      InfiniteLoading
     }
   }
 </script>

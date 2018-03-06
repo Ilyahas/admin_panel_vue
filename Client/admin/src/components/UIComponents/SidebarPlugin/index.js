@@ -14,27 +14,27 @@ const SidebarStore = {
       path: '/stats'
     }, */
     {
-      name: 'Main Page',
+      name: 'Головна',
       icon: 'ti-blackboard',
       path: '/main-page'
     },
     {
-      name: 'Photo Managment',
+      name: 'Фотографії',
       icon: 'ti-instagram',
       path: '/photos'
     },
     {
-      name: 'News',
+      name: 'Новини',
       icon: 'ti-comment-alt',
       path: '/news'
     },
     {
-      name: 'Articles',
+      name: 'Статті',
       icon: 'ti-pencil',
       path: '/articles'
     },
     {
-      name: 'Article',
+      name: 'Історія',
       icon: 'ti-pencil-alt',
       path: '/article-page'
     }

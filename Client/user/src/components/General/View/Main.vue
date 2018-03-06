@@ -20,7 +20,7 @@
     </md-card>
 
     <div class="articles">
-      <span class="art-title">Articles</span>
+      <span class="art-title">Статті</span>
         <div class="article-item" v-for="(article, index) in listOfArticles" :key="index">
           <div class="art-item-title">{{article.title}}</div>
           <div class="art-date">{{article.created_date}}</div>

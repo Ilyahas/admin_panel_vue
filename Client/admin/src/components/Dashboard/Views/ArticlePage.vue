@@ -4,18 +4,18 @@
       <div class="row">
         <div class="col-lg-6 col-sm-12">
           <fg-input type="text"
-                    label="Article Title"
-                    placeholder="Enter Article title"
+                    label="Заголовок для сторінки"
+                    placeholder="Введіть заголовок"
                     v-model="title">
           </fg-input>
         </div>
       </div>
       <div>
-        <label>Article Text</label>
+        <label>Текст сторінки</label>
         <vue-editor v-model="content" :editorToolbar="customToolbar"></vue-editor>
       </div>
       <div class="text-center">
-        <button class="btn btn-success btn-form-submit btn-wd" @click="save">Save</button>
+        <button class="btn btn-success btn-form-submit btn-wd" @click="save">Зберегти</button>
       </div>
     </div>
   </div>
@@ -41,7 +41,7 @@
       save () {
         let isTitleValid = this.title.length > 3
         if (!isTitleValid) {
-          this.notify('Article Title is too short', 'ti-info', 'warning')
+          this.notify('Заголовок сторінки закороткий', 'ti-info', 'warning')
           return
         }
         let articleData = {
@@ -50,10 +50,10 @@
         }
         this.$http.post(this.$config.serverHost + '/api/updateArticlePage', articleData).then((res) => {
           if (res.status === 200) {
-            this.notify('Page was updated', 'ti-pencil', 'success')
+            this.notify('Сторінка оновлена', 'ti-pencil', 'success')
           }
         }).catch((error) => {
-          this.notify('Cannot update page', 'ti-pencil', 'warning')
+          this.notify('Неможливо оновити сторінку', 'ti-pencil', 'warning')
           console.log(error)
         })
       },
@@ -76,11 +76,11 @@
           this.title = res.body.rows[0].title
           this.content = res.body.rows[0].content
         } else {
-          this.notify('The Article does not exist', 'ti-pencil', 'danger')
+          this.notify('Такої сторінки не існує', 'ti-pencil', 'danger')
           this.$router.go(-1)
         }
       }).catch((error) => {
-        this.notify('Cannot get the article', 'ti-pencil', 'warning')
+        this.notify('Неможливо отримати сторінку', 'ti-pencil', 'warning')
         console.log('error: ', error)
       })
     }

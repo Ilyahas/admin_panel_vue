@@ -19,23 +19,26 @@
             <hr>
             <div class="row row-edit">
               <div class="col-lg-6 col-sm-6 text-center">
-                <router-link :to="{ path: '/news/edit-news', query: {id: news.id_news}}"><i class="ti-pencil"></i> <span>Edit</span></router-link>
+                <router-link :to="{ path: '/news/edit-news', query: {id: news.id_news}}"><i class="ti-pencil"></i> <span>Редагувати</span></router-link>
               </div>
               <div class="col-lg-6 col-sm-6 text-center">
-                <button id="show-modal" @click="askConfirmation(news)" class="as-link"><i class="ti-close"></i> <span>Delete</span></button>
+                <button id="show-modal" @click="askConfirmation(news)" class="as-link"><i class="ti-close"></i> <span>Видалити</span></button>
               </div>
             </div>
           </div>
         </div>
 
       </div>
+      <infinite-loading @infinite="infiniteHandler">
+        <span slot="no-more"></span>
+      </infinite-loading>
     </div>
 
     <modal-component v-if="showModal">
-      <h3 slot="header">Delete "{{selectedNews.title}}"?</h3>
+      <h3 slot="header">Видалити "{{selectedNews.title}}"?</h3>
       <div slot="footer">
-        <button class="modal-default-button btn btn-success" @click="showModal = false">Cancel</button>
-        <button class="modal-default-button btn" @click="deleteNews">OK</button>
+        <button class="modal-default-button btn btn-success" @click="showModal = false">Відміна</button>
+        <button class="modal-default-button btn" @click="deleteNews">Так</button>
       </div>
     </modal-component>
 
@@ -43,10 +46,13 @@
 </template>
 <script>
   import ModalComponent from '../ModalComponent.vue'
+  import InfiniteLoading from 'vue-infinite-loading'
 
   export default {
     data () {
       return {
+        TOP_NEWS_NUMBER: 12,
+        isMoreNewsForLoad: true,
         newsImg: this.$config.imagesHost + this.$config.defaultImg,
         newsList: [],
         selectedNews: {},
@@ -54,6 +60,28 @@
       }
     },
     methods: {
+      infiniteHandler ($state) {
+        let fromLoadNewsIndex = this.newsList.length
+
+        if (this.isMoreNewsForLoad) {
+          this.$http.post(this.$config.serverHost + '/api/getTopNews', {
+            topNumber: this.TOP_NEWS_NUMBER,
+            fromNumber: fromLoadNewsIndex
+          }).then((res) => {
+            let isNewsExist = res.body.rows.length
+            if (isNewsExist) {
+              this.newsList = this.newsList.concat(res.body.rows)
+              $state.loaded()
+            } else {
+              this.isMoreNewsForLoad = false
+              $state.complete()
+            }
+          }).catch((error) => {
+            console.log(error)
+            $state.complete()
+          })
+        }
+      },
       askConfirmation (news) {
         this.selectedNews = news
         this.showModal = true
@@ -65,7 +93,7 @@
             this.newsList.splice(this.newsList.indexOf(this.selectedNews), 1)
           }
         }).catch((error) => {
-          this.notify('Cannot delete news', 'ti-trash', 'warning')
+          this.notify('Неможливо видалити новину', 'ti-trash', 'warning')
           console.log(error)
         })
         this.showModal = false
@@ -82,15 +110,8 @@
       }
     },
     components: {
-      ModalComponent
-    },
-    created () {
-      this.$http.get(this.$config.serverHost + '/api/getNews').then((res) => {
-        this.newsList = res.body.rows
-      }).catch((error) => {
-        this.notify('Cannot get sections', 'ti-gallery', 'warning')
-        console.log(error)
-      })
+      ModalComponent,
+      InfiniteLoading
     }
   }
 </script>

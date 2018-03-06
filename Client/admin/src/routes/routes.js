@@ -46,67 +46,67 @@ const routes = [
       }, */
       {
         path: 'main-page',
-        name: 'Main Page',
+        name: 'Секції Головної сторінки',
         component: MainPage
       },
       {
         path: 'main-page/add-section',
-        name: 'Add Section to Main Page',
+        name: 'Додати секцію до Головної сторінки',
         component: AddMainPage
       },
       {
         path: 'main-page/edit-section',
-        name: 'Edit Section to Main Page',
+        name: 'Редагувати секцію Головної сторінки',
         component: EditMainPage
       },
       {
         path: 'photos',
-        name: 'Photo Sections',
+        name: 'Розділи Фотограцій',
         component: Photos
       },
       {
         path: 'photos/add-section',
-        name: 'Add Section',
+        name: 'Додати розділ',
         component: AddSection
       },
       {
         path: 'photos/edit-section',
-        name: 'Edit Section',
+        name: 'Редагувати розділ',
         component: EditSection
       },
       {
         path: 'news',
-        name: 'News',
+        name: 'Новини',
         component: News
       },
       {
         path: 'news/add-news',
-        name: 'Add News',
+        name: 'Додати новину',
         component: AddNews
       },
       {
         path: 'news/edit-news',
-        name: 'Edit News',
+        name: 'Редагувати новину',
         component: EditNews
       },
       {
         path: 'articles',
-        name: 'Articles',
+        name: 'Статті',
         component: Articles
       },
       {
         path: 'articles/add-article',
-        name: 'Add Article',
+        name: 'Додати статтю',
         component: AddArticle
       },
       {
         path: 'articles/edit-article',
-        name: 'Edit Article',
+        name: 'рудагувати статтю',
         component: EditArticle
       },
       {
         path: 'article-page',
-        name: 'Article Page',
+        name: 'Історія',
         component: ArticlePage
       }
       /* {

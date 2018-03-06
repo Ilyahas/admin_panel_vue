@@ -9,8 +9,8 @@ module.exports = function(connection, passport) {
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        connection.query("SELECT * FROM users WHERE idusers = " + id, (err, res) => {
-            done(null, res.rows);
+        connection.query("SELECT * FROM public.users WHERE id_users = " + id, (err, res) => {
+            done(null, res.rows[0]);
         });
     });
 
@@ -21,7 +21,7 @@ module.exports = function(connection, passport) {
             passReqToCallback : true // allows us to pass back the entire request to the callback
         },
         (req, login, password, done) => {
-            connection.query("SELECT * FROM users WHERE login= '" + login + "'", (err, res) => {
+            connection.query("SELECT * FROM public.users WHERE login = '" + login + "'", (err, res) => {
                 if (err)
                     return done(null);
                 if (!res.rows.length) {

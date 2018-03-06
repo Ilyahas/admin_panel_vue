@@ -13,7 +13,7 @@
           <span class="text-cr">Copyright &copy; {{ new Date().getFullYear() }}. All rights reserved.</span>
         </div>
         <div class="youtute-icon">
-          <a href="#"><img src="../../../assets/youtube.png"></a>
+          <a href="https://www.youtube.com/user/HramsmZP" target="_blank"><img src="../../../assets/youtube.png"></a>
         </div>
       </div>
     </div>

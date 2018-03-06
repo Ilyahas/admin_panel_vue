@@ -4,8 +4,8 @@
       <div class="row">
         <div class="col-lg-6 col-sm-12">
           <fg-input type="text"
-                    label="Page Title"
-                    placeholder="Enter Page title"
+                    label="Заголовок статті"
+                    placeholder="Введіть заголовок статті"
                     v-model="title">
           </fg-input>
         </div>
@@ -15,8 +15,8 @@
         <vue-editor v-model="content" :editorToolbar="customToolbar"></vue-editor>
       </div>
       <div class="text-center">
-        <button v-if="isNewArticle" class="btn btn-success btn-form-submit btn-wd" @click="saveArticle('/api/addArticle')">Save</button>
-        <button v-if="!isNewArticle" class="btn btn-success btn-form-submit btn-wd" @click="saveArticle('/api/updateArticle')">Update</button>
+        <button v-if="isNewArticle" class="btn btn-success btn-form-submit btn-wd" @click="saveArticle('/api/addArticle')">Зберегти</button>
+        <button v-if="!isNewArticle" class="btn btn-success btn-form-submit btn-wd" @click="saveArticle('/api/updateArticle')">Оновити</button>
       </div>
     </div>
   </div>
@@ -60,7 +60,7 @@
       saveArticle (strUrl) {
         let isTitleValid = this.title.length > 3
         if (!isTitleValid) {
-          this.notify('Article Title is too short', 'ti-info', 'warning')
+          this.notify('Заголовок закороткий', 'ti-info', 'warning')
           return
         }
         let articleData = {}
@@ -79,11 +79,11 @@
         }
         this.$http.post(this.$config.serverHost + strUrl, articleData).then((res) => {
           if (res.status === 200) {
-            this.notify('Page was updated', 'ti-pencil', 'success')
+            this.notify('Стаття опублікована', 'ti-pencil', 'success')
             this.$router.push('/articles')
           }
         }).catch((error) => {
-          this.notify('Cannot update page', 'ti-pencil', 'warning')
+          this.notify('Неможливо опублікувати статтю', 'ti-pencil', 'warning')
           console.log(error)
         })
       },
@@ -110,11 +110,11 @@
             this.title = res.body.rows[0].title
             this.content = res.body.rows[0].content
           } else {
-            this.notify('The Article does not exist', 'ti-gallery', 'danger')
+            this.notify('Такої статті не існує', 'ti-gallery', 'danger')
             this.$router.go(-1)
           }
         }).catch((error) => {
-          this.notify('Cannot get the article', 'ti-gallery', 'warning')
+          this.notify('Неможливо отримати статтю', 'ti-gallery', 'warning')
           console.log('error: ', error)
         })
       }

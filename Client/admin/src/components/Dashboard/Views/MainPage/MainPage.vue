@@ -57,11 +57,11 @@
       deleteSection () {
         this.$http.post(this.$config.serverHost + '/api/deleteMainPageSection', {mainPageSectionId: this.selectedSection.id_mainpage_sections}).then((res) => {
           if (res.status === 200) {
-            this.notify('Section was deleted', 'ti-trash', 'success')
+            this.notify('Секція видалена', 'ti-trash', 'success')
             this.listOfSections.splice(this.listOfSections.indexOf(this.selectedSection), 1)
           }
         }).catch((error) => {
-          this.notify('Cannot delete section', 'ti-trash', 'warning')
+          this.notify('Неможливо видалити секцію', 'ti-trash', 'warning')
           console.log(error)
         })
         this.showModal = false
@@ -81,7 +81,7 @@
       this.$http.get(this.$config.serverHost + '/api/getMainPageSections').then((res) => {
         this.listOfSections = res.body.rows
       }).catch((error) => {
-        this.notify('Cannot get sections', 'ti-gallery', 'warning')
+        this.notify('Неможливо отримати секцію', 'ti-gallery', 'warning')
         console.log(error)
       })
     }

@@ -56,4 +56,4 @@ CREATE TABLE public.users
 
 INSERT INTO users (id_users, login, password) VALUES (1, 'admin', '$2a$08$MKw5EY07Lr0NssqikoMoDO.uxDMA741HPVTGMr8gW1bhxPl8fS9Ie');
 
-INSERT INTO articlepage (id_article_page, title, content) VALUES (1, 'title', 'content');
+INSERT INTO article_page (id_article_page, title, content) VALUES (1, 'title', 'content');

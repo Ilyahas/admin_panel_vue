@@ -1,15 +1,15 @@
 <template>
   <div class="card form">
     <div class="header">
-      <h4 class="title">Edit Photo Section</h4>
+      <h4 class="title">Редагування секції фотографій</h4>
     </div>
     <div class="content">
       <fg-input type="text"
-                label="Section Name"
-                placeholder="Enter section name"
+                label="Назва секції"
+                placeholder="Введіть назву секції"
                 v-model="sectionName">
       </fg-input>
-      <label>Section photo cover</label>
+      <label>Зображення для секції</label>
       <picture-input
         ref="sectionCoverImgInput"
         v-bind:prefill="photoSectionImg"
@@ -22,13 +22,20 @@
         size="15"
         buttonClass="btn"
         :customStrings="{
-                  upload: '<h1>Bummer!</h1>',
-                  drag: 'Drag a 😺 GIF or GTFO'
+                  upload: '<h1>😺</h1>',
+                  drag: 'Перетащить зображення'
                 }">
       </picture-input>
       <div class="text-center">
-        <button v-if="isNewSection" class="btn btn-success btn-form-submit btn-wd" @click="saveSection('addSection')">Save</button>
-        <button v-if="!isNewSection" class="btn btn-success btn-form-submit btn-wd" @click="saveSection('updateSection')">Update</button>
+        <button v-if="isNewSection" class="btn btn-success btn-form-submit btn-wd" @click="saveSection('addSection')">Зберегти</button>
+        <button v-if="!isNewSection" class="btn btn-success btn-form-submit btn-wd" @click="saveSection('updateSection')">Оновити</button>
+      </div>
+    </div>
+
+    <div class="spinner-bg" v-bind:class="{hide: isLoaded}">
+      <div class="spinner">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
       </div>
     </div>
   </div>
@@ -42,6 +49,7 @@
     },
     data () {
       return {
+        isLoaded: false,
         photoSectionImg: this.$config.serverHost + this.$config.defaultImg,
         imgBase64: '',
         changedCoverSection: false,
@@ -144,10 +152,13 @@
     created () {
       if (this.currentId !== undefined) {
         this.isNewSection = false
+      } else {
+        this.isLoaded = true
       }
       if (!this.isNewSection) {
         this.$http.post(this.$config.serverHost + '/api/getSectionById', {sectionId: this.currentId}).then((res) => {
           let isSectionExist = res.body.rows.length
+          this.isLoaded = true
           if (isSectionExist) {
             this.sectionName = res.body.rows[0].section_name
             this.imgBase64 = res.body.rows[0].img_data

@@ -34,7 +34,7 @@ module.exports = function(app, path, express, passport) {
                 res.status(500).send({ error: 'Something failed!' });
                 return;
             }
-            req.login(user.idusers, (error) => {
+            req.login(user.id_users, (error) => {
                 if (error) return next(error);
                 return res.redirect('/admin');
             });

@@ -1,17 +1,17 @@
 <template>
   <div class="card form">
     <div class="header">
-      <h4 class="title">Add News</h4>
+      <h4 class="title">Новина</h4>
     </div>
     <div class="content">
       <div class="row">
         <div class="col-lg-4 col-sm-12">
           <fg-input type="text"
-                    label="News Title"
-                    placeholder="Enter News title"
+                    label="Заголовок новини"
+                    placeholder="Введіть заголовок новини"
                     v-model="title">
           </fg-input>
-          <label>News Cover</label>
+          <label>Зображення для новини</label>
           <picture-input
             ref="pictureInput"
             :crop="false"
@@ -24,19 +24,25 @@
             size="15"
             buttonClass="btn"
             :customStrings="{
-                    upload: '<h1>Bummer!</h1>',
-                    drag: 'Drag a 😺 GIF or GTFO'
+                    upload: '<h1>😺</h1>',
+                    drag: 'Перетащить зображення'
                   }">
           </picture-input>
         </div>
         <div class="col-lg-8 col-sm-12">
-          <label>News Text</label>
+          <label>Текст новини</label>
           <vue-editor v-model="content" :editorToolbar="customToolbar"></vue-editor>
         </div>
       </div>
       <div class="text-center">
-        <button v-if="isNewNews" class="btn btn-success btn-form-submit btn-wd" @click="saveNews('addNews')">Save</button>
-        <button v-if="!isNewNews" class="btn btn-success btn-form-submit btn-wd" @click="saveNews('updateNews')">Update</button>
+        <button v-if="isNewNews" class="btn btn-success btn-form-submit btn-wd" @click="saveNews('addNews')">Зберегти</button>
+        <button v-if="!isNewNews" class="btn btn-success btn-form-submit btn-wd" @click="saveNews('updateNews')">Оновити</button>
+      </div>
+    </div>
+    <div class="spinner-bg" v-bind:class="{hide: isLoaded}">
+      <div class="spinner">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
       </div>
     </div>
   </div>
@@ -50,6 +56,7 @@
     },
     data () {
       return {
+        isLoaded: false,
         newsImg: this.$config.serverHost + this.$config.defaultImg,
         imgBase64: '',
         changedCoverNews: false,
@@ -105,11 +112,11 @@
       validFields () {
         let isTitleValid = this.title.length > 3
         if (!isTitleValid) {
-          this.notify('News Title is too short', 'ti-info', 'warning')
+          this.notify('Заголовок закороткий', 'ti-info', 'warning')
           return false
         }
         if (!this.changedCoverNews && this.isNewNews) {
-          this.notify('News Cover cannot be default', 'ti-info', 'warning')
+          this.notify('Зображення новини не може бути пустим', 'ti-info', 'warning')
           return false
         }
         return true
@@ -138,7 +145,7 @@
         return newsData
       },
       successUpload () {
-        this.notify('News was successfully added', 'ti-check', 'success')
+        this.notify('Новина була опублікована', 'ti-check', 'success')
         this.$router.push('/news')
       },
       saveNews (path) {
@@ -147,7 +154,7 @@
         this.$http.post(this.$config.serverHost + '/api/' + path, newsData).then((res) => {
           this.successUpload()
         }).catch((error) => {
-          this.notify('Cannot add news', 'ti-plus', 'warning')
+          this.notify('Неможливо опублікувати новину', 'ti-plus', 'warning')
           console.log(error)
         })
       },
@@ -176,10 +183,13 @@
     created () {
       if (this.currentId !== undefined) {
         this.isNewNews = false
+      } else {
+        this.isLoaded = true
       }
       if (!this.isNewNews) {
         this.$http.post(this.$config.serverHost + '/api/getNewsById', {newsId: this.currentId}).then((res) => {
           let isNewsExist = res.body.rows.length
+          this.isLoaded = true
           if (isNewsExist) {
             // init variables
             this.title = res.body.rows[0].title
@@ -187,10 +197,10 @@
             this.imgBase64 = res.body.rows[0].img_data
             this.newsImg = this.base64toFile(this.imgBase64.split(',')[1], res.body.rows[0].img_name)
           } else {
-            this.notify('This News does not exist', 'ti-gallery', 'danger')
+            this.notify('Такої новини не існує', 'ti-gallery', 'danger')
           }
         }).catch((error) => {
-          this.notify('Cannot get news', 'ti-gallery', 'warning')
+          this.notify('Неможливо отримати новину', 'ti-gallery', 'warning')
           console.log('error: ', error)
         })
       }

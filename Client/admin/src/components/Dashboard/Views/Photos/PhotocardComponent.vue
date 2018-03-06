@@ -10,8 +10,8 @@
         <div class="col-lg-4 col-md-6 col-sm-4">
           <div class="photoFrame" ref="photoFrameInput">
             <fg-input type="text"
-                      label="Photo Name"
-                      placeholder="Enter name of the photo"
+                      label="Назва фотографії"
+                      placeholder="Введіть назву фотографії"
                       v-model="newPhotoName">
             </fg-input>
             <picture-input
@@ -26,8 +26,8 @@
               size="15"
               buttonClass="btn"
               :customStrings="{
-                      upload: '<h1>Bummer!</h1>',
-                      drag: 'Drag a 😺 GIF or GTFO'
+                      upload: '<h1>😺</h1>',
+                      drag: 'Перетащить зображення'
                     }">
             </picture-input>
             <div class="text-center">
@@ -53,12 +53,19 @@
 
     </div>
     <modal-component v-if="showModal" class="modalWindow">
-      <h3 slot="header">Delete the Photo?</h3>
+      <h3 slot="header">Видалити фотографію?</h3>
       <div slot="footer">
-        <button class="modal-default-button btn btn-success" @click="showModal = false">Cancel</button>
-        <button class="modal-default-button btn" @click="deletePhoto">OK</button>
+        <button class="modal-default-button btn btn-success" @click="showModal = false">Відмінити</button>
+        <button class="modal-default-button btn" @click="deletePhoto">Так</button>
       </div>
     </modal-component>
+
+    <div class="spinner-bg" v-bind:class="{hide: isLoaded}">
+      <div class="spinner">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -71,6 +78,7 @@
     },
     data () {
       return {
+        isLoaded: false,
         newPhoto: this.$config.serverHost + this.$config.defaultImg,
         newPhotoName: '',
         image: {},
@@ -88,7 +96,7 @@
     methods: {
       validImg () {
         if (!this.photoChanged) {
-          this.notify('Section Picture cannot be empty', 'ti-info', 'warning')
+          this.notify('Зображення Секції не може бути пустим', 'ti-info', 'warning')
           return false
         }
         return true
@@ -117,7 +125,7 @@
         this.$http.post(this.$config.serverHost + '/api/addPhoto', this.getPhotoData()).then((res) => {
           this.$router.go(this.$router.currentRoute)
         }).catch((error) => {
-          this.notify('Cannot save image data', 'ti-save', 'warning')
+          this.notify('Не можливо зберегти зображення', 'ti-save', 'warning')
           console.log(error)
         })
       },
@@ -142,7 +150,7 @@
             this.allPhotos.splice(this.allPhotos.indexOf(this.selectedPhoto), 1)
           }
         }).catch((error) => {
-          this.$config.notify('Cannot delete image', 'ti-close', 'warning')
+          this.$config.notify('Неможливо видалити зображення', 'ti-close', 'warning')
           console.log(error)
         })
         this.showModal = false
@@ -165,8 +173,9 @@
         if (isPhotosExist) {
           this.allPhotos = res.body.rows
         }
+        this.isLoaded = true
       }).catch((error) => {
-        this.notify('Cannot get images', 'ti-image', 'warning')
+        this.notify('Неможливо отримати зображення', 'ti-image', 'warning')
         console.log(error)
       })
     }

@@ -16,7 +16,7 @@
             <a :href="host + '/logout'" class="btn-rotate">
               <i class="ti-shift-right"></i>
               <p>
-                Logout
+                Вихід
               </p>
             </a>
           </li>
