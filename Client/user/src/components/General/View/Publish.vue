@@ -1,42 +1,41 @@
 <template>
   <div class="container container-margin">
-    <div class="title">{{article.title}}</div>
-    <small class="title-date">{{article.created_date}}</small>
-    <div class="article-content" v-html="article.content"></div>
+    <div class="title">{{publish.title}}</div>
+    <div class="article-content" v-html="publish.content"></div>
   </div>
 </template>
 <script>
   export default {
     data () {
       return {
-        article: {}
+        publish: {}
       }
     },
     methods: {
-      getArticles (id) {
-        this.$http.post(this.$config.serverHost + '/api/getArticleById', {articleId: id}).then((res) => {
-          let isArticleExist = res.body.rows.length
-          if (isArticleExist) {
-            this.article = res.body.rows[0]
+      getPublish (id) {
+        this.$http.post(this.$config.serverHost + '/api/getMainPageSectionById', {mainPageSectionId: id}).then((res) => {
+          let isPublishExist = res.body.rows.length
+          if (isPublishExist) {
+            this.publish = res.body.rows[0]
           }
         }).catch((error) => {
-          this.$noty.error('Article does not exist')
-          this.$router.push('/articles')
+          this.$noty.error('Publish does not exist')
+          this.$router.push('/')
           console.log(error)
         })
       }
     },
     watch: {
       '$route' (to, from) {
-        this.getArticles(to.query.id)
+        this.getPublish(to.query.id)
       }
     },
     created () {
       if (this.$route.query.id) {
-        this.getArticles(this.$route.query.id)
+        this.getPublish(this.$route.query.id)
       } else {
         this.$noty.error('Article does not exist')
-        this.$router.push('/articles')
+        this.$router.push('/')
       }
     }
   }

@@ -1,5 +1,5 @@
 const configData = {
-  defaultImg: 'static/img/default.png',
+  defaultImg: '/img/default.png',
   serverHost: 'http://localhost:3000'
 }
 

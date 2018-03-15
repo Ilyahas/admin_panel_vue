@@ -30,7 +30,10 @@
     },
     methods: {
       goToNews (newsId) {
-        this.$router.push({ path: '/read-news', query: { id: newsId } })
+        this.showPublishes = false
+        let data = Object.assign({}, this.$route.query)
+        data['id'] = newsId
+        this.$router.push({ path: '/read-news', query: data })
       },
       infiniteHandler ($state) {
         let fromLoadNewsIndex = this.listOfNews.length

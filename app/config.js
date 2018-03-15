@@ -2,8 +2,8 @@ module.exports = {
     'database': {
         'host': 'localhost',
         'user': 'postgres',
-        'password': '',
-        'database': 'admin_panel',
+        'password': 'root',
+        'database': 'postgres',
         'port': '5432'
     },
     'PORT': '3000',

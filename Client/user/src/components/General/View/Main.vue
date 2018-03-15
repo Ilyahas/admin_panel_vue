@@ -68,7 +68,10 @@
         this.$router.push({ path: '/read-news', query: { id: index } })
       },
       goToArticle (id) {
-        this.$router.push({ path: '/read-article', query: { id: id } })
+        this.showPublishes = false
+        let data = Object.assign({}, this.$route.query)
+        data['id'] = id
+        this.$router.push({ path: '/read-article', query: data })
       }
     },
     mounted () {
@@ -139,6 +142,7 @@
     height: 55vh !important;
     min-height: 500px!important;
     width: 100%;
+    z-index: -10;
 
     @include breakpoint(xs) {
       height: 55vh !important;

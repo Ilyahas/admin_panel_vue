@@ -29,7 +29,10 @@
     },
     methods: {
       goToSection (id) {
-        this.$router.push({ path: '/photos', query: { id: id } })
+        this.showPublishes = false
+        let data = Object.assign({}, this.$route.query)
+        data['id'] = id
+        this.$router.push({ path: '/photos', query: data })
       },
       infiniteHandler ($state) {
         let fromLoadPhotoSectionsIndex = this.listOfSections.length

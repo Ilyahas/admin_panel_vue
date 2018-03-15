@@ -12,6 +12,18 @@
         <router-link v-for="(link,index) in navbarLinks" :to="link.path" tag="li" :ref="link.name" v-bind:key="link.name">
           <a>{{link.name}}</a>
         </router-link>
+        <li>
+          <a class="publish-block" @click="publishedClick()">
+            Публікації <div class = "triangleBottom" :class="{'rotate': showPublishes}"></div>
+          </a>
+          <collapse-transition>
+          <div class="all-publishes" v-show="showPublishes">
+              <div v-for="(publish, index) in publishes" v-bind:key="publish.title">
+                <a @click.prevent="goToPublish(publish.id_mainpage_sections)">{{publish.title}}</a>
+              </div>
+          </div>
+          </collapse-transition>
+        </li>
       </ul>
       <slide-x-left-transition :duration="300">
       <ul class="nav-list-mobile" v-show="isOpen">
@@ -25,7 +37,7 @@
   </div>
 </template>
 <script>
-  import { SlideXLeftTransition } from 'vue2-transitions'
+  import { SlideXLeftTransition, CollapseTransition } from 'vue2-transitions'
 
   export default {
     props: {
@@ -37,12 +49,15 @@
     data () {
       return {
         isOpen: false,
+        showPublishes: false,
+        publishes: [],
         hideContent: false,
         activeLinkIndex: 0
       }
     },
     components: {
-      SlideXLeftTransition
+      SlideXLeftTransition,
+      CollapseTransition
     },
     methods: {
       toggleOpen () {
@@ -63,7 +78,26 @@
           }
           return found
         })
+      },
+      publishedClick () {
+        this.showPublishes = !this.showPublishes
+      },
+      goToPublish (id) {
+        this.showPublishes = false
+        let data = Object.assign({}, this.$route.query)
+        data['id'] = id
+        this.$router.push({ path: '/publish', query: data })
       }
+    },
+    created () {
+      this.$http.get(this.$config.serverHost + '/api/getMainPageSections').then((res) => {
+        let isSectionsExist = res.body.rows.length
+        if (isSectionsExist) {
+          this.publishes = res.body.rows
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
     },
     mounted () {
       this.findActiveLink()
@@ -80,8 +114,54 @@
 
   $mobilePadding: 12px;
 
+  .all-publishes {
+    background: $navbarBgColor;
+    position: absolute;
+    margin-left: -25px;
+    z-index: 19990;
+
+    div {
+      margin-left: -10;
+      min-width: 120px;
+      text-align: center;
+
+      a {
+        border-top: 1px solid #fff;
+        display: inline-block;
+        width: 100%;
+        padding: 0 !important;
+      }
+    }
+
+  }
+
+  .triangleBottom {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 8px 0 8px;
+    border-color: #fff transparent transparent transparent;
+    transition: all 0.5s;
+  }
+
+  .rotate {
+    transition: all 0.5s;
+    transform: rotate(-180deg);
+  }
+
+  .triangleTop {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 8px 8px 8px;
+    border-color: transparent transparent #fff transparent;
+  }
+
   .navbar {
     background-color: $navbarBgColor;
+    z-index: 19990;
 
     @include breakpoint(xs) {
       padding: $mobilePadding;
@@ -116,7 +196,7 @@
       margin: 0;
       padding: 0;
       height: 50px;
-      width: 40%;
+      width: 50%;
 
       -webkit-user-select: none;
       -moz-user-select: none;
@@ -159,6 +239,7 @@
         }
 
         &:hover {
+          cursor: pointer;
           text-decoration: underline;
         }
       }

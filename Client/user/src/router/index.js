@@ -10,6 +10,7 @@ import Photos from '../components/General/View/Photos.vue'
 import History from '../components/General/View/History.vue'
 import Articles from '../components/General/View/Articles.vue'
 import ReadArticle from '../components/General/View/ReadArticle.vue'
+import Publish from '../components/General/View/Publish.vue'
 
 Vue.use(Router)
 
@@ -60,6 +61,11 @@ export default new Router({
           path: 'history',
           name: 'History',
           component: History
+        },
+        {
+          path: 'publish',
+          name: 'Publish',
+          component: Publish
         }
       ]
     }

@@ -13,9 +13,9 @@
         news: {}
       }
     },
-    created () {
-      if (this.$route.query.id) {
-        this.$http.post(this.$config.serverHost + '/api/getNewsById', {newsId: this.$route.query.id}).then((res) => {
+    methods: {
+      getNews (id) {
+        this.$http.post(this.$config.serverHost + '/api/getNewsById', {newsId: id}).then((res) => {
           let isNewsExist = res.body.rows.length
           if (isNewsExist) {
             this.news = res.body.rows[0]
@@ -26,6 +26,16 @@
         }).catch((error) => {
           console.log(error)
         })
+      }
+    },
+    watch: {
+      '$route' (to, from) {
+        this.getNews(to.query.id)
+      }
+    },
+    created () {
+      if (this.$route.query.id) {
+        this.getNews(this.$route.query.id)
       } else {
         this.$noty.error('News does not exist')
         this.$router.push('/news')
