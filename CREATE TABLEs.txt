@@ -54,6 +54,15 @@ CREATE TABLE public.users
   password character varying(255) DEFAULT NULL::character varying
 );
 
+CREATE TABLE public.contacts
+(
+  id_contacts SERIAL PRIMARY KEY,
+  title character varying(255) NOT NULL,
+  content text
+);
+
 INSERT INTO users (id_users, login, password) VALUES (1, 'admin', '$2a$08$MKw5EY07Lr0NssqikoMoDO.uxDMA741HPVTGMr8gW1bhxPl8fS9Ie');
 
 INSERT INTO article_page (id_article_page, title, content) VALUES (1, 'title', 'content');
+
+INSERT INTO contacts (id_contacts, title, content) VALUES (1, 'Contacts', 'content');

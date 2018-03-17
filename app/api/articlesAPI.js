@@ -9,7 +9,23 @@ module.exports = function (app, getData, postData) {
         if (req.body.title !== '') {
             postData(queries.updateArticlePage, req, res, [
                 req.body.title,
-                req.body.text
+                req.body.content
+            ]);
+        } else {
+            res.status(400).end("Page Title is not define");
+        }
+    });
+
+
+    app.get('/getContacts', (req, res) => {
+        getData(queries.getContacts, req, res)
+    });
+
+    app.post('/updateContacts', (req, res) => {
+        if (req.body.title !== '') {
+            postData(queries.updateContacts, req, res, [
+                req.body.title,
+                req.body.content
             ]);
         } else {
             res.status(400).end("Page Title is not define");

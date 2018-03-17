@@ -37,6 +37,11 @@ const SidebarStore = {
       name: 'Історія',
       icon: 'ti-pencil-alt',
       path: '/article-page'
+    },
+    {
+      name: 'Контакти',
+      icon: 'ti-email',
+      path: '/contacts'
     }
     /* {
       name: 'Table List',

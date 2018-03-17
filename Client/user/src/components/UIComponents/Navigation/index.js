@@ -21,6 +21,10 @@ const NavigationStore = {
     {
       name: 'Історія',
       path: '/history'
+    },
+    {
+      name: 'Контакти',
+      path: '/contacts'
     }
   ]
 }

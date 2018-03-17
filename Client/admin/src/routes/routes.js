@@ -27,6 +27,7 @@ import EditArticle from 'src/components/Dashboard/Views/Articles/EditArticle.vue
 import MainPage from 'src/components/Dashboard/Views/MainPage/MainPage.vue'
 import AddMainPage from 'src/components/Dashboard/Views/MainPage/AddMainPageSection.vue'
 import EditMainPage from 'src/components/Dashboard/Views/MainPage/EditMainPageSection.vue'
+import Contacts from 'src/components/Dashboard/Views/Contacts.vue'
 
 const routes = [
   {
@@ -108,6 +109,11 @@ const routes = [
         path: 'article-page',
         name: 'Історія',
         component: ArticlePage
+      },
+      {
+        path: 'contacts',
+        name: 'Контакти',
+        component: Contacts
       }
       /* {
         path: 'notifications',

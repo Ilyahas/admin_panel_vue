@@ -216,12 +216,16 @@
       margin: 0;
       padding: 0;
       height: 50px;
-      width: 50%;
+      width: 70%;
 
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
+
+      @include breakpoint(md) {
+        width: 100%;
+      }
 
       @include breakpoint(xs) {
         display: none;

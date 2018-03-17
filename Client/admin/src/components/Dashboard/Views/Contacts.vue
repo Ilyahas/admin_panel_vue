@@ -44,11 +44,11 @@
           this.notify('Заголовок сторінки закороткий', 'ti-info', 'warning')
           return
         }
-        let articleData = {
+        let contactsData = {
           title: this.title,
           content: this.content
         }
-        this.$http.post(this.$config.serverHost + '/api/updateArticlePage', articleData).then((res) => {
+        this.$http.post(this.$config.serverHost + '/api/updateContacts', contactsData).then((res) => {
           if (res.status === 200) {
             this.notify('Сторінка оновлена', 'ti-pencil', 'success')
           }
@@ -69,9 +69,9 @@
       }
     },
     created () {
-      this.$http.get(this.$config.serverHost + '/api/getArticlePage').then((res) => {
-        let isArticleExist = res.body.rows.length
-        if (isArticleExist) {
+      this.$http.get(this.$config.serverHost + '/api/getContacts').then((res) => {
+        let isContactsExist = res.body.rows.length
+        if (isContactsExist) {
           // init variables
           this.title = res.body.rows[0].title
           this.content = res.body.rows[0].content

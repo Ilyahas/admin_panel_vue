@@ -11,6 +11,7 @@ import History from '../components/General/View/History.vue'
 import Articles from '../components/General/View/Articles.vue'
 import ReadArticle from '../components/General/View/ReadArticle.vue'
 import Publish from '../components/General/View/Publish.vue'
+import Contacts from '../components/General/View/Contacts.vue'
 
 Vue.use(Router)
 
@@ -66,6 +67,11 @@ export default new Router({
           path: 'publish',
           name: 'Publish',
           component: Publish
+        },
+        {
+          path: 'contacts',
+          name: 'Contacts',
+          component: Contacts
         }
       ]
     }
