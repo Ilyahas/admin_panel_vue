@@ -19,7 +19,7 @@
           <collapse-transition>
           <div class="all-publishes" v-show="showPublishes">
               <div v-for="(publish, index) in publishes" v-bind:key="publish.title">
-                <a @click.prevent="goToPublish(publish.id_mainpage_sections)">{{publish.title}}</a>
+                <a @click.prevent="goToPublish(publish.id_mainpage_sections, false)">{{publish.title}}</a>
               </div>
           </div>
           </collapse-transition>
@@ -31,6 +31,18 @@
         <router-link v-on:click.native="toggleOpen" v-for="(link,index) in navbarLinks" :to="link.path" tag="li" :ref="link.name" v-bind:key="link.name" >
           <a>{{link.name}}</a>
         </router-link>
+        <li>
+          <a class="m-publish-block" @click="publishedClickMobile()">
+            Публікації <div class = "triangleBottom" :class="{'rotate': showPublishesMobile}"></div>
+          </a>
+          <collapse-transition>
+            <div class="m-all-publishes" v-show="showPublishesMobile">
+              <div v-for="(publish, index) in publishes" v-bind:key="publish.title">
+                <a v-on:click="goToPublish(publish.id_mainpage_sections, true)">{{publish.title}}</a>
+              </div>
+            </div>
+          </collapse-transition>
+        </li>
       </ul>
       </slide-x-left-transition>
     </div>
@@ -50,6 +62,7 @@
       return {
         isOpen: false,
         showPublishes: false,
+        showPublishesMobile: false,
         publishes: [],
         hideContent: false,
         activeLinkIndex: 0
@@ -82,8 +95,15 @@
       publishedClick () {
         this.showPublishes = !this.showPublishes
       },
-      goToPublish (id) {
+      publishedClickMobile () {
+        this.showPublishesMobile = !this.showPublishesMobile
+      },
+      goToPublish (id, isMobile) {
+        if (isMobile) {
+          this.toggleOpen()
+        }
         this.showPublishes = false
+        this.showPublishesMobile = false
         let data = Object.assign({}, this.$route.query)
         data['id'] = id
         this.$router.push({ path: '/publish', query: data })
@@ -175,10 +195,10 @@
       top: 25px;
       right: 0;
       bottom: 0;
-      max-height: 100vh;
-      overflow: hidden;
       padding-bottom: 1px;
-      height: calc(100% - 50px);
+      min-height: calc(100% - 50px);
+      overflow-y: scroll;
+      overflow-x: hidden;
       width: 100%;
       z-index: 99999;
 
