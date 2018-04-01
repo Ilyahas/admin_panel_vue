@@ -9,7 +9,7 @@
     <div class="container">
       <ul class="nav-list">
         <!--By default vue-router adds an active class to each route link. This way the links are colored when clicked-->
-        <router-link v-for="(link,index) in navbarLinks" :to="link.path" tag="li" :ref="link.name" v-bind:key="link.name">
+        <router-link @click.native="hidePublishes()" v-for="(link,index) in navbarLinks" :to="link.path" tag="li" :ref="link.name" v-bind:key="link.name">
           <a>{{link.name}}</a>
         </router-link>
         <li>
@@ -38,7 +38,7 @@
           <collapse-transition>
             <div class="m-all-publishes" v-show="showPublishesMobile">
               <div v-for="(publish, index) in publishes" v-bind:key="publish.title">
-                <a v-on:click="goToPublish(publish.id_mainpage_sections, true)">{{publish.title}}</a>
+                  <a v-on:click="goToPublish(publish.id_mainpage_sections, true)">{{publish.title}}</a>
               </div>
             </div>
           </collapse-transition>
@@ -92,6 +92,10 @@
           return found
         })
       },
+      hidePublishes () {
+        this.showPublishes = false
+        this.showPublishesMobile = false
+      },
       publishedClick () {
         this.showPublishes = !this.showPublishes
       },
@@ -137,19 +141,19 @@
   .all-publishes {
     background: $navbarBgColor;
     position: absolute;
-    margin-left: -25px;
+    margin-top: 1px;
+    margin-left: -45px;
     z-index: 19990;
 
     div {
-      margin-left: -10;
       min-width: 120px;
       text-align: center;
 
       a {
         border-top: 1px solid #fff;
         display: inline-block;
-        width: 100%;
-        padding: 0 !important;
+        width: calc(100% - 30px);
+        padding: 0 15px!important;
       }
     }
 
