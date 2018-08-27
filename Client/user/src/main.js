@@ -16,6 +16,13 @@ import 'swiper/dist/css/swiper.css'
 import 'vuejs-noty/dist/vuejs-noty.css'
 
 import * as VueGoogleMaps from 'vue2-google-maps'
+
+// Calendar
+import 'vue-event-calendar/dist/style.css' // ^1.1.10, CSS has been extracted as one file, so you can easily update it.
+import vueEventCalendar from 'vue-event-calendar'
+// locale can be 'zh' , 'en' , 'es', 'pt-br', 'ja', 'ko', 'fr', 'it', 'ru', 'de', 'vi', 'ua'
+Vue.use(vueEventCalendar, {locale: 'ru', color: '#35495E', weekStartOn: 1})
+
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyDQv6scxuf370EzYaKHIUPPa7qBzhaLT28',

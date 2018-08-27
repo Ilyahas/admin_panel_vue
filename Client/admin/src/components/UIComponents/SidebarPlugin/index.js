@@ -42,6 +42,11 @@ const SidebarStore = {
       name: 'Контакти',
       icon: 'ti-email',
       path: '/contacts'
+    },
+    {
+      name: 'Календар',
+      icon: 'ti-calendar',
+      path: '/calendar'
     }
     /* {
       name: 'Table List',

@@ -21,6 +21,12 @@ import 'bootstrap/dist/css/bootstrap.css'
 import './assets/sass/paper-dashboard.scss'
 import 'es6-promise/auto'
 
+// Calendar
+import 'vue-event-calendar/dist/style.css' // ^1.1.10, CSS has been extracted as one file, so you can easily update it.
+import vueEventCalendar from 'vue-event-calendar'
+// locale can be 'zh' , 'en' , 'es', 'pt-br', 'ja', 'ko', 'fr', 'it', 'ru', 'de', 'vi', 'ua'
+Vue.use(vueEventCalendar, {locale: 'ru', color: '#35495E', weekStartOn: 1})
+
 // plugin setup
 Vue.use(VueResource)
 Vue.use(VueRouter)

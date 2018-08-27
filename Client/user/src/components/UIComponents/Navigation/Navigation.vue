@@ -220,7 +220,7 @@
       margin: 0;
       padding: 0;
       height: 50px;
-      width: 70%;
+      width: 97%;
 
       -webkit-user-select: none;
       -moz-user-select: none;

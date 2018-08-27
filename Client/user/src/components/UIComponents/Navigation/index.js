@@ -25,6 +25,10 @@ const NavigationStore = {
     {
       name: 'Контакти',
       path: '/contacts'
+    },
+    {
+      name: 'Календар',
+      path: '/calendar'
     }
   ]
 }

@@ -12,6 +12,7 @@ import Articles from '../components/General/View/Articles.vue'
 import ReadArticle from '../components/General/View/ReadArticle.vue'
 import Publish from '../components/General/View/Publish.vue'
 import Contacts from '../components/General/View/Contacts.vue'
+import Calendar from '../components/General/View/Calendar.vue'
 
 Vue.use(Router)
 
@@ -72,6 +73,11 @@ export default new Router({
           path: 'contacts',
           name: 'Contacts',
           component: Contacts
+        },
+        {
+          path: 'calendar',
+          name: 'Calendar',
+          component: Calendar
         }
       ]
     }

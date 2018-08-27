@@ -138,6 +138,9 @@
   }
 
   /*-----------SLIDESHOW----------------*/
+  .swiper-container {
+    z-index: 1 !important;
+  }
   .gallery-top {
     height: 55vh !important;
     min-height: 500px!important;

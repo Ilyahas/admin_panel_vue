@@ -61,6 +61,16 @@ CREATE TABLE public.contacts
   content text
 );
 
+CREATE TABLE public.events
+(
+  id_events SERIAL PRIMARY KEY,
+  title character varying(255) NOT NULL,
+  description text,
+  year character varying(255) NOT NULL,
+  month character varying(255) NOT NULL,
+  day character varying(255) NOT NULL
+);
+
 INSERT INTO users (id_users, login, password) VALUES (1, 'admin', '$2a$08$MKw5EY07Lr0NssqikoMoDO.uxDMA741HPVTGMr8gW1bhxPl8fS9Ie');
 
 INSERT INTO article_page (id_article_page, title, content) VALUES (1, 'title', 'content');

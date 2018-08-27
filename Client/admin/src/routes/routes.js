@@ -29,6 +29,8 @@ import AddMainPage from 'src/components/Dashboard/Views/MainPage/AddMainPageSect
 import EditMainPage from 'src/components/Dashboard/Views/MainPage/EditMainPageSection.vue'
 import Contacts from 'src/components/Dashboard/Views/Contacts.vue'
 
+import Calendar from 'src/components/Dashboard/Views/Calendar.vue'
+
 const routes = [
   {
     path: '/',
@@ -114,6 +116,16 @@ const routes = [
         path: 'contacts',
         name: 'Контакти',
         component: Contacts
+      },
+      {
+        path: 'icons',
+        name: 'icons',
+        component: Icons
+      },
+      {
+        path: 'calendar',
+        name: 'calendar',
+        component: Calendar
       }
       /* {
         path: 'notifications',

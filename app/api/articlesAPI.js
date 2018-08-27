@@ -32,6 +32,44 @@ module.exports = function (app, getData, postData) {
         }
     });
 
+
+    app.post('/getEvents', (req, res) => {
+        getData(queries.getEvents, req, res, [
+            req.body.year,
+            req.body.month
+        ]);
+    });
+
+    app.post('/updateEvent', (req, res) => {
+        if (req.body.title !== '') {
+            postData(queries.updateEvent, req, res, [
+                req.body.title,
+                req.body.description,
+                req.body.year,
+                req.body.month,
+                req.body.day,
+                req.body.eventId
+            ]);
+        } else {
+            res.status(400).end("Page Title is not define");
+        }
+    });
+
+    app.post('/addEvent', (req, res) => {
+        if (req.body.title !== '') {
+            postData(queries.addEvent, req, res, [
+                req.body.title,
+                req.body.description,
+                req.body.year,
+                req.body.month,
+                req.body.day
+            ]);
+        } else {
+            res.status(400).end("Page Title is not define");
+        }
+    });
+
+
     app.get('/getArticles', (req, res) => {
         getData(queries.getArticles, req, res);
     });
