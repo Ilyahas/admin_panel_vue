@@ -16,6 +16,7 @@ const client = new Pool({
   database: config.database.database
 });
 
+
 const cors = require('cors');
 app.use(cors({origin: 'http://localhost:8080'}));
 
