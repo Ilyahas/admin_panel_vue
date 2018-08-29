@@ -1,20 +1,18 @@
 <template>
   <div class="container container-margin">
+
     <md-card>
       <md-card-media>
-        <!-- swiper1 -->
-        <swiper :options="swiperOptionTop" class="gallery-top" ref="swiperTop">
+        <!-- swiper -->
+        <swiper :options="swiperOption" class="gallery-top" ref="swiperTop">
           <swiper-slide class="bg-container" v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + news.img_data+ '\');'">
             <div class="slide-title" @click="newsClick(news.id_news)">
               <div class="container">{{news.title}}</div>
             </div>
           </swiper-slide>
-          <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
-          <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
-        </swiper>
-        <!-- swiper2 Thumbs -->
-        <swiper :options="swiperOptionThumbs" class="gallery-thumbs" ref="swiperThumbs">
-          <swiper-slide v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + news.img_data + '\');'"></swiper-slide>
+          <div class="swiper-pagination" slot="pagination"></div>
+          <div class="swiper-button-prev" slot="button-prev"></div>
+          <div class="swiper-button-next" slot="button-next"></div>
         </swiper>
       </md-card-media>
     </md-card>
@@ -54,6 +52,21 @@
           slidesPerView: 'auto',
           touchRatio: 0.2,
           slideToClickedSlide: true
+        },
+        swiperOption: {
+          slidesPerView: 3,
+          spaceBetween: 30,
+          slidesPerGroup: 3,
+          loop: true,
+          loopFillGroupWithBlank: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+          }
         },
         listOfNewsForCarusel: [],
         listOfArticles: [],
@@ -142,8 +155,8 @@
     z-index: 1 !important;
   }
   .gallery-top {
-    height: 55vh !important;
-    min-height: 500px!important;
+    height: 35vh !important;
+    min-height: 250px!important;
     width: 100%;
     z-index: -10;
 
