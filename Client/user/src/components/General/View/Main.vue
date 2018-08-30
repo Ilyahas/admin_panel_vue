@@ -22,14 +22,14 @@
         <div class="article-item" v-for="(article, index) in listOfArticles" :key="index">
           <div class="art-item-title">{{article.title}}</div>
           <div class="art-date">{{article.created_date}}</div>
-          <button @click="goToArticle(article.id_articles)" class="btn"><span>Read More</span> <i class="icon ti-angle-right"></i></button>
+          <button @click="goToArticle(article.id_articles)" class="btn"><span>Детальніше</span> <i class="icon ti-angle-right"></i></button>
         </div>
     </div>
 
     <div class="main-sections">
       <div class="custom-section" v-for="(section, index) in listOfSections" :key="index">
         <span class="sections-title">{{section.title}}</span>
-        <div class="section-content" v-html="section.content"></div>
+        <pre><div class="section-content" v-html="section.content"></div></pre>
       </div>
     </div>
 
@@ -274,6 +274,10 @@
   /*-----------------Sections------------------*/
   .main-sections {
     margin-top: 25px;
+
+    pre {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
 
     .custom-section {
       display: block;

@@ -10,10 +10,13 @@
       </nav>-->
       <div class="blocks">
         <div class="copyright">
-          <span class="text-cr">Copyright &copy; {{ new Date().getFullYear() }}. All rights reserved.</span>
+          <span class="text-cr">Copyright &copy; {{ new Date().getFullYear() }}. Усі права захищені.</span>
         </div>
         <div class="youtute-icon">
-          <a href="https://www.youtube.com/user/HramsmZP" target="_blank"><img src="../../../assets/youtube.png"></a>
+          <a href="https://www.youtube.com/user/HramsmZP" target="_blank">
+            <div class="img-text">Дивитися відео на YouTube</div>
+            <img src="../../../assets/youtube.png">
+          </a>
         </div>
       </div>
     </div>
@@ -69,27 +72,35 @@
       display: -webkit-flex;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       height: 70px;
 
       .copyright {
-        width: 100%;
+        width: 120%;
       }
 
       .youtute-icon {
-        width: 100%;
+        width: 300px;
 
         a {
+          opacity: 0.8;
+          transition: all 0.3s;
+
+          &:hover {
+            opacity: 1;
+            transition: all 0.3s;
+          }
+
           img {
             float: right;
-            opacity: 0.8;
-            transition: all 0.5s;
           }
-          &:hover {
-            img {
-              opacity: 1;
-              transition: all 0.5s;
-            }
-          }
+
+        }
+
+        .img-text {
+          color: #fff;
+          display: inline-block;
+          width: 80px;
         }
       }
 

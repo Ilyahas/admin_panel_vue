@@ -4,7 +4,7 @@
       <div class="art-item-title">{{article.title}}</div>
       <div class="art-date">{{article.created_date}}</div>
       <div class="art-content" v-html="article.content"></div>
-      <button @click="goToArticle(article.id_articles)" class="btn"><span>Read More</span> <i class="icon ti-angle-right"></i></button>
+      <button @click="goToArticle(article.id_articles)" class="btn"><span>Детальніше</span> <i class="icon ti-angle-right"></i></button>
     </div>
     <infinite-loading @infinite="infiniteHandler">
       <span slot="no-more"></span>
