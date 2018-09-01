@@ -1,10 +1,26 @@
 <template>
   <div class="container container-margin">
 
-    <md-card>
+    <md-card class="desktop">
       <md-card-media>
         <!-- swiper -->
         <swiper :options="swiperOption" class="gallery-top" ref="swiperTop">
+          <swiper-slide class="bg-container" v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + news.img_data+ '\');'">
+            <div class="slide-title" @click="newsClick(news.id_news)">
+              <div class="container">{{news.title}}</div>
+            </div>
+          </swiper-slide>
+          <div class="swiper-pagination" slot="pagination"></div>
+          <div class="swiper-button-prev" slot="button-prev"></div>
+          <div class="swiper-button-next" slot="button-next"></div>
+        </swiper>
+      </md-card-media>
+    </md-card>
+
+    <md-card class="mobile">
+      <md-card-media>
+        <!-- swiper -->
+        <swiper :options="swiperOptionMobile" class="gallery-top" ref="swiperTop">
           <swiper-slide class="bg-container" v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + news.img_data+ '\');'">
             <div class="slide-title" @click="newsClick(news.id_news)">
               <div class="container">{{news.title}}</div>
@@ -68,11 +84,26 @@
             prevEl: '.swiper-button-prev'
           }
         },
+        swiperOptionMobile: {
+          slidesPerView: 1,
+          spaceBetween: 0,
+          slidesPerGroup: 1,
+          loop: true,
+          loopFillGroupWithBlank: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+          }
+        },
         listOfNewsForCarusel: [],
         listOfArticles: [],
         listOfSections: [],
-        TOP_NEWS_NUMBER: 5,
-        TOP_ARTICLES_NUMBER: 3,
+        TOP_NEWS_NUMBER: 9,
+        TOP_ARTICLES_NUMBER: 5,
         styleBg: 'background-image:url'
       }
     },
@@ -151,6 +182,25 @@
   }
 
   /*-----------SLIDESHOW----------------*/
+
+  .desktop {
+    @include breakpoint(md) {
+      width: 100%;
+    }
+
+    @include breakpoint(xs) {
+      display: none;
+    }
+  }
+
+  .mobile {
+    @include breakpoint(768px) {
+      display: none !important;
+    }
+  }
+
+
+
   .swiper-container {
     z-index: 1 !important;
   }
@@ -161,8 +211,8 @@
     z-index: -10;
 
     @include breakpoint(xs) {
-      height: 55vh !important;
-      min-height: 362px!important;
+      height: 25vh !important;
+      min-height: 152px!important;
     }
 
   }
@@ -301,6 +351,10 @@
       }
 
       .section-content {
+        white-space: pre-wrap;       /* css-3 */
+        white-space: -moz-pre-wrap;  /* Mozilla, с 1999 */
+        white-space: -o-pre-wrap;    /* Opera 7 */
+        word-wrap: break-word;
         font-size: $fontSizeSmall + 5px;
       }
     }

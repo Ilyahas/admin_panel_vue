@@ -62,6 +62,10 @@
     width: 100%;
 
     @include breakpoint(xs) {
+      height: 90px;
+    }
+
+    @include breakpoint(xs) {
       text-align: center;
     }
 
@@ -75,12 +79,20 @@
       justify-content: space-between;
       height: 70px;
 
+      @include breakpoint(xs) {
+        display: block;
+      }
+
       .copyright {
-        width: 120%;
+        width: 100%;
       }
 
       .youtute-icon {
         width: 300px;
+
+        @include breakpoint(xs) {
+          margin-top: 10px;
+        }
 
         a {
           opacity: 0.8;
