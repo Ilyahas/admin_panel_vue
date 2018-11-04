@@ -37,7 +37,7 @@ export default {
     return {
       userlogin: '',
       password: '',
-      host: 'http://localhost:3000'
+      host: window.location.origin
     }
   },
   methods: {

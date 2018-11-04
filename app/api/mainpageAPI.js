@@ -1,5 +1,6 @@
 module.exports = function (app, getData, postData) {
     const queries = require('./mainpageQueries');
+    const authCheck = require('../authCheck');
 
     app.get('/getMainPageSections', (req, res) => {
         getData(queries.getMainPageSections, req, res);
@@ -13,7 +14,7 @@ module.exports = function (app, getData, postData) {
         getData(queries.getMainPageSectionById, req, res, [req.body.mainPageSectionId]);
     });
 
-    app.post('/addMainPageSection', (req, res) => {
+    app.post('/addMainPageSection', authCheck.isLoggedIn, (req, res) => {
         if (req.body.title !== '') {
             postData(queries.addMainPageSection, req, res, [
                 req.body.title,
@@ -24,7 +25,7 @@ module.exports = function (app, getData, postData) {
         }
     });
 
-    app.post('/updateMainPageSection', (req, res) => {
+    app.post('/updateMainPageSection', authCheck.isLoggedIn, (req, res) => {
         if (req.body.title !== '') {
             getData(queries.updateMainPageSection, req, res, [
                 req.body.title,
@@ -36,7 +37,7 @@ module.exports = function (app, getData, postData) {
         }
     });
 
-    app.post('/deleteMainPageSection', (req, res) => {
+    app.post('/deleteMainPageSection', authCheck.isLoggedIn, (req, res) => {
         postData(queries.deleteMainPageSection, req, res, [req.body.mainPageSectionId]);
     });
 

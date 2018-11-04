@@ -4,7 +4,7 @@
     <md-card class="desktop">
       <md-card-media>
         <!-- swiper -->
-        <swiper :options="swiperOption" class="gallery-top" ref="swiperTop">
+        <swiper :options="swiperOption" class="gallery-top">
           <swiper-slide class="bg-container" v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + news.img_data+ '\');'">
             <div class="slide-title" @click="newsClick(news.id_news)">
               <div class="container">{{news.title}}</div>
@@ -19,8 +19,8 @@
 
     <md-card class="mobile">
       <md-card-media>
-        <!-- swiper -->
-        <swiper :options="swiperOptionMobile" class="gallery-top" ref="swiperTop">
+        <!-- swiper-->
+        <swiper :options="swiperOptionMobile" class="gallery-top">
           <swiper-slide class="bg-container" v-for="(news, index) in listOfNewsForCarusel" :key="index" :style="styleBg + '(\'' + news.img_data+ '\');'">
             <div class="slide-title" @click="newsClick(news.id_news)">
               <div class="container">{{news.title}}</div>
@@ -55,13 +55,6 @@
   export default {
     data () {
       return {
-        swiperOptionTop: {
-          spaceBetween: 10,
-          navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev'
-          }
-        },
         swiperOptionThumbs: {
           spaceBetween: 10,
           centeredSlides: true,
@@ -117,14 +110,6 @@
         data['id'] = id
         this.$router.push({ path: '/read-article', query: data })
       }
-    },
-    mounted () {
-      this.$nextTick(() => {
-        const swiperTop = this.$refs.swiperTop.swiper
-        const swiperThumbs = this.$refs.swiperThumbs.swiper
-        swiperTop.controller.control = swiperThumbs
-        swiperThumbs.controller.control = swiperTop
-      })
     },
     created () {
       /* Get Top News for slideshow */

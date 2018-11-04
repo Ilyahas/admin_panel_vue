@@ -1,8 +1,8 @@
-module.exports = function (app, getData, postData, path) {
-
+module.exports = function (app, getData, postData) {
     const queries = require('./photoQueries');
+    const authCheck = require('./authCheck');
 
-    app.post('/addSection', (req, res) => {
+    app.post('/addSection', authCheck.isLoggedIn, (req, res) => {
         if (req.body.sectionName !== '') {
             postData(queries.addPhotoSection, req, res, [
                 req.body.sectionName,
@@ -22,7 +22,7 @@ module.exports = function (app, getData, postData, path) {
         getData(queries.getPhotoSectionById, req, res, [req.body.sectionId]);
     });
 
-    app.post('/updateSection', (req, res) => {
+    app.post('/updateSection', authCheck.isLoggedIn, (req, res) => {
         if (req.body.sectionName !== '') {
             if (req.body.isNewImg) {
                 postData(queries.updatePhotoSectionWithImg, req, res, [
@@ -42,7 +42,7 @@ module.exports = function (app, getData, postData, path) {
         }
     });
 
-    app.post('/deleteSection', (req, res) => {
+    app.post('/deleteSection', authCheck.isLoggedIn, (req, res) => {
         postData(queries.deleteSection, req, res, [req.body.sectionId]);
         // postData(queries.deleteAllPhotosInSection, req, res, {sectionId: req.body.sectionId});
     });
@@ -56,7 +56,7 @@ module.exports = function (app, getData, postData, path) {
 
 
 
-    app.post('/addPhoto', (req, res) => {
+    app.post('/addPhoto', authCheck.isLoggedIn, (req, res) => {
         postData(queries.addNewPhoto, req, res, [
             req.body.photoName,
             req.body.imgName,
@@ -69,7 +69,7 @@ module.exports = function (app, getData, postData, path) {
         getData(queries.getPhotosInSection, req, res, [req.body.sectionId]);
     });
 
-    app.post('/deletePhoto', (req, res) => {
+    app.post('/deletePhoto', authCheck.isLoggedIn, (req, res) => {
         postData(queries.deletePhotoFromSection, req, res, [req.body.photoId]);
     });
 };

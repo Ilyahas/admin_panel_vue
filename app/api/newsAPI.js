@@ -1,8 +1,8 @@
-module.exports = function (app, getData, postData, path) {
-
+module.exports = function (app, getData, postData) {
     const queries = require('./newsQueries');
+    const authCheck = require('./authCheck');
 
-    app.post('/addNews', (req, res) => {
+    app.post('/addNews', authCheck.isLoggedIn, (req, res) => {
         if (req.body.title !== '') {
             postData(queries.addNews, req, res, [
                 req.body.title,
@@ -24,11 +24,11 @@ module.exports = function (app, getData, postData, path) {
         getData(queries.getNewsById, req, res, [req.body.newsId]);
     });
 
-    app.post('/deleteNews', (req, res) => {
+    app.post('/deleteNews', authCheck.isLoggedIn, (req, res) => {
         postData(queries.deleteNews, req, res, [req.body.newsId]);
     });
 
-    app.post('/updateNews', (req, res) => {
+    app.post('/updateNews', authCheck.isLoggedIn, (req, res) => {
         if (req.body.title !== '') {
             if (req.body.isNewImg) {
                 postData(queries.updateNewsWithImg, req, res, [

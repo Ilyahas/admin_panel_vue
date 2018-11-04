@@ -27,7 +27,7 @@ module.exports = function (app, connection, path) {
     };
 
     require('./api/mainpageAPI') (app, getData, postData);
-    require('./api/photosAPI') (app, getData, postData, path);
-    require('./api/newsAPI') (app, getData, postData, path);
+    require('./api/photosAPI') (app, getData, postData);
+    require('./api/newsAPI') (app, getData, postData);
     require('./api/articlesAPI') (app, getData, postData);
 };

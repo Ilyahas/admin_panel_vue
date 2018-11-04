@@ -1,11 +1,12 @@
 module.exports = function (app, getData, postData) {
     const queries = require('./articlesQueries');
+    const authCheck = require('../authCheck');
 
     app.get('/getArticlePage', (req, res) => {
         getData(queries.getArticlePage, req, res);
     });
 
-    app.post('/updateArticlePage', (req, res) => {
+    app.post('/updateArticlePage', authCheck.isLoggedIn, (req, res) => {
         if (req.body.title !== '') {
             postData(queries.updateArticlePage, req, res, [
                 req.body.title,
@@ -21,7 +22,7 @@ module.exports = function (app, getData, postData) {
         getData(queries.getContacts, req, res)
     });
 
-    app.post('/updateContacts', (req, res) => {
+    app.post('/updateContacts', authCheck.isLoggedIn, (req, res) => {
         if (req.body.title !== '') {
             postData(queries.updateContacts, req, res, [
                 req.body.title,
@@ -40,7 +41,7 @@ module.exports = function (app, getData, postData) {
         ]);
     });
 
-    app.post('/updateEvent', (req, res) => {
+    app.post('/updateEvent', authCheck.isLoggedIn, (req, res) => {
         if (req.body.title !== '') {
             postData(queries.updateEvent, req, res, [
                 req.body.title,
@@ -55,7 +56,7 @@ module.exports = function (app, getData, postData) {
         }
     });
 
-    app.post('/addEvent', (req, res) => {
+    app.post('/addEvent', authCheck.isLoggedIn, (req, res) => {
         if (req.body.title !== '') {
             postData(queries.addEvent, req, res, [
                 req.body.title,
@@ -85,7 +86,7 @@ module.exports = function (app, getData, postData) {
         getData(queries.getArticleById, req, res, [req.body.articleId]);
     });
 
-    app.post('/addArticle', (req, res) => {
+    app.post('/addArticle', authCheck.isLoggedIn, (req, res) => {
         if (req.body.title !== '') {
             postData(queries.addArticle, req, res, [
                 req.body.title,
@@ -97,7 +98,7 @@ module.exports = function (app, getData, postData) {
         }
     });
 
-    app.post('/updateArticle', (req, res) => {
+    app.post('/updateArticle', authCheck.isLoggedIn, (req, res) => {
         if (req.body.title !== '') {
             getData(queries.updateArticle, req, res, [
                 req.body.title,
@@ -109,7 +110,7 @@ module.exports = function (app, getData, postData) {
         }
     });
 
-    app.post('/deleteArticle', (req, res) => {
+    app.post('/deleteArticle', authCheck.isLoggedIn, (req, res) => {
         postData(queries.deleteArticle, req, res, [req.body.articleId]);
     });
 };
