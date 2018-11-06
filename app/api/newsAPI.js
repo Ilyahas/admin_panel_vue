@@ -1,6 +1,6 @@
 module.exports = function (app, getData, postData) {
     const queries = require('./newsQueries');
-    const authCheck = require('./authCheck');
+    const authCheck = require('../authCheck');
 
     app.post('/addNews', authCheck.isLoggedIn, (req, res) => {
         if (req.body.title !== '') {

@@ -1,6 +1,6 @@
 module.exports = function (app, getData, postData) {
     const queries = require('./photoQueries');
-    const authCheck = require('./authCheck');
+    const authCheck = require('../authCheck');
 
     app.post('/addSection', authCheck.isLoggedIn, (req, res) => {
         if (req.body.sectionName !== '') {
