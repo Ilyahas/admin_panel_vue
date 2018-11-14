@@ -11,7 +11,7 @@ const NavigationStore = {
       path: '/news'
     },
     {
-      name: 'Фотограії',
+      name: 'Фотографії',
       path: '/photo-sections'
     },
     {

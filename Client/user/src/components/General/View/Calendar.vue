@@ -42,7 +42,7 @@
             title: eventsToInsert[i].title,
             desc: eventsToInsert[i].description
           })
-          console.log(this.events);
+          console.log(this.events)
         }
       },
       refreshEvents (eventMonth) {
